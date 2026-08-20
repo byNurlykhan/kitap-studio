@@ -369,6 +369,7 @@ code.pl{
     <div class="field"><label data-i="f.mail">Электрондық пошта</label><input id="lMail" type="email" placeholder="aigul@karasu-kitap.kz"></div>
     <div class="field"><label data-i="f.code">Код</label><input id="lCode" inputmode="numeric" maxlength="6" placeholder="______" style="font-family:var(--mono);letter-spacing:.3em;text-align:center"></div>
     <div class="err" id="loginErr"></div>
+    <button class="btn ghost" style="width:100%;margin-bottom:9px" onclick="askLoginCode()"><span data-i="login.ask">Поштаға код жіберу</span></button>
     <button class="btn" style="width:100%" onclick="doLogin()" data-i="login.go">Кабинетке кіру</button>
     <button class="btn ghost" style="width:100%;margin-top:9px" onclick="demoLogin()" data-i="login.demo">Демо аккаунтпен кіру</button>
   </div>
@@ -501,7 +502,7 @@ code.pl{
         <div class="field" style="margin-top:14px"><label data-i="g.site">Профиль сілтемесі (QR-ға түседі)</label><input id="gSite" value="https://instagram.com/karasu.kitaphana"></div>
       </div>
       <div class="card"><h4 data-i="g.gs">Google Sheets қосылымы</h4>
-        <div class="field"><label data-i="g.url">Apps Script Web App URL</label><input id="gUrl" placeholder="https://script.google.com/macros/s/AKfy.../exec"></div>
+        <div class="field"><label data-i="g.url">Apps Script Web App URL</label><input id="gUrl" value="https://script.google.com/macros/s/AKfycby7RH9hQAS13wyuOSoZg2SBD3WDOllUle97pU0PVIqi7Id5eNZg8UdDl69Pvg2ro2e9/exec"></div><div class="hint" style="margin:-6px 0 12px"><span id="modeBadge" style="font-family:var(--mono);font-size:12px;color:#C8912B">● Demo</span></div>
         <div class="kv">
           <b>Libraries</b><span data-i="g.t1">кітапханалар тізілімі, ЖСН, рөл</span>
           <b>Monthly</b><span data-i="g.t2">ай сайынғы бес көрсеткіш</span>
@@ -548,7 +549,7 @@ kk:{
  'mail.demo':'Демо режимде код осында көрсетіледі. Нақты жүйеде оны Apps Script MailApp жібереді.',
  'btn.cancel':'Бас тарту',
  'login.eyebrow':'Жеке кабинет','login.h':'Кіру','login.hint':'Пошта мен поштаға келген код арқылы кіресіз.',
- 'login.go':'Кабинетке кіру','login.demo':'Демо аккаунтпен кіру',
+ 'login.ask':'Поштаға код жіберу','login.go':'Кабинетке кіру','login.demo':'Демо аккаунтпен кіру',
  'nav.data':'Дерек енгізу','nav.studio':'Контент студиясы','nav.books':'Кітап рейтингі',
  'nav.wrap':'Жыл қорытындысы','nav.roll':'Жиынтық есеп','nav.set':'Баптаулар','nav.out':'Шығу',
  'd.h':'Дерек енгізу','d.sub':'Айды таңдап, бес көрсеткішті енгізіңіз. Жүйе өзгерісті бірден тексереді.',
@@ -640,7 +641,7 @@ ru:{
  'mail.demo':'В демо-режиме код показан здесь. В реальной системе его отправляет Apps Script MailApp.',
  'btn.cancel':'Отмена',
  'login.eyebrow':'Личный кабинет','login.h':'Вход','login.hint':'Вход по почте и коду, который пришёл на неё.',
- 'login.go':'Войти в кабинет','login.demo':'Войти демо-аккаунтом',
+ 'login.ask':'Отправить код на почту','login.go':'Войти в кабинет','login.demo':'Войти демо-аккаунтом',
  'nav.data':'Ввод данных','nav.studio':'Студия контента','nav.books':'Рейтинг книг',
  'nav.wrap':'Итоги года','nav.roll':'Сводный отчёт','nav.set':'Настройки','nav.out':'Выйти',
  'd.h':'Ввод данных','d.sub':'Выберите месяц и введите пять показателей. Система сразу проверит изменение.',
@@ -708,6 +709,63 @@ ru:{
 }};
 let L='kk';
 const t=(k)=>T[L][k]??k;
+
+
+/* ==========================================================
+   API — Google Apps Script Web App
+   POST-та Content-Type: text/plain — preflight (CORS) болмау үшін
+========================================================== */
+const API=(()=>{
+  let BASE="https://script.google.com/macros/s/AKfycby7RH9hQAS13wyuOSoZg2SBD3WDOllUle97pU0PVIqi7Id5eNZg8UdDl69Pvg2ro2e9/exec";
+  const set=(u)=>{BASE=(u||'').trim();};
+  const get=()=>BASE;
+  const ok=()=>/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(BASE);
+  async function rd(action,params={}){
+    const q=new URLSearchParams({action,...params});
+    const r=await fetch(BASE+'?'+q,{method:'GET',redirect:'follow'});
+    const j=await r.json();
+    if(!j.ok)throw new Error(j.error||'API');
+    return j.data;
+  }
+  async function wr(action,payload={}){
+    const r=await fetch(BASE,{method:'POST',redirect:'follow',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({action,...payload})});
+    const j=await r.json();
+    if(!j.ok)throw new Error(j.error||'API');
+    return j;
+  }
+  return{set,get,ok,
+    summary:()=>rd('summary'), ranking:(region)=>rd('ranking',region?{region}:{}),
+    library:(libraryId)=>rd('library',{libraryId}), rollup:()=>rd('rollup'),
+    requestCode:(email)=>wr('requestCode',{email}),
+    verifyCode:(email,code)=>wr('verifyCode',{email,code}),
+    register:(form)=>wr('register',form),
+    saveMonthly:(row)=>wr('saveMonthly',{row}),
+    saveBook:(row)=>wr('saveBook',{row})};
+})();
+
+/* MODE: 'api' — нақты Sheets, 'demo' — жадтағы дерек */
+let MODE='demo';
+function setMode(m,msg){
+  MODE=m;
+  const b=$('#modeBadge');
+  if(b){
+    b.textContent=(m==='api'?'● Sheets':'● Demo')+(msg?' · '+msg:'');
+    b.style.color=(m==='api'?'#2F7D4F':'#C8912B');
+  }
+}
+async function probe(){
+  if(!API.ok()){setMode('demo','URL жоқ');return false;}
+  try{
+    const s=await API.summary();
+    setMode('api', (s.libraries||0)+' кітапхана');
+    return true;
+  }catch(e){
+    setMode('demo', String(e.message).slice(0,40));
+    return false;
+  }
+}
 
 /* ==========================================================
    Демо деректер
@@ -809,7 +867,7 @@ function openModal(k){$('#m'+(k==='reg'?'Reg':'Login')).classList.add('on');}
 function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));}
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal();}));
 
-function sendCode(){
+async function sendCode(){
   const v=(id)=>$('#'+id).value.trim();
   const f={lib:v('rLib'),reg:v('rReg'),dist:v('rDist'),loc:v('rLoc'),name:v('rName'),
            pos:v('rPos'),phone:v('rPhone'),iin:v('rIin'),mail:v('rMail'),role:$('#rRole').value};
@@ -818,30 +876,103 @@ function sendCode(){
   if(!/^\d{12}$/.test(f.iin)){err.textContent=T[L].errIin;err.classList.add('on');return;}
   if(!/^\S+@\S+\.\S+$/.test(f.mail)){err.textContent=T[L].errMail;err.classList.add('on');return;}
   pendingReg=f;
+
+  if(MODE==='api'){
+    const btn=event&&event.target; if(btn)btn.disabled=true;
+    try{
+      const reg=await API.register({name:f.lib,region:f.reg,district:f.dist,locality:f.loc,
+        fullName:f.name,position:f.pos,phone:f.phone,email:f.mail,iin:f.iin,role:f.role});
+      pendingReg.libraryId=reg.libraryId;
+      await API.requestCode(f.mail);
+      pendingCode=null;                       /* кодты тек пошта біледі */
+      $('#codeShown').textContent='•  •  •';
+      $('#regStep1').style.display='none';$('#regStep2').style.display='block';
+      return;
+    }catch(e){
+      err.textContent=e.message==='email exists'
+        ? (L==='kk'?'Бұл пошта тіркелген. «Кіру» бөлімін қолданыңыз.':'Эта почта уже зарегистрирована. Используйте «Вход».')
+        : e.message;
+      err.classList.add('on');return;
+    }finally{ if(btn)btn.disabled=false; }
+  }
+
   pendingCode=String(Math.floor(100000+Math.random()*900000));
   $('#codeShown').textContent=pendingCode;
   $('#regStep1').style.display='none';$('#regStep2').style.display='block';
 }
-function confirmCode(){
+
+async function confirmCode(){
   const err=$('#codeErr');err.classList.remove('on');
-  if($('#rCode').value.trim()!==pendingCode){err.textContent=T[L].errCode;err.classList.add('on');return;}
+  const code=$('#rCode').value.trim();
+
+  if(MODE==='api'){
+    try{
+      const res=await API.verifyCode(pendingReg.mail,code);
+      ME={libraryId:pendingReg.libraryId,name:pendingReg.name,pos:pendingReg.pos,
+          mail:pendingReg.mail,role:pendingReg.role};
+      DB.libs.push({n:{kk:pendingReg.lib,ru:pendingReg.lib},reg:{kk:pendingReg.reg,ru:pendingReg.reg},
+        dist:pendingReg.dist,r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,staff:0});
+      CUR=DB.libs.length-1;
+      enterApp();await pullLibrary();
+      return;
+    }catch(e){err.textContent=T[L].errCode+' ('+e.message+')';err.classList.add('on');return;}
+  }
+
+  if(code!==pendingCode){err.textContent=T[L].errCode;err.classList.add('on');return;}
   const nl={n:{kk:pendingReg.lib,ru:pendingReg.lib},reg:{kk:pendingReg.reg,ru:pendingReg.reg},dist:pendingReg.dist,
     r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,staff:0};
   DB.libs.push(nl);CUR=DB.libs.length-1;
   ME={name:pendingReg.name,pos:pendingReg.pos,mail:pendingReg.mail,role:pendingReg.role};
   enterApp();
 }
+
 function demoLogin(){
   CUR=0;
-  ME={name:L==='kk'?'Сәрсенова Айгүл Қайратқызы':'Сарсенова Айгуль Кайратовна',
+  ME={libraryId:'LIB-0001',
+      name:L==='kk'?'Сәрсенова Айгүл Қайратқызы':'Сарсенова Айгуль Кайратовна',
       pos:L==='kk'?'Кітапхана меңгерушісі':'Заведующая библиотекой',
       mail:'aigul@karasu-kitap.kz',role:'lib'};
   enterApp();
 }
-function doLogin(){
+
+/* Кіру: 1) кодты сұрату  2) кодпен кіру */
+async function askLoginCode(){
   const m=$('#lMail').value.trim();const err=$('#loginErr');err.classList.remove('on');
-  if(!m){err.textContent=T[L].errFill;err.classList.add('on');return;}
-  demoLogin();
+  if(!/^\S+@\S+\.\S+$/.test(m)){err.textContent=T[L].errMail;err.classList.add('on');return;}
+  if(MODE!=='api'){err.textContent=L==='kk'?'Sheets қосылмаған — демо аккаунтты қолданыңыз':'Sheets не подключён — используйте демо-аккаунт';err.classList.add('on');return;}
+  try{await API.requestCode(m);toast(L==='kk'?'Код поштаға жіберілді':'Код отправлен на почту');}
+  catch(e){err.textContent=e.message;err.classList.add('on');}
+}
+
+async function doLogin(){
+  const m=$('#lMail').value.trim(), c=$('#lCode').value.trim();
+  const err=$('#loginErr');err.classList.remove('on');
+  if(!m||!c){err.textContent=T[L].errFill;err.classList.add('on');return;}
+  if(MODE!=='api'){demoLogin();return;}
+  try{
+    const res=await API.verifyCode(m,c);
+    const u=res.user;
+    if(!u){err.textContent=T[L].errLogin;err.classList.add('on');return;}
+    ME={libraryId:u.libraryId,name:u.fullName,pos:u.position,mail:u.email,role:u.role};
+    DB.libs.push({n:{kk:u.name,ru:u.name},reg:{kk:u.region,ru:u.region},dist:u.district,
+      r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,staff:0});
+    CUR=DB.libs.length-1;
+    enterApp();await pullLibrary();
+  }catch(e){err.textContent=T[L].errCode+' ('+e.message+')';err.classList.add('on');}
+}
+
+/* Sheets-тен өз кітапханасының дерегін тарту */
+async function pullLibrary(){
+  if(MODE!=='api'||!ME||!ME.libraryId)return;
+  try{
+    const d=await API.library(ME.libraryId);
+    if(d.readers)lib().r=d.readers;
+    if(d.visits)lib().v=d.visits;
+    if(d.books&&d.books.length){
+      d.books.forEach(b=>{const i=+b.category;if(DB.books[i]){DB.books[i].title[L]=b.title;DB.books[i].author=b.author;DB.books[i].cnt=+b.count||0;}});
+    }
+    renderMonths();renderBars();renderBooks();loadMonth();drawPoster();
+  }catch(e){toast('Sheets: '+e.message);}
 }
 function logout(){ME=null;$('#app').classList.remove('on');$('#site').style.display='';window.scrollTo(0,0);}
 
@@ -899,6 +1030,14 @@ function saveMonth(){
   $('#dWarn').classList.remove('on');
   $('#dOk').textContent=T[L].savedOk(T[L].months[EDIT]);$('#dOk').classList.add('on');
   ST.period=EDIT;renderMonths();renderBars();renderChips();renderRoll();updatePayload();drawPoster();
+
+  if(MODE==='api'&&ME&&ME.libraryId){
+    API.saveMonthly({libraryId:ME.libraryId,year:YEAR,month:EDIT+1,
+      readers:l.r[EDIT],visits:l.v[EDIT],fund:l.fund,issued:l.issued,staff:l.staff,
+      enteredBy:ME.name,position:ME.pos})
+     .then(r=>toast('Google Sheets ✓ '+(r.mode==='update'?'жаңартылды':'жазылды')))
+     .catch(e=>toast('Sheets: '+e.message));
+  }
 }
 function renderBars(){
   if(!lib())return;
@@ -945,7 +1084,15 @@ function renderBooks(){
      <div class="field" style="max-width:220px"><label>${T[L].bookCount}</label><input type="number" value="${b.cnt}" oninput="DB.books[${i}].cnt=+this.value"></div>
    </div>`).join('');
 }
-function saveBooks(){ST.tpl=2;ST.period=0;renderChips();go('studio',navBtn(1));drawPoster();}
+function saveBooks(){
+  if(MODE==='api'&&ME&&ME.libraryId){
+    DB.books.forEach((b,i)=>API.saveBook({libraryId:ME.libraryId,year:YEAR,category:i,
+      title:b.title[L],author:b.author,count:b.cnt,enteredBy:ME.name,position:ME.pos})
+      .catch(e=>toast('Sheets: '+e.message)));
+    toast('Google Sheets ✓');
+  }
+  ST.tpl=2;ST.period=0;renderChips();go('studio',navBtn(1));drawPoster();
+}
 
 /* ==========================================================
    Жиынтық есеп
@@ -969,7 +1116,29 @@ function updatePayload(){
     enteredBy:ME.name,position:ME.pos,iin:'8801•••••000',ts:new Date().toISOString()}};
   $('#payload').textContent='POST /exec\n'+JSON.stringify(p,null,2);
 }
-function testSync(){toast($('#gUrl').value.trim()?'URL OK':T[L].toastSync);}
+async function testSync(){
+  API.set($('#gUrl').value);
+  toast(L==='kk'?'Тексерілуде…':'Проверка…');
+  const okk=await probe();
+  if(okk){toast(L==='kk'?'Қосылым сәтті — дерек Sheets-ке жазылады':'Подключение успешно — данные пишутся в Sheets');
+    renderLandingRemote();if(ME)pullLibrary();}
+  else toast(L==='kk'?'Қосылым жоқ. Deploy баптауын тексеріңіз (Who has access: Anyone).':'Нет связи. Проверьте Deploy (Who has access: Anyone).');
+}
+/* Басты беттегі сандарды Sheets-тен алу */
+async function renderLandingRemote(){
+  if(MODE!=='api')return;
+  try{
+    const s=await API.summary();
+    const box=$('#landStats');if(!box)return;
+    const vals=[s.libraries,nf(s.readers),nf(s.visits),s.regions];
+    box.innerHTML=T[L].stats.map((x,i)=>`<div class="stat"><div class="n">${vals[i]}</div><div class="l">${x}</div></div>`).join('');
+    const rk=await API.ranking();
+    if(rk&&rk.length){
+      $('#rankBody').innerHTML=rk.slice(0,10).map((r,k)=>
+        `<tr><td><span class="medal ${k===0?'g':''}">${k+1}</span></td><td>${r.name}</td><td>${r.region}</td><td class="num">${nf(r.readers)}</td><td class="num">—</td></tr>`).join('');
+    }
+  }catch(e){}
+}
 
 /* ==========================================================
    Чиптер
@@ -1246,7 +1415,7 @@ const FACES=[`800 100px Manrope`,`700 100px Manrope`,`600 100px Manrope`,
 if(document.fonts&&document.fonts.load){
   Promise.all(FACES.map(f=>document.fonts.load(f,KZ).catch(()=>{})))
     .then(()=>document.fonts.ready)
-    .then(()=>{drawPoster();renderLanding();});
+    .then(()=>{drawPoster();renderLanding();probe().then(renderLandingRemote);});
 }else{
   setTimeout(()=>{drawPoster();renderLanding();},600);
 }
