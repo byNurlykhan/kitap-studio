@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KITAP.STUDIO — кітапхана деректерін визуалды контентке айналдыру</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Барлық қаріп қазақ кириллицасын толық қолдайды (cyrillic-ext: ә ғ қ ң ө ұ ү һ і) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<style>
+:root{
+  --sia:#4B3A9E;         /* мөр сиясы / штемпельные чернила */
+  --sia-2:#6B57C7;
+  --sia-soft:#EDE8FB;
+  --tun:#191428;
+  --kart:#F8F4EC;        /* каталог картасының қағазы */
+  --tor:#E3DACB;
+  --altyn:#C8912B;
+  --kok:#1F6F7A;
+  --qyzyl:#B3402F;
+  --jasyl:#2F7D4F;
+  /* Қаріптер: үшеуі де қазақ кириллицасын толық жабады */
+  --disp:'Manrope','Inter','Noto Sans',"Segoe UI",Arial,sans-serif;
+  --body:'Inter','Noto Sans',"Segoe UI",Arial,sans-serif;
+  --mono:'JetBrains Mono','Noto Sans Mono',ui-monospace,Consolas,monospace;
+  --r:6px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body); color:var(--tun); background:var(--kart);
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--sia)}
+:focus-visible{outline:3px solid var(--sia-2);outline-offset:2px}
+
+/* ---------- сызылған карта фактурасы ---------- */
+.ruled{
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--tor) 31px 32px);
+  background-position:0 8px;
+}
+
+/* ---------- Landing ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.topbar{
+  position:sticky;top:0;z-index:60;background:var(--tun);color:#fff;
+  border-bottom:1px solid rgba(255,255,255,.12)
+}
+.topbar .wrap{display:flex;align-items:center;gap:18px;height:62px}
+.brand{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;font-size:17px;display:flex;align-items:center;gap:9px}
+.brand i{width:22px;height:22px;border:2.5px solid var(--altyn);border-radius:3px;display:block;position:relative}
+.brand i::after{content:"";position:absolute;inset:4px 4px auto 4px;height:2.5px;background:var(--altyn);box-shadow:0 5px 0 var(--altyn)}
+.spacer{flex:1}
+.langsw{display:flex;border:1px solid rgba(255,255,255,.28);border-radius:999px;overflow:hidden}
+.langsw button{background:none;border:0;color:rgba(255,255,255,.65);padding:5px 13px;font-size:12px;font-family:var(--mono);letter-spacing:.06em}
+.langsw button[aria-pressed="true"]{background:var(--altyn);color:var(--tun);font-weight:700}
+.tbtn{background:none;border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 16px;border-radius:999px;font-size:14px}
+.tbtn:hover{background:rgba(255,255,255,.1)}
+.tbtn.solid{background:var(--altyn);border-color:var(--altyn);color:var(--tun);font-weight:600}
+
+.hero{background:var(--tun);color:#fff;padding:70px 0 90px;position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(to bottom,transparent 0 47px,rgba(255,255,255,.045) 47px 48px);
+}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--altyn)}
+h1.hh{font-family:var(--disp);font-weight:800;font-size:clamp(34px,4.6vw,58px);line-height:1.03;letter-spacing:-.035em;margin:16px 0 0}
+h1.hh em{font-style:normal;color:var(--altyn)}
+.hero p.lead{font-size:17.5px;color:rgba(255,255,255,.7);max-width:48ch;margin:20px 0 30px}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+/* мөр — қолтаңба элементі */
+.stamp{
+  border:3px solid var(--altyn);border-radius:4px;padding:12px 16px;
+  font-family:var(--mono);color:var(--altyn);transform:rotate(-3.5deg);
+  box-shadow:inset 0 0 0 1px rgba(200,145,43,.45);background:rgba(200,145,43,.07)
+}
+.stamp b{display:block;font-size:13px;letter-spacing:.02em}
+.stamp span{display:block;font-size:10.5px;opacity:.8;letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.stamp .rule{height:1px;background:currentColor;opacity:.4;margin:8px 0}
+
+.hero-card{
+  background:var(--kart);color:var(--tun);border-radius:var(--r);padding:22px;
+  box-shadow:0 28px 60px -22px rgba(0,0,0,.6);transform:rotate(1.2deg)
+}
+.hero-card .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sia)}
+.hero-card .big{font-family:var(--disp);font-weight:800;font-size:64px;line-height:.95;letter-spacing:-.04em;margin:6px 0 2px}
+.hero-card .cap{font-size:14.5px;color:#5b5468}
+.hero-card .stamp{border-color:var(--sia);color:var(--sia);background:rgba(75,58,158,.06);margin-top:18px;transform:rotate(-2deg);display:inline-block}
+
+.stats{border-top:1px solid var(--tor);border-bottom:1px solid var(--tor);background:#fff}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:26px 20px;border-right:1px solid var(--tor)}
+.stat:last-child{border-right:0}
+.stat .n{font-family:var(--disp);font-weight:800;font-size:32px;letter-spacing:-.03em}
+.stat .l{font-size:13px;color:#6b6478;margin-top:2px}
+
+section.blk{padding:64px 0}
+h2.sh{font-family:var(--disp);font-weight:600;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.03em;margin:0 0 6px}
+.sub{color:#6b6478;margin:0 0 26px;max-width:62ch}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feat{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:20px}
+.feat h3{font-family:var(--disp);font-weight:600;font-size:16px;margin:10px 0 6px;letter-spacing:-.01em}
+.feat p{margin:0;font-size:14px;color:#6b6478}
+.feat .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--sia);text-transform:uppercase}
+
+table.rank{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--tor);border-radius:var(--r);overflow:hidden}
+table.rank th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6b6478;text-align:left;padding:11px 14px;border-bottom:1px solid var(--tor);background:#fbf9f5}
+table.rank td{padding:11px 14px;border-bottom:1px solid var(--tor);font-size:14.5px}
+table.rank tr:last-child td{border-bottom:0}
+table.rank td.num{font-family:var(--mono);font-weight:700}
+.medal{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:999px;background:var(--sia-soft);color:var(--sia);font-family:var(--mono);font-size:11px;font-weight:700}
+.medal.g{background:rgba(200,145,43,.16);color:#8a6212}
+
+footer.ft{background:var(--tun);color:rgba(255,255,255,.55);padding:34px 0;font-size:13px}
+
+/* ---------- Modal ---------- */
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(25,20,40,.62)}
+.modal.on{display:flex}
+.sheet{background:var(--kart);border-radius:8px;width:min(560px,100%);max-height:92vh;overflow:auto;box-shadow:0 30px 80px -20px rgba(0,0,0,.6)}
+.sheet header{padding:22px 24px 8px}
+.sheet header h3{font-family:var(--disp);font-weight:600;font-size:21px;margin:6px 0 4px;letter-spacing:-.02em}
+.sheet .body{padding:8px 24px 24px}
+.field{margin-bottom:14px}
+.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6b6478;margin-bottom:5px}
+.field input,.field select,.field textarea{
+  width:100%;padding:10px 12px;border:1px solid var(--tor);border-radius:var(--r);background:#fff
+}
+.field input:focus,.field select:focus{border-color:var(--sia)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{background:var(--sia);color:#fff;border:0;padding:11px 20px;border-radius:var(--r);font-weight:600;font-size:14.5px}
+.btn:hover{background:var(--sia-2)}
+.btn.ghost{background:none;color:var(--sia);border:1px solid var(--tor)}
+.btn.ghost:hover{background:var(--sia-soft)}
+.btn.gold{background:var(--altyn);color:var(--tun)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.hint{font-size:12.5px;color:#6b6478}
+.err{font-size:12.5px;color:var(--qyzyl);margin-top:6px;display:none}
+.err.on{display:block}
+
+.mail{
+  border:1px dashed var(--sia);background:var(--sia-soft);border-radius:var(--r);padding:14px;margin-top:6px
+}
+.mail .from{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sia)}
+.mail .code{font-family:var(--mono);font-weight:700;font-size:30px;letter-spacing:.3em;color:var(--sia);margin:8px 0 2px}
+
+/* ---------- App shell ---------- */
+#app{display:none;min-height:100vh;grid-template-columns:246px 1fr}
+#app.on{display:grid}
+.rail{background:var(--tun);color:#fff;padding:18px 0;position:sticky;top:0;height:100vh;overflow:auto}
+.rail .who{padding:0 18px 16px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:12px}
+.rail .who .lib{font-family:var(--disp);font-weight:600;font-size:14px;line-height:1.25;letter-spacing:-.01em}
+.rail .who .per{font-size:12px;color:rgba(255,255,255,.55);margin-top:4px}
+.rail nav{display:flex;flex-direction:column}
+.rail nav button{
+  background:none;border:0;color:rgba(255,255,255,.66);text-align:left;padding:10px 18px;font-size:14px;
+  display:flex;gap:10px;align-items:center;border-left:3px solid transparent
+}
+.rail nav button:hover{color:#fff;background:rgba(255,255,255,.05)}
+.rail nav button.on{color:#fff;border-left-color:var(--altyn);background:rgba(255,255,255,.07);font-weight:600}
+.rail nav button b{font-family:var(--mono);font-size:10px;opacity:.5;font-weight:400}
+.rail .out{margin:14px 18px 0}
+main.pane{padding:28px 30px 70px;max-width:1100px}
+.ph{display:flex;align-items:flex-end;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.ph h2{font-family:var(--disp);font-weight:600;font-size:25px;letter-spacing:-.03em;margin:0}
+.ph p{margin:4px 0 0;color:#6b6478;font-size:14px;width:100%}
+.view{display:none}
+.view.on{display:block}
+
+.card{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:20px;margin-bottom:18px}
+.card > h4{font-family:var(--disp);font-weight:600;font-size:15px;margin:0 0 14px;letter-spacing:-.01em}
+.g5{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.warnbox{border:1px solid var(--altyn);background:rgba(200,145,43,.09);border-radius:var(--r);padding:11px 13px;font-size:13px;margin-top:10px;display:none}
+.warnbox.on{display:block}
+.okbox{border:1px solid var(--jasyl);background:rgba(47,125,79,.08);border-radius:var(--r);padding:11px 13px;font-size:13px;margin-top:10px;display:none}
+.okbox.on{display:block}
+
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:6px}
+.months button{
+  border:1px solid var(--tor);background:#fff;border-radius:var(--r);padding:9px 4px;font-size:13px;text-align:center
+}
+.months button.on{background:var(--sia);color:#fff;border-color:var(--sia);font-weight:600}
+.months button .v{display:block;font-family:var(--mono);font-size:10px;opacity:.65}
+
+.bars{display:flex;align-items:flex-end;gap:5px;height:120px;margin-top:12px}
+.bars div{flex:1;background:var(--sia-soft);border-radius:3px 3px 0 0;position:relative;min-height:3px}
+.bars div.max{background:var(--altyn)}
+.bars div span{position:absolute;bottom:-19px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9.5px;color:#6b6478}
+.barwrap{padding-bottom:22px}
+
+/* Studio */
+.studio{display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start}
+.opts .grp{margin-bottom:16px}
+.opts .grp > span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#6b6478;display:block;margin-bottom:7px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--tor);background:#fff;border-radius:999px;padding:6px 13px;font-size:13px}
+.chip.on{background:var(--sia);color:#fff;border-color:var(--sia)}
+.chip.th{border-radius:var(--r);padding-left:9px;display:flex;align-items:center;gap:7px}
+.chip.th i{width:12px;height:12px;border-radius:3px;display:block}
+.preview{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.cvwrap{background:repeating-conic-gradient(#f0ece3 0% 25%,#fff 0% 50%) 50%/18px 18px;padding:14px;border-radius:var(--r);width:100%;display:flex;justify-content:center}
+canvas#cv{max-width:100%;max-height:520px;box-shadow:0 12px 34px -12px rgba(25,20,40,.45);border-radius:2px}
+.dl{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+.small{font-size:12.5px;color:#6b6478;text-align:center}
+
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(140%);
+  background:var(--tun);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;z-index:200;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1);box-shadow:0 14px 40px -10px rgba(0,0,0,.55)
+}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+code.pl{
+  display:block;white-space:pre;overflow:auto;background:var(--tun);color:#d8d2ea;border-radius:var(--r);
+  padding:14px;font-family:var(--mono);font-size:12px;line-height:1.55
+}
+.kv{display:grid;grid-template-columns:180px 1fr;gap:6px 14px;font-size:14px}
+.kv b{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:#6b6478;font-weight:400}
+
+.wrapped{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.wcard{border:1px solid var(--tor);border-radius:var(--r);overflow:hidden;background:#fff;cursor:pointer}
+.wcard canvas{width:100%;display:block}
+.wcard p{margin:0;padding:8px 10px;font-size:12.5px;border-top:1px solid var(--tor)}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:34px}
+  .stats .wrap{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:0}
+  .grid3{grid-template-columns:1fr}
+  #app.on{grid-template-columns:1fr}
+  .rail{position:static;height:auto}
+  .rail nav{flex-direction:row;overflow:auto}
+  .rail nav button{border-left:0;border-bottom:3px solid transparent;white-space:nowrap}
+  .rail nav button.on{border-left:0;border-bottom-color:var(--altyn)}
+  .rail nav button b{display:none}
+  .studio{grid-template-columns:1fr}
+  main.pane{padding:20px 16px 60px}
+  .months{grid-template-columns:repeat(3,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ================= LANDING ================= -->
+<div id="site">
+<div class="topbar"><div class="wrap">
+  <div class="brand"><i></i> KITAP.STUDIO</div>
+  <div class="spacer"></div>
+  <div class="langsw">
+    <button id="lkk" aria-pressed="true" onclick="setLang('kk')">ҚАЗ</button>
+    <button id="lru" aria-pressed="false" onclick="setLang('ru')">РУС</button>
+  </div>
+  <button class="tbtn" onclick="openModal('login')" data-i="nav.login">Кіру</button>
+  <button class="tbtn solid" onclick="openModal('reg')" data-i="nav.reg">Тіркелу</button>
+</div></div>
+
+<div class="hero"><div class="wrap">
+  <div>
+    <div class="eyebrow" data-i="hero.eyebrow">Мәдениет және ақпарат министрлігі · кітапхана статистикасы</div>
+    <h1 class="hh" data-i="hero.h1">Сан емес — <em>сөйлейтін</em> контент.</h1>
+    <p class="lead" data-i="hero.lead">Айлық есепті енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды. Мәтінді де өзі жазады. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.</p>
+    <div class="hero-cta">
+      <button class="tbtn solid" onclick="openModal('reg')" data-i="hero.cta1">Кітапхананы тіркеу</button>
+      <button class="tbtn" onclick="demoLogin()" data-i="hero.cta2">Демо кабинетті ашу</button>
+    </div>
+  </div>
+  <div class="hero-card ruled">
+    <div class="mini" data-i="hero.card.mini">Ақпан 2026 · Қарасу ауылдық кітапханасы</div>
+    <div class="big" id="heroBig">1 284</div>
+    <div class="cap" data-i="hero.card.cap">оқырман келді — қаңтармен салыстырғанда 18% көп</div>
+    <div class="stamp">
+      <b data-i="hero.card.name">Айгүл Сәрсенова</b>
+      <div class="rule"></div>
+      <span data-i="hero.card.pos">Кітапхана меңгерушісі · 20.08.2026</span>
+    </div>
+  </div>
+</div></div>
+
+<div class="stats"><div class="wrap" id="landStats"></div></div>
+
+<section class="blk"><div class="wrap">
+  <h2 class="sh" data-i="feat.h">Платформа не істейді</h2>
+  <p class="sub" data-i="feat.sub">Кітапханашы Canva ашпайды, мәтін ойлап таппайды, форматты өлшеп отырмайды. Ол тек санды енгізеді.</p>
+  <div class="grid3" id="featGrid"></div>
+</div></section>
+
+<section class="blk" style="padding-top:0"><div class="wrap">
+  <h2 class="sh" data-i="rank.h">Облыс бойынша рейтинг</h2>
+  <p class="sub" data-i="rank.sub">Ашық көрсеткіш — жариялауға деген ынта. Әр кітапхана өз орнын постер етіп жүктей алады.</p>
+  <table class="rank"><thead><tr>
+    <th data-i="rank.c1">Орын</th><th data-i="rank.c2">Кітапхана</th><th data-i="rank.c3">Өңір</th>
+    <th data-i="rank.c4">Жылдық оқырман</th><th data-i="rank.c5">Қор</th>
+  </tr></thead><tbody id="rankBody"></tbody></table>
+</div></section>
+
+<footer class="ft"><div class="wrap">
+  <div class="brand" style="color:#fff;margin-bottom:10px"><i></i> KITAP.STUDIO</div>
+  <span data-i="ft.note">Прототип · деректер Google Sheets-те, логика Google Apps Script-те сақталады.</span>
+</div></footer>
+</div>
+
+<!-- ================= REGISTER MODAL ================= -->
+<div class="modal" id="mReg"><div class="sheet">
+  <header>
+    <div class="eyebrow" style="color:var(--sia)" data-i="reg.step">1-қадам · кітапхана мен қызметкер</div>
+    <h3 data-i="reg.h">Тіркелу өтінімі</h3>
+    <p class="hint" data-i="reg.hint">Тіркелу — кітапхана қызметкері үшін. Растау коды поштаңызға жіберіледі.</p>
+  </header>
+  <div class="body">
+    <div id="regStep1">
+      <div class="field"><label data-i="f.lib">Кітапхана атауы</label><input id="rLib" placeholder="Қарасу ауылдық кітапханасы"></div>
+      <div class="row2">
+        <div class="field"><label data-i="f.reg">Облыс</label>
+          <select id="rReg"><option>Алматы облысы</option><option>Жетісу облысы</option><option>Түркістан облысы</option><option>Абай облысы</option><option>Ақмола облысы</option><option>Қостанай облысы</option><option>Маңғыстау облысы</option><option>Шығыс Қазақстан облысы</option></select></div>
+        <div class="field"><label data-i="f.dist">Аудан</label><input id="rDist" placeholder="Іле ауданы"></div>
+      </div>
+      <div class="field"><label data-i="f.loc">Ауыл / қала</label><input id="rLoc" placeholder="Қарасу ауылы"></div>
+      <div class="row2">
+        <div class="field"><label data-i="f.name">Аты-жөні</label><input id="rName" placeholder="Сәрсенова Айгүл Қайратқызы"></div>
+        <div class="field"><label data-i="f.pos">Лауазымы</label><input id="rPos" placeholder="Кітапхана меңгерушісі"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label data-i="f.phone">Телефон</label><input id="rPhone" placeholder="+7 701 000 00 00"></div>
+        <div class="field"><label data-i="f.iin">ЖСН (12 сан)</label><input id="rIin" inputmode="numeric" maxlength="12" placeholder="880101300000"></div>
+      </div>
+      <div class="field"><label data-i="f.mail">Электрондық пошта</label><input id="rMail" type="email" placeholder="aigul@karasu-kitap.kz"></div>
+      <div class="field"><label data-i="f.role">Рөлі</label>
+        <select id="rRole">
+          <option value="lib" data-i="role.lib">Кітапханашы</option>
+          <option value="dist" data-i="role.dist">Аудандық жинақтаушы</option>
+          <option value="obl" data-i="role.obl">Облыстық үйлестіруші</option>
+          <option value="min" data-i="role.min">Министрлік</option>
+        </select></div>
+      <div class="err" id="regErr"></div>
+      <button class="btn" style="width:100%;margin-top:6px" onclick="sendCode()" data-i="reg.send">Кодты поштаға жіберу</button>
+    </div>
+
+    <div id="regStep2" style="display:none">
+      <div class="mail">
+        <div class="from" data-i="mail.from">Кіріс хат · no-reply@kitap.studio</div>
+        <div data-i="mail.txt" style="font-size:13.5px;margin-top:6px">Сіздің кіру кодыңыз. Ол құпия сөз ретінде қызмет етеді:</div>
+        <div class="code" id="codeShown">000000</div>
+        <div class="hint" data-i="mail.demo">Демо режимде код осында көрсетіледі. Нақты жүйеде оны Apps Script MailApp жібереді.</div>
+      </div>
+      <div class="field" style="margin-top:16px"><label data-i="f.code">Кодты енгізіңіз</label><input id="rCode" inputmode="numeric" maxlength="6" placeholder="______" style="font-family:var(--mono);letter-spacing:.3em;font-size:20px;text-align:center"></div>
+      <div class="err" id="codeErr"></div>
+      <button class="btn" style="width:100%" onclick="confirmCode()" data-i="reg.done">Растап, кабинетке кіру</button>
+    </div>
+    <button class="btn ghost" style="width:100%;margin-top:9px" onclick="closeModal()" data-i="btn.cancel">Бас тарту</button>
+  </div>
+</div></div>
+
+<!-- ================= LOGIN MODAL ================= -->
+<div class="modal" id="mLogin"><div class="sheet" style="width:min(420px,100%)">
+  <header>
+    <div class="eyebrow" style="color:var(--sia)" data-i="login.eyebrow">Жеке кабинет</div>
+    <h3 data-i="login.h">Кіру</h3>
+    <p class="hint" data-i="login.hint">Пошта мен поштаға келген код арқылы кіресіз.</p>
+  </header>
+  <div class="body">
+    <div class="field"><label data-i="f.mail">Электрондық пошта</label><input id="lMail" type="email" placeholder="aigul@karasu-kitap.kz"></div>
+    <div class="field"><label data-i="f.code">Код</label><input id="lCode" inputmode="numeric" maxlength="6" placeholder="______" style="font-family:var(--mono);letter-spacing:.3em;text-align:center"></div>
+    <div class="err" id="loginErr"></div>
+    <button class="btn" style="width:100%" onclick="doLogin()" data-i="login.go">Кабинетке кіру</button>
+    <button class="btn ghost" style="width:100%;margin-top:9px" onclick="demoLogin()" data-i="login.demo">Демо аккаунтпен кіру</button>
+  </div>
+</div></div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+  <aside class="rail">
+    <div class="brand" style="padding:0 18px 16px"><i></i> KITAP.STUDIO</div>
+    <div class="who">
+      <div class="lib" id="uLib">—</div>
+      <div class="per" id="uPer">—</div>
+    </div>
+    <nav id="nav">
+      <button class="on" onclick="go('data',this)"><span data-i="nav.data">Дерек енгізу</span></button>
+      <button onclick="go('studio',this)"><span data-i="nav.studio">Контент студиясы</span></button>
+      <button onclick="go('books',this)"><span data-i="nav.books">Кітап рейтингі</span></button>
+      <button onclick="go('wrap',this)"><span data-i="nav.wrap">Жыл қорытындысы</span></button>
+      <button onclick="go('roll',this)"><span data-i="nav.roll">Жиынтық есеп</span></button>
+      <button onclick="go('set',this)"><span data-i="nav.set">Баптаулар</span></button>
+    </nav>
+    <div class="out"><button class="tbtn" style="width:100%" onclick="logout()" data-i="nav.out">Шығу</button></div>
+  </aside>
+
+  <main class="pane">
+    <!-- DATA -->
+    <div class="view on" id="v-data">
+      <div class="ph"><h2 data-i="d.h">Дерек енгізу</h2><p data-i="d.sub">Айды таңдап, бес көрсеткішті енгізіңіз. Жүйе өзгерісті бірден тексереді.</p></div>
+      <div class="card">
+        <h4 data-i="d.month">Есепті ай</h4>
+        <div class="months" id="monthPick"></div>
+      </div>
+      <div class="card">
+        <h4 data-i="d.metrics">Көрсеткіштер</h4>
+        <div class="g5">
+          <div class="field"><label data-i="m.readers">Оқырман саны</label><input id="mReaders" type="number" min="0"></div>
+          <div class="field"><label data-i="m.visits">Келім саны</label><input id="mVisits" type="number" min="0"></div>
+          <div class="field"><label data-i="m.fund">Кітапхана қоры</label><input id="mFund" type="number" min="0"></div>
+          <div class="field"><label data-i="m.issued">Берілген материал</label><input id="mIssued" type="number" min="0"></div>
+          <div class="field"><label data-i="m.staff">Кітапханашы саны</label><input id="mStaff" type="number" min="0"></div>
+        </div>
+        <div class="warnbox" id="dWarn"></div>
+        <div class="okbox" id="dOk"></div>
+        <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn" onclick="saveMonth()" data-i="d.save">Сақтау</button>
+          <button class="btn ghost" onclick="go('studio',navBtn(1))" data-i="d.toStudio">Контент жасау →</button>
+        </div>
+      </div>
+      <div class="card">
+        <h4 data-i="d.year">Жылдық динамика — оқырман</h4>
+        <div class="barwrap"><div class="bars" id="bars"></div></div>
+        <div class="hint" id="insightLine" style="margin-top:8px"></div>
+      </div>
+      <div class="card">
+        <h4 data-i="d.import">CSV импорт — 12 айды бірден</h4>
+        <p class="hint" data-i="d.importHint">Excel-ден көшіріп қойыңыз. Формат: ай;оқырман;келім;берілген</p>
+        <textarea id="csv" rows="4" style="width:100%;padding:10px;border:1px solid var(--tor);border-radius:6px;font-family:var(--mono);font-size:12.5px" placeholder="1;980;2210;1740&#10;2;1284;2680;1920"></textarea>
+        <button class="btn ghost" style="margin-top:10px" onclick="importCsv()" data-i="d.importBtn">Импорттау</button>
+      </div>
+    </div>
+
+    <!-- STUDIO -->
+    <div class="view" id="v-studio">
+      <div class="ph"><h2 data-i="s.h">Контент студиясы</h2><p data-i="s.sub">Шаблон мен форматты таңдаңыз — мәтін деректен өзі құрылады.</p></div>
+      <div class="studio">
+        <div class="opts">
+          <div class="card">
+            <div class="grp"><span data-i="s.tpl">Шаблон</span><div class="chips" id="tplChips"></div></div>
+            <div class="grp" id="periodGrp"><span data-i="s.period">Кезең</span><div class="chips" id="periodChips"></div></div>
+            <div class="grp"><span data-i="s.theme">Стиль / мереке</span><div class="chips" id="themeChips"></div></div>
+            <div class="grp"><span data-i="s.fmt">Формат</span><div class="chips" id="fmtChips"></div></div>
+            <div class="grp"><span data-i="s.qr">QR-код</span>
+              <div class="chips">
+                <button class="chip on" onclick="toggleQR(true,this)" data-i="s.qrOn">Қосу</button>
+                <button class="chip" onclick="toggleQR(false,this)" data-i="s.qrOff">Өшіру</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="preview">
+          <div class="cvwrap"><canvas id="cv" width="1080" height="1080"></canvas></div>
+          <div class="dl">
+            <button class="btn" onclick="dlJPG()" data-i="s.jpg">JPG жүктеу</button>
+            <button class="btn ghost" onclick="dlPDF()" data-i="s.pdf">PDF жүктеу</button>
+            <button class="btn gold" onclick="dlAll()" data-i="s.zip">4 форматты бірден (ZIP)</button>
+          </div>
+          <div class="small" data-i="s.note">Постердің төменгі жағында деректі енгізген қызметкердің аты-жөні мен лауазымы автоматты қойылады.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKS -->
+    <div class="view" id="v-books">
+      <div class="ph"><h2 data-i="b.h">Ең көп оқылған кітап</h2><p data-i="b.sub">Төрт жас санаты бойынша. Әрқайсысы бірден постерге айналады.</p></div>
+      <div class="card">
+        <div id="bookRows"></div>
+        <button class="btn" onclick="saveBooks()" data-i="b.save">Сақтап, постер жасау</button>
+      </div>
+    </div>
+
+    <!-- WRAPPED -->
+    <div class="view" id="v-wrap">
+      <div class="ph"><h2 data-i="w.h">Жыл қорытындысы</h2><p data-i="w.sub">Бір батырма — алты дайын сторис. Жылдың соңында бүкіл кітапхана бір күнде жариялайды.</p></div>
+      <div class="card">
+        <button class="btn gold" onclick="buildWrapped()" data-i="w.build">Қорытындыны жинау</button>
+        <button class="btn ghost" onclick="dlWrapped()" data-i="w.zip" style="margin-left:9px">Барлығын ZIP-пен жүктеу</button>
+        <div class="wrapped" id="wrapGrid" style="margin-top:18px"></div>
+      </div>
+    </div>
+
+    <!-- ROLLUP -->
+    <div class="view" id="v-roll">
+      <div class="ph"><h2 data-i="r.h">Жиынтық есеп</h2><p data-i="r.sub">Кітапханашы → аудан → облыс → министрлік. Дерек жоғары қарай өзі жиналады.</p></div>
+      <div class="card"><h4 data-i="r.byreg">Облыстар бойынша</h4>
+        <table class="rank"><thead><tr>
+          <th data-i="r.c1">Өңір</th><th data-i="r.c2">Кітапхана</th><th data-i="r.c3">Оқырман</th><th data-i="r.c4">Келім</th><th data-i="r.c5">Қор</th>
+        </tr></thead><tbody id="rollBody"></tbody></table>
+      </div>
+      <div class="card"><h4 data-i="r.sheet">Google Sheets-ке кететін жол</h4>
+        <p class="hint" data-i="r.sheetHint">«Сақтау» батырмасы Apps Script Web App-қа осындай сұрау жібереді:</p>
+        <code class="pl" id="payload">—</code>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="view" id="v-set">
+      <div class="ph"><h2 data-i="g.h">Баптаулар</h2><p data-i="g.sub">Бренд түсі мен қосылым. Бір рет реттеледі — барлық шаблонға түседі.</p></div>
+      <div class="card"><h4 data-i="g.brand">Кітапхананың бренд түсі</h4>
+        <div class="chips" id="brandChips"></div>
+        <div class="field" style="margin-top:14px"><label data-i="g.site">Профиль сілтемесі (QR-ға түседі)</label><input id="gSite" value="https://instagram.com/karasu.kitaphana"></div>
+      </div>
+      <div class="card"><h4 data-i="g.gs">Google Sheets қосылымы</h4>
+        <div class="field"><label data-i="g.url">Apps Script Web App URL</label><input id="gUrl" placeholder="https://script.google.com/macros/s/AKfy.../exec"></div>
+        <div class="kv">
+          <b>Libraries</b><span data-i="g.t1">кітапханалар тізілімі, ЖСН, рөл</span>
+          <b>Monthly</b><span data-i="g.t2">ай сайынғы бес көрсеткіш</span>
+          <b>Books</b><span data-i="g.t3">санат бойынша ең көп оқылған кітап</span>
+          <b>AuthCodes</b><span data-i="g.t4">кіру кодтары мен мерзімі</span>
+          <b>Log</b><span data-i="g.t5">кім, қашан, нені өзгертті</span>
+        </div>
+        <button class="btn ghost" style="margin-top:14px" onclick="testSync()" data-i="g.test">Қосылымды тексеру</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ==========================================================
+   i18n
+========================================================== */
+const T={
+kk:{
+ 'nav.login':'Кіру','nav.reg':'Тіркелу',
+ 'hero.eyebrow':'Мәдениет және ақпарат министрлігі · кітапхана статистикасы',
+ 'hero.h1':'Сан емес — <em>сөйлейтін</em> контент.',
+ 'hero.lead':'Айлық есепті енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды. Мәтінді де өзі жазады. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
+ 'hero.cta1':'Кітапхананы тіркеу','hero.cta2':'Демо кабинетті ашу',
+ 'hero.card.mini':'Ақпан 2026 · Қарасу ауылдық кітапханасы',
+ 'hero.card.cap':'оқырман келді — қаңтармен салыстырғанда 18% көп',
+ 'hero.card.name':'Айгүл Сәрсенова','hero.card.pos':'Кітапхана меңгерушісі · 20.08.2026',
+ 'feat.h':'Платформа не істейді',
+ 'feat.sub':'Кітапханашы Canva ашпайды, мәтін ойлап таппайды, форматты өлшеп отырмайды. Ол тек санды енгізеді.',
+ 'rank.h':'Облыс бойынша рейтинг',
+ 'rank.sub':'Ашық көрсеткіш — жариялауға деген ынта. Әр кітапхана өз орнын постер етіп жүктей алады.',
+ 'rank.c1':'Орын','rank.c2':'Кітапхана','rank.c3':'Өңір','rank.c4':'Жылдық оқырман','rank.c5':'Қор',
+ 'ft.note':'Прототип · деректер Google Sheets-те, логика Google Apps Script-те сақталады.',
+ 'reg.step':'1-қадам · кітапхана мен қызметкер','reg.h':'Тіркелу өтінімі',
+ 'reg.hint':'Тіркелу — кітапхана қызметкері үшін. Растау коды поштаңызға жіберіледі.',
+ 'reg.send':'Кодты поштаға жіберу','reg.done':'Растап, кабинетке кіру',
+ 'f.lib':'Кітапхана атауы','f.reg':'Облыс','f.dist':'Аудан','f.loc':'Ауыл / қала','f.name':'Аты-жөні',
+ 'f.pos':'Лауазымы','f.phone':'Телефон','f.iin':'ЖСН (12 сан)','f.mail':'Электрондық пошта','f.role':'Рөлі','f.code':'Кодты енгізіңіз',
+ 'role.lib':'Кітапханашы','role.dist':'Аудандық жинақтаушы','role.obl':'Облыстық үйлестіруші','role.min':'Министрлік',
+ 'mail.from':'Кіріс хат · no-reply@kitap.studio',
+ 'mail.txt':'Сіздің кіру кодыңыз. Ол құпия сөз ретінде қызмет етеді:',
+ 'mail.demo':'Демо режимде код осында көрсетіледі. Нақты жүйеде оны Apps Script MailApp жібереді.',
+ 'btn.cancel':'Бас тарту',
+ 'login.eyebrow':'Жеке кабинет','login.h':'Кіру','login.hint':'Пошта мен поштаға келген код арқылы кіресіз.',
+ 'login.go':'Кабинетке кіру','login.demo':'Демо аккаунтпен кіру',
+ 'nav.data':'Дерек енгізу','nav.studio':'Контент студиясы','nav.books':'Кітап рейтингі',
+ 'nav.wrap':'Жыл қорытындысы','nav.roll':'Жиынтық есеп','nav.set':'Баптаулар','nav.out':'Шығу',
+ 'd.h':'Дерек енгізу','d.sub':'Айды таңдап, бес көрсеткішті енгізіңіз. Жүйе өзгерісті бірден тексереді.',
+ 'd.month':'Есепті ай','d.metrics':'Көрсеткіштер','d.save':'Сақтау','d.toStudio':'Контент жасау →',
+ 'd.year':'Жылдық динамика — оқырман','d.import':'CSV импорт — 12 айды бірден',
+ 'd.importHint':'Excel-ден көшіріп қойыңыз. Формат: ай;оқырман;келім;берілген','d.importBtn':'Импорттау',
+ 'm.readers':'Оқырман саны','m.visits':'Келім саны','m.fund':'Кітапхана қоры','m.issued':'Берілген материал','m.staff':'Кітапханашы саны',
+ 's.h':'Контент студиясы','s.sub':'Шаблон мен форматты таңдаңыз — мәтін деректен өзі құрылады.',
+ 's.tpl':'Шаблон','s.period':'Кезең','s.theme':'Стиль / мереке','s.fmt':'Формат','s.qr':'QR-код','s.qrOn':'Қосу','s.qrOff':'Өшіру',
+ 's.jpg':'JPG жүктеу','s.pdf':'PDF жүктеу','s.zip':'4 форматты бірден (ZIP)',
+ 's.note':'Постердің төменгі жағында деректі енгізген қызметкердің аты-жөні мен лауазымы автоматты қойылады.',
+ 'b.h':'Ең көп оқылған кітап','b.sub':'Төрт жас санаты бойынша. Әрқайсысы бірден постерге айналады.','b.save':'Сақтап, постер жасау',
+ 'w.h':'Жыл қорытындысы','w.sub':'Бір батырма — алты дайын сторис. Жылдың соңында бүкіл кітапхана бір күнде жариялайды.',
+ 'w.build':'Қорытындыны жинау','w.zip':'Барлығын ZIP-пен жүктеу',
+ 'r.h':'Жиынтық есеп','r.sub':'Кітапханашы → аудан → облыс → министрлік. Дерек жоғары қарай өзі жиналады.',
+ 'r.byreg':'Облыстар бойынша','r.c1':'Өңір','r.c2':'Кітапхана','r.c3':'Оқырман','r.c4':'Келім','r.c5':'Қор',
+ 'r.sheet':'Google Sheets-ке кететін жол','r.sheetHint':'«Сақтау» батырмасы Apps Script Web App-қа осындай сұрау жібереді:',
+ 'g.h':'Баптаулар','g.sub':'Бренд түсі мен қосылым. Бір рет реттеледі — барлық шаблонға түседі.',
+ 'g.brand':'Кітапхананың бренд түсі','g.site':'Профиль сілтемесі (QR-ға түседі)',
+ 'g.gs':'Google Sheets қосылымы','g.url':'Apps Script Web App URL','g.test':'Қосылымды тексеру',
+ 'g.t1':'кітапханалар тізілімі, ЖСН, рөл','g.t2':'ай сайынғы бес көрсеткіш','g.t3':'санат бойынша ең көп оқылған кітап',
+ 'g.t4':'кіру кодтары мен мерзімі','g.t5':'кім, қашан, нені өзгертті',
+ months:['Қаңтар','Ақпан','Наурыз','Сәуір','Мамыр','Маусым','Шілде','Тамыз','Қыркүйек','Қазан','Қараша','Желтоқсан'],
+ monthsIn:['қаңтар','ақпан','наурыз','сәуір','мамыр','маусым','шілде','тамыз','қыркүйек','қазан','қараша','желтоқсан'],
+ cats:['Балалар','Жасөспірімдер','Жастар','Ересектер'],
+ stats:['Тіркелген кітапхана','Жылдық оқырман','Жасалған контент','Қамтылған өңір'],
+ feats:[
+  ['Авто-мәтін','Сан сөйлемге айналады','«Наурызда оқырман саны ақпанмен салыстырғанда 18%-ға өсті» — мұны жүйе өзі жазады.'],
+  ['Төрт формат','Бір дерек — төрт өлшем','Instagram пост, сторис, Facebook және A4 құжаты бір батырмамен.'],
+  ['Мөр','Автор автоматты қойылады','Әр суреттің астында деректі енгізген қызметкердің аты-жөні мен лауазымы.'],
+  ['Мереке','Ұлттық стиль шаблондары','Наурыз, Абай күні, Тіл мерекесі, Кітап күні — ою-өрнекті нұсқалар.'],
+  ['Иерархия','Есеп өзі жиналады','Кітапханашы енгізген дерек ауданға, облысқа, министрлікке автоматты өтеді.'],
+  ['Тексеру','Қате санды ұстайды','Көрсеткіш күрт өзгерсе, жүйе сақтамай тұрып сұрайды.']
+ ],
+ tpl:['Айлық есеп','Тоқсандық есеп','Ең көп оқылған кітап','Рейтингтегі орын'],
+ themes:['Негізгі','Наурыз','Абай күні','Тіл мерекесі','Кітап күні'],
+ fmts:['Instagram пост','Instagram сторис','Facebook','A4 құжат'],
+ quarters:['I тоқсан','II тоқсан','III тоқсан','IV тоқсан'],
+ p:{
+  monthTitle:(m,y)=>`Кітапханаға ${y} жылдың ${m} айында`,
+  monthTail:'оқырман келді',
+  qTitle:(q,y)=>`${y} жылдың ${q}ында кітапханаға`,
+  qTail:'оқырман келді',
+  bookTitle:(c)=>`${c} ең көп оқыған кітап`,
+  rankTitle:(r)=>`${r} бойынша`,
+  rankTail:(n)=>`кітапханалар арасында ${n}-орын`,
+  visits:'келім', fund:'қор', issued:'берілген материал', staff:'кітапханашы',
+  bestMonth:'жылдағы ең белсенді ай',
+  vsPrev:(p,d)=>`${p} айымен салыстырғанда ${d}% ${d>=0?'көп':'аз'}`,
+  daily:(n)=>`күніне орта есеппен ${n} оқырман`,
+  wrapped:'Жыл қорытындысы',
+  readersYear:'жылдық оқырман', visitsYear:'жылдық келім',
+  thanks:'Рахмет, оқырман!', thanksSub:'Келесі жылы да кітап оқып жүріңіз',
+  record:'Рекордтық ай'
+ },
+ warnBig:(p,c,d)=>`Өткен айда ${p}, қазір ${c} — өзгеріс ${d}%. Сан дұрыс па? Тексеріп, қайта сақтаңыз.`,
+ savedOk:(m)=>`${m} айының дерегі сақталды. Контент студиясы дайын.`,
+ toastCsv:(n)=>`${n} айдың дерегі импортталды`,
+ toastJpg:'JPG жүктелді', toastPdf:'PDF жүктелді', toastZip:'ZIP жүктелді',
+ toastSync:'Web App URL қосылмаған — демо режимде дерек жадта сақталады',
+ needData:'Алдымен «Дерек енгізу» бөлімінде осы кезеңнің дерегін енгізіңіз',
+ errFill:'Барлық өрісті толтырыңыз', errIin:'ЖСН 12 саннан тұруы керек', errMail:'Пошта дұрыс емес',
+ errCode:'Код сәйкес келмейді', errLogin:'Мұндай пошта табылмады. Демо аккаунтты қолданып көріңіз.',
+ bookTitleF:'Кітап атауы', bookAuthor:'Авторы', bookCount:'Оқылым саны'
+},
+ru:{
+ 'nav.login':'Войти','nav.reg':'Регистрация',
+ 'hero.eyebrow':'Министерство культуры и информации · библиотечная статистика',
+ 'hero.h1':'Не цифра — <em>говорящий</em> контент.',
+ 'hero.lead':'Введите месячный отчёт — платформа сама соберёт из него пост для Instagram, сторис, картинку для Facebook и документ A4. И сама напишет текст. Внизу будет ваше имя и должность.',
+ 'hero.cta1':'Зарегистрировать библиотеку','hero.cta2':'Открыть демо-кабинет',
+ 'hero.card.mini':'Февраль 2026 · Сельская библиотека Карасу',
+ 'hero.card.cap':'читателей пришло — на 18% больше, чем в январе',
+ 'hero.card.name':'Айгуль Сарсенова','hero.card.pos':'Заведующая библиотекой · 20.08.2026',
+ 'feat.h':'Что делает платформа',
+ 'feat.sub':'Библиотекарь не открывает Canva, не придумывает текст и не подгоняет форматы. Он вводит только цифру.',
+ 'rank.h':'Рейтинг по областям',
+ 'rank.sub':'Открытый показатель — мотивация публиковать. Каждая библиотека может скачать своё место постером.',
+ 'rank.c1':'Место','rank.c2':'Библиотека','rank.c3':'Регион','rank.c4':'Читателей за год','rank.c5':'Фонд',
+ 'ft.note':'Прототип · данные хранятся в Google Sheets, логика — в Google Apps Script.',
+ 'reg.step':'Шаг 1 · библиотека и сотрудник','reg.h':'Заявка на регистрацию',
+ 'reg.hint':'Регистрация — для сотрудника библиотеки. Код подтверждения придёт на почту.',
+ 'reg.send':'Отправить код на почту','reg.done':'Подтвердить и войти',
+ 'f.lib':'Название библиотеки','f.reg':'Область','f.dist':'Район','f.loc':'Село / город','f.name':'ФИО',
+ 'f.pos':'Должность','f.phone':'Телефон','f.iin':'ИИН (12 цифр)','f.mail':'Электронная почта','f.role':'Роль','f.code':'Введите код',
+ 'role.lib':'Библиотекарь','role.dist':'Районный координатор','role.obl':'Областной координатор','role.min':'Министерство',
+ 'mail.from':'Входящее письмо · no-reply@kitap.studio',
+ 'mail.txt':'Ваш код входа. Он служит паролем:',
+ 'mail.demo':'В демо-режиме код показан здесь. В реальной системе его отправляет Apps Script MailApp.',
+ 'btn.cancel':'Отмена',
+ 'login.eyebrow':'Личный кабинет','login.h':'Вход','login.hint':'Вход по почте и коду, который пришёл на неё.',
+ 'login.go':'Войти в кабинет','login.demo':'Войти демо-аккаунтом',
+ 'nav.data':'Ввод данных','nav.studio':'Студия контента','nav.books':'Рейтинг книг',
+ 'nav.wrap':'Итоги года','nav.roll':'Сводный отчёт','nav.set':'Настройки','nav.out':'Выйти',
+ 'd.h':'Ввод данных','d.sub':'Выберите месяц и введите пять показателей. Система сразу проверит изменение.',
+ 'd.month':'Отчётный месяц','d.metrics':'Показатели','d.save':'Сохранить','d.toStudio':'Создать контент →',
+ 'd.year':'Динамика за год — читатели','d.import':'Импорт CSV — все 12 месяцев сразу',
+ 'd.importHint':'Скопируйте из Excel. Формат: месяц;читатели;посещения;выдано','d.importBtn':'Импортировать',
+ 'm.readers':'Читателей','m.visits':'Посещений','m.fund':'Фонд библиотеки','m.issued':'Выдано материалов','m.staff':'Библиотекарей',
+ 's.h':'Студия контента','s.sub':'Выберите шаблон и формат — текст соберётся из данных сам.',
+ 's.tpl':'Шаблон','s.period':'Период','s.theme':'Стиль / праздник','s.fmt':'Формат','s.qr':'QR-код','s.qrOn':'Включить','s.qrOff':'Выключить',
+ 's.jpg':'Скачать JPG','s.pdf':'Скачать PDF','s.zip':'Все 4 формата (ZIP)',
+ 's.note':'Внизу постера автоматически ставится ФИО и должность сотрудника, внёсшего данные.',
+ 'b.h':'Самая читаемая книга','b.sub':'По четырём возрастным категориям. Каждая сразу становится постером.','b.save':'Сохранить и создать постер',
+ 'w.h':'Итоги года','w.sub':'Одна кнопка — шесть готовых сторис. В конце года вся библиотечная сеть публикует за один день.',
+ 'w.build':'Собрать итоги','w.zip':'Скачать всё в ZIP',
+ 'r.h':'Сводный отчёт','r.sub':'Библиотекарь → район → область → министерство. Данные собираются вверх автоматически.',
+ 'r.byreg':'По областям','r.c1':'Регион','r.c2':'Библиотек','r.c3':'Читателей','r.c4':'Посещений','r.c5':'Фонд',
+ 'r.sheet':'Что уходит в Google Sheets','r.sheetHint':'Кнопка «Сохранить» отправляет в Apps Script Web App такой запрос:',
+ 'g.h':'Настройки','g.sub':'Цвет бренда и подключение. Настраивается один раз — применяется ко всем шаблонам.',
+ 'g.brand':'Фирменный цвет библиотеки','g.site':'Ссылка на профиль (попадёт в QR)',
+ 'g.gs':'Подключение Google Sheets','g.url':'Apps Script Web App URL','g.test':'Проверить подключение',
+ 'g.t1':'реестр библиотек, ИИН, роль','g.t2':'пять показателей помесячно','g.t3':'самая читаемая книга по категориям',
+ 'g.t4':'коды входа и срок действия','g.t5':'кто, когда и что изменил',
+ months:['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
+ monthsIn:['январе','феврале','марте','апреле','мае','июне','июле','августе','сентябре','октябре','ноябре','декабре'],
+ cats:['Дети','Подростки','Молодёжь','Взрослые'],
+ stats:['Библиотек в системе','Читателей за год','Создано материалов','Охвачено регионов'],
+ feats:[
+  ['Авто-текст','Цифра становится фразой','«В марте читателей стало на 18% больше, чем в феврале» — это пишет система.'],
+  ['Четыре формата','Одни данные — четыре размера','Пост Instagram, сторис, Facebook и документ A4 одной кнопкой.'],
+  ['Печать','Автор ставится сам','Под каждой картинкой — ФИО и должность внёсшего данные сотрудника.'],
+  ['Праздники','Шаблоны в национальном стиле','Наурыз, День Абая, День языков, День книги — версии с орнаментом.'],
+  ['Иерархия','Отчёт собирается сам','Данные библиотекаря уходят в район, область и министерство автоматически.'],
+  ['Проверка','Ловит ошибочную цифру','Если показатель резко изменился, система переспросит до сохранения.']
+ ],
+ tpl:['Месячный отчёт','Квартальный отчёт','Самая читаемая книга','Место в рейтинге'],
+ themes:['Основной','Наурыз','День Абая','День языков','День книги'],
+ fmts:['Пост Instagram','Сторис Instagram','Facebook','Документ A4'],
+ quarters:['I квартал','II квартал','III квартал','IV квартал'],
+ p:{
+  monthTitle:(m,y)=>`В ${m} ${y} года в библиотеку`,
+  monthTail:'пришло читателей',
+  qTitle:(q,y)=>`За ${q} ${y} года в библиотеку`,
+  qTail:'пришло читателей',
+  bookTitle:(c)=>`Категория «${c}» читала чаще всего`,
+  rankTitle:(r)=>`По региону ${r}`,
+  rankTail:(n)=>`${n}-е место среди библиотек`,
+  visits:'посещений', fund:'фонд', issued:'выдано материалов', staff:'библиотекарей',
+  bestMonth:'самый активный месяц года',
+  vsPrev:(p,d)=>`на ${Math.abs(d)}% ${d>=0?'больше':'меньше'}, чем в ${p}`,
+  daily:(n)=>`в среднем ${n} читателей в день`,
+  wrapped:'Итоги года',
+  readersYear:'читателей за год', visitsYear:'посещений за год',
+  thanks:'Спасибо, читатель!', thanksSub:'Читайте с нами и в новом году',
+  record:'Рекордный месяц'
+ },
+ warnBig:(p,c,d)=>`В прошлом месяце ${p}, сейчас ${c} — изменение ${d}%. Цифра верная? Проверьте и сохраните снова.`,
+ savedOk:(m)=>`Данные за ${m} сохранены. Студия контента готова.`,
+ toastCsv:(n)=>`Импортировано месяцев: ${n}`,
+ toastJpg:'JPG скачан', toastPdf:'PDF скачан', toastZip:'ZIP скачан',
+ toastSync:'Web App URL не подключён — в демо данные хранятся в памяти',
+ needData:'Сначала введите данные за этот период в разделе «Ввод данных»',
+ errFill:'Заполните все поля', errIin:'ИИН должен состоять из 12 цифр', errMail:'Некорректная почта',
+ errCode:'Код не совпадает', errLogin:'Такая почта не найдена. Попробуйте демо-аккаунт.',
+ bookTitleF:'Название книги', bookAuthor:'Автор', bookCount:'Количество прочтений'
+}};
+let L='kk';
+const t=(k)=>T[L][k]??k;
+
+/* ==========================================================
+   Демо деректер
+========================================================== */
+const DB={
+ libs:[
+  {n:{kk:'Қарасу ауылдық кітапханасы',ru:'Сельская библиотека Карасу'},reg:{kk:'Алматы облысы',ru:'Алматинская область'},dist:'Іле',
+   r:[980,1284,1410,1330,1520,1180,1090,1240,1620,1710,1580,1460],
+   v:[2210,2680,2940,2810,3120,2460,2280,2600,3380,3510,3260,3040],fund:24800,issued:19200,staff:4},
+  {n:{kk:'Абай атындағы облыстық кітапхана',ru:'Областная библиотека им. Абая'},reg:{kk:'Абай облысы',ru:'Область Абай'},dist:'Семей',
+   r:[3120,3340,3610,3480,3720,3010,2880,3150,4020,4210,3980,3760],
+   v:[7400,7920,8460,8100,8740,7020,6680,7300,9410,9880,9260,8800],fund:112000,issued:86400,staff:22},
+  {n:{kk:'Түркістан қалалық кітапханасы',ru:'Городская библиотека Туркестана'},reg:{kk:'Түркістан облысы',ru:'Туркестанская область'},dist:'Түркістан',
+   r:[2410,2560,2790,2680,2910,2330,2210,2440,3120,3280,3060,2900],
+   v:[5620,5980,6440,6180,6720,5340,5060,5620,7180,7540,7060,6680],fund:78400,issued:61200,staff:15},
+  {n:{kk:'Жетісу аудандық кітапханасы',ru:'Районная библиотека Жетысу'},reg:{kk:'Жетісу облысы',ru:'Область Жетысу'},dist:'Талдықорған',
+   r:[1640,1720,1880,1810,1960,1580,1490,1660,2100,2210,2060,1950],
+   v:[3820,4010,4360,4180,4540,3660,3440,3860,4880,5140,4780,4520],fund:41200,issued:32600,staff:8},
+  {n:{kk:'Көкшетау балалар кітапханасы',ru:'Детская библиотека Кокшетау'},reg:{kk:'Ақмола облысы',ru:'Акмолинская область'},dist:'Көкшетау',
+   r:[1180,1250,1390,1310,1440,1120,1040,1180,1520,1610,1480,1400],
+   v:[2740,2900,3220,3040,3340,2600,2400,2740,3520,3740,3440,3260],fund:29600,issued:23800,staff:6},
+  {n:{kk:'Ақтөбе орталық кітапханасы',ru:'Центральная библиотека Актобе'},reg:{kk:'Қостанай облысы',ru:'Костанайская область'},dist:'Арқалық',
+   r:[1420,1510,1640,1580,1720,1360,1280,1440,1840,1930,1800,1700],
+   v:[3300,3510,3800,3660,4000,3160,2960,3340,4260,4480,4180,3940],fund:35800,issued:28400,staff:7}
+ ],
+ books:[
+  {cat:0,title:{kk:'Менің атым Қожа',ru:'Меня зовут Кожа'},author:'Б. Соқпақбаев',cnt:412},
+  {cat:1,title:{kk:'Абай жолы',ru:'Путь Абая'},author:'М. Әуезов',cnt:308},
+  {cat:2,title:{kk:'Көшпенділер',ru:'Кочевники'},author:'І. Есенберлин',cnt:264},
+  {cat:3,title:{kk:'Қан мен тер',ru:'Кровь и пот'},author:'Ә. Нұрпейісов',cnt:197}
+ ]
+};
+const YEAR=2026;
+let ME=null, CUR=0, EDIT=1;                 /* ағымдағы кітапхана / таңдалған ай */
+let pendingReg=null, pendingCode=null;
+
+/* Студия күйі */
+const ST={tpl:0,period:1,theme:0,fmt:0,qr:true,brand:'#4B3A9E'};
+
+/* ==========================================================
+   Тақырыптар (canvas палитрасы)
+========================================================== */
+const THEMES=[
+ {id:'base', bg:'#191428', ink:'#FFFFFF', acc:'#C8912B', soft:'rgba(255,255,255,.62)', orn:0.16, swatch:'#191428'},
+ {id:'nauryz', bg:'#0E5A63', ink:'#FFF7E8', acc:'#F0B429', soft:'rgba(255,247,232,.68)', orn:0.22, swatch:'#0E5A63'},
+ {id:'abai', bg:'#2E2318', ink:'#F6EEDF', acc:'#C89B5A', soft:'rgba(246,238,223,.6)', orn:0.18, swatch:'#2E2318'},
+ {id:'til', bg:'#1B3A8C', ink:'#FFFFFF', acc:'#7FD4C1', soft:'rgba(255,255,255,.66)', orn:0.2, swatch:'#1B3A8C'},
+ {id:'kitap', bg:'#F8F4EC', ink:'#191428', acc:'#4B3A9E', soft:'rgba(25,20,40,.6)', orn:0.14, swatch:'#F8F4EC'}
+];
+const FORMATS=[{k:'ig',w:1080,h:1080},{k:'story',w:1080,h:1920},{k:'fb',w:1200,h:630},{k:'a4',w:1240,h:1754}];
+const BRANDS=['#4B3A9E','#0E5A63','#B3402F','#2F7D4F','#C8912B','#1B3A8C'];
+
+/* ==========================================================
+   Жалпы көмекшілер
+========================================================== */
+const $=(s)=>document.querySelector(s);
+const nf=(n)=>Math.round(n).toLocaleString('ru-RU').replace(/,/g,' ');
+function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2600);}
+function lib(){return DB.libs[CUR];}
+function libName(){return lib().n[L];}
+function today(){const d=new Date();return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear();}
+
+function setLang(l){
+  L=l;
+  $('#lkk').setAttribute('aria-pressed',l==='kk');$('#lru').setAttribute('aria-pressed',l==='ru');
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-i]').forEach(el=>{const k=el.getAttribute('data-i');const v=T[l][k];if(v!=null)el.innerHTML=v;});
+  renderLanding();renderMonths();renderChips();renderBooks();renderRoll();renderBars();
+  if(ME){$('#uLib').textContent=libName();}
+  drawPoster();
+}
+
+/* ==========================================================
+   LANDING
+========================================================== */
+function renderLanding(){
+  const totR=DB.libs.reduce((s,l)=>s+l.r.reduce((a,b)=>a+b,0),0);
+  const regs=new Set(DB.libs.map(l=>l.reg.kk)).size;
+  const vals=[DB.libs.length, nf(totR), '1 840', regs];
+  $('#landStats').innerHTML=T[L].stats.map((s,i)=>
+    `<div class="stat"><div class="n">${vals[i]}</div><div class="l">${s}</div></div>`).join('');
+
+  $('#featGrid').innerHTML=T[L].feats.map(f=>
+    `<div class="feat"><div class="tag">${f[0]}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
+
+  const rows=DB.libs.map((l,i)=>({i,tot:l.r.reduce((a,b)=>a+b,0)})).sort((a,b)=>b.tot-a.tot);
+  $('#rankBody').innerHTML=rows.map((r,k)=>{
+    const l=DB.libs[r.i];
+    return `<tr><td><span class="medal ${k===0?'g':''}">${k+1}</span></td><td>${l.n[L]}</td>
+    <td>${l.reg[L]}</td><td class="num">${nf(r.tot)}</td><td class="num">${nf(l.fund)}</td></tr>`;
+  }).join('');
+  $('#heroBig').textContent=nf(DB.libs[0].r[1]);
+}
+
+/* ==========================================================
+   Тіркелу / кіру
+========================================================== */
+function openModal(k){$('#m'+(k==='reg'?'Reg':'Login')).classList.add('on');}
+function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal();}));
+
+function sendCode(){
+  const v=(id)=>$('#'+id).value.trim();
+  const f={lib:v('rLib'),reg:v('rReg'),dist:v('rDist'),loc:v('rLoc'),name:v('rName'),
+           pos:v('rPos'),phone:v('rPhone'),iin:v('rIin'),mail:v('rMail'),role:$('#rRole').value};
+  const err=$('#regErr');err.classList.remove('on');
+  if(Object.values(f).some(x=>!x)){err.textContent=T[L].errFill;err.classList.add('on');return;}
+  if(!/^\d{12}$/.test(f.iin)){err.textContent=T[L].errIin;err.classList.add('on');return;}
+  if(!/^\S+@\S+\.\S+$/.test(f.mail)){err.textContent=T[L].errMail;err.classList.add('on');return;}
+  pendingReg=f;
+  pendingCode=String(Math.floor(100000+Math.random()*900000));
+  $('#codeShown').textContent=pendingCode;
+  $('#regStep1').style.display='none';$('#regStep2').style.display='block';
+}
+function confirmCode(){
+  const err=$('#codeErr');err.classList.remove('on');
+  if($('#rCode').value.trim()!==pendingCode){err.textContent=T[L].errCode;err.classList.add('on');return;}
+  const nl={n:{kk:pendingReg.lib,ru:pendingReg.lib},reg:{kk:pendingReg.reg,ru:pendingReg.reg},dist:pendingReg.dist,
+    r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,staff:0};
+  DB.libs.push(nl);CUR=DB.libs.length-1;
+  ME={name:pendingReg.name,pos:pendingReg.pos,mail:pendingReg.mail,role:pendingReg.role};
+  enterApp();
+}
+function demoLogin(){
+  CUR=0;
+  ME={name:L==='kk'?'Сәрсенова Айгүл Қайратқызы':'Сарсенова Айгуль Кайратовна',
+      pos:L==='kk'?'Кітапхана меңгерушісі':'Заведующая библиотекой',
+      mail:'aigul@karasu-kitap.kz',role:'lib'};
+  enterApp();
+}
+function doLogin(){
+  const m=$('#lMail').value.trim();const err=$('#loginErr');err.classList.remove('on');
+  if(!m){err.textContent=T[L].errFill;err.classList.add('on');return;}
+  demoLogin();
+}
+function logout(){ME=null;$('#app').classList.remove('on');$('#site').style.display='';window.scrollTo(0,0);}
+
+function enterApp(){
+  closeModal();$('#site').style.display='none';$('#app').classList.add('on');
+  $('#uLib').textContent=libName();
+  $('#uPer').textContent=ME.name+' · '+ME.pos;
+  EDIT=1;renderMonths();loadMonth();renderBars();renderChips();renderBooks();renderRoll();updatePayload();
+  drawPoster();window.scrollTo(0,0);
+}
+
+/* ==========================================================
+   Навигация
+========================================================== */
+function navBtn(i){return document.querySelectorAll('#nav button')[i];}
+function go(v,btn){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  $('#v-'+v).classList.add('on');
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  if(v==='studio')drawPoster();
+  if(v==='roll'){renderRoll();updatePayload();}
+  window.scrollTo(0,0);
+}
+
+/* ==========================================================
+   Дерек енгізу
+========================================================== */
+function renderMonths(){
+  $('#monthPick').innerHTML=T[L].months.map((m,i)=>
+   `<button class="${i===EDIT?'on':''}" onclick="pickMonth(${i})">${m}<span class="v">${lib()&&lib().r[i]?nf(lib().r[i]):'—'}</span></button>`).join('');
+}
+function pickMonth(i){EDIT=i;renderMonths();loadMonth();}
+function loadMonth(){
+  const l=lib();
+  $('#mReaders').value=l.r[EDIT]||'';
+  $('#mVisits').value=l.v[EDIT]||'';
+  $('#mFund').value=l.fund||'';
+  $('#mIssued').value=l.issued||'';
+  $('#mStaff').value=l.staff||'';
+  $('#dWarn').classList.remove('on');$('#dOk').classList.remove('on');
+}
+function saveMonth(){
+  const l=lib();
+  const nr=+$('#mReaders').value||0, prev=EDIT>0?l.r[EDIT-1]:0;
+  if(prev>0&&nr>0){
+    const d=Math.round((nr-prev)/prev*100);
+    if(Math.abs(d)>70&&!$('#dWarn').classList.contains('on')){
+      $('#dWarn').textContent=T[L].warnBig(nf(prev),nf(nr),d>0?'+'+d:d);
+      $('#dWarn').classList.add('on');return;
+    }
+  }
+  l.r[EDIT]=nr; l.v[EDIT]=+$('#mVisits').value||0;
+  l.fund=+$('#mFund').value||0; l.issued=+$('#mIssued').value||0; l.staff=+$('#mStaff').value||0;
+  $('#dWarn').classList.remove('on');
+  $('#dOk').textContent=T[L].savedOk(T[L].months[EDIT]);$('#dOk').classList.add('on');
+  ST.period=EDIT;renderMonths();renderBars();renderChips();renderRoll();updatePayload();drawPoster();
+}
+function renderBars(){
+  if(!lib())return;
+  const r=lib().r,mx=Math.max(...r,1);
+  $('#bars').innerHTML=r.map((x,i)=>
+    `<div class="${x===mx&&x>0?'max':''}" style="height:${Math.max(3,x/mx*100)}%"><span>${T[L].months[i].slice(0,3)}</span></div>`).join('');
+  $('#insightLine').textContent=insight(EDIT).join(' · ');
+}
+function importCsv(){
+  const lines=$('#csv').value.trim().split(/\n+/).filter(Boolean);let n=0;
+  lines.forEach(ln=>{
+    const p=ln.split(/[;,\t]/).map(s=>s.trim());
+    const m=parseInt(p[0],10);if(!(m>=1&&m<=12))return;
+    lib().r[m-1]=+p[1]||lib().r[m-1]; lib().v[m-1]=+p[2]||lib().v[m-1];
+    if(p[3])lib().issued=+p[3]; n++;
+  });
+  renderMonths();renderBars();renderChips();loadMonth();drawPoster();toast(T[L].toastCsv(n));
+}
+
+/* Авто-инсайт */
+function insight(i){
+  const l=lib(),r=l.r,out=[];
+  if(!r[i])return [T[L].needData];
+  if(i>0&&r[i-1]>0){
+    const d=Math.round((r[i]-r[i-1])/r[i-1]*100);
+    out.push(T[L].p.vsPrev(T[L].monthsIn[i-1],d));
+  }
+  if(r[i]===Math.max(...r))out.push(T[L].p.bestMonth);
+  out.push(T[L].p.daily(Math.round(r[i]/30)));
+  return out;
+}
+
+/* ==========================================================
+   Кітап рейтингі
+========================================================== */
+function renderBooks(){
+  $('#bookRows').innerHTML=DB.books.map((b,i)=>`
+   <div style="border-bottom:1px solid var(--tor);padding-bottom:12px;margin-bottom:14px">
+     <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sia);margin-bottom:8px">${T[L].cats[i]}</div>
+     <div class="row2">
+       <div class="field"><label>${T[L].bookTitleF}</label><input value="${b.title[L]}" oninput="DB.books[${i}].title.${L}=this.value"></div>
+       <div class="field"><label>${T[L].bookAuthor}</label><input value="${b.author}" oninput="DB.books[${i}].author=this.value"></div>
+     </div>
+     <div class="field" style="max-width:220px"><label>${T[L].bookCount}</label><input type="number" value="${b.cnt}" oninput="DB.books[${i}].cnt=+this.value"></div>
+   </div>`).join('');
+}
+function saveBooks(){ST.tpl=2;ST.period=0;renderChips();go('studio',navBtn(1));drawPoster();}
+
+/* ==========================================================
+   Жиынтық есеп
+========================================================== */
+function renderRoll(){
+  const map={};
+  DB.libs.forEach(l=>{
+    const k=l.reg[L];
+    map[k]=map[k]||{c:0,r:0,v:0,f:0};
+    map[k].c++;map[k].r+=l.r.reduce((a,b)=>a+b,0);map[k].v+=l.v.reduce((a,b)=>a+b,0);map[k].f+=l.fund;
+  });
+  $('#rollBody').innerHTML=Object.entries(map).sort((a,b)=>b[1].r-a[1].r).map(([k,x])=>
+   `<tr><td>${k}</td><td class="num">${x.c}</td><td class="num">${nf(x.r)}</td><td class="num">${nf(x.v)}</td><td class="num">${nf(x.f)}</td></tr>`).join('');
+}
+function updatePayload(){
+  if(!ME)return;
+  const p={action:'saveMonthly',sheet:'Monthly',row:{
+    libraryId:'LIB-'+String(CUR+1).padStart(4,'0'),library:libName(),region:lib().reg[L],
+    year:YEAR,month:EDIT+1,readers:lib().r[EDIT],visits:lib().v[EDIT],
+    fund:lib().fund,issued:lib().issued,staff:lib().staff,
+    enteredBy:ME.name,position:ME.pos,iin:'8801•••••000',ts:new Date().toISOString()}};
+  $('#payload').textContent='POST /exec\n'+JSON.stringify(p,null,2);
+}
+function testSync(){toast($('#gUrl').value.trim()?'URL OK':T[L].toastSync);}
+
+/* ==========================================================
+   Чиптер
+========================================================== */
+function renderChips(){
+  $('#tplChips').innerHTML=T[L].tpl.map((x,i)=>`<button class="chip ${ST.tpl===i?'on':''}" onclick="setTpl(${i})">${x}</button>`).join('');
+  const per = ST.tpl===0 ? T[L].months : ST.tpl===1 ? T[L].quarters : ST.tpl===2 ? T[L].cats : ['—'];
+  $('#periodGrp').style.display = ST.tpl===3?'none':'';
+  $('#periodChips').innerHTML=per.map((x,i)=>`<button class="chip ${ST.period===i?'on':''}" onclick="setPeriod(${i})">${x}</button>`).join('');
+  $('#themeChips').innerHTML=T[L].themes.map((x,i)=>
+    `<button class="chip th ${ST.theme===i?'on':''}" onclick="setTheme(${i})"><i style="background:${THEMES[i].swatch};border:1px solid rgba(0,0,0,.2)"></i>${x}</button>`).join('');
+  $('#fmtChips').innerHTML=T[L].fmts.map((x,i)=>`<button class="chip ${ST.fmt===i?'on':''}" onclick="setFmt(${i})">${x}</button>`).join('');
+  $('#brandChips').innerHTML=BRANDS.map(c=>
+    `<button class="chip th ${ST.brand===c?'on':''}" onclick="setBrand('${c}')"><i style="background:${c}"></i>${c}</button>`).join('');
+}
+function setTpl(i){ST.tpl=i;ST.period=i===0?EDIT:0;renderChips();drawPoster();}
+function setPeriod(i){ST.period=i;renderChips();drawPoster();}
+function setTheme(i){ST.theme=i;renderChips();drawPoster();}
+function setFmt(i){ST.fmt=i;renderChips();drawPoster();}
+function setBrand(c){ST.brand=c;renderChips();drawPoster();}
+function toggleQR(v,btn){ST.qr=v;btn.parentNode.querySelectorAll('.chip').forEach(b=>b.classList.remove('on'));btn.classList.add('on');drawPoster();}
+
+/* ==========================================================
+   ПОСТЕР — canvas
+========================================================== */
+function wrapText(ctx,text,maxW){
+  const words=String(text).split(' ');const lines=[];let cur='';
+  words.forEach(w=>{
+    const test=cur?cur+' '+w:w;
+    if(ctx.measureText(test).width>maxW&&cur){lines.push(cur);cur=w;}else cur=test;
+  });
+  if(cur)lines.push(cur);return lines;
+}
+/* қошқар мүйіз мотиві */
+function horn(ctx,x,y,s,color,alpha){
+  ctx.save();ctx.translate(x,y);ctx.globalAlpha=alpha;ctx.strokeStyle=color;
+  ctx.lineWidth=Math.max(1.4,s*.1);ctx.lineCap='round';ctx.lineJoin='round';
+  [1,-1].forEach(d=>{
+    ctx.beginPath();ctx.moveTo(0,s*.45);
+    ctx.bezierCurveTo(d*s*.08,-s*.08, d*s*.85,-s*.05, d*s*.5,-s*.42);
+    ctx.bezierCurveTo(d*s*.32,-s*.58, d*s*.12,-s*.36, d*s*.28,-s*.2);
+    ctx.stroke();
+  });
+  ctx.restore();
+}
+function ornBand(ctx,y,W,s,color,alpha){
+  const step=s*1.6;
+  for(let x=step*.6;x<W;x+=step)horn(ctx,x,y,s,color,alpha);
+}
+function stampBlock(ctx,x,y,w,name,pos,dateStr,color,scale){
+  ctx.save();ctx.translate(x,y);ctx.rotate(-0.035);
+  const h=scale*86;
+  ctx.strokeStyle=color;ctx.lineWidth=scale*3.2;
+  ctx.strokeRect(0,0,w,h);
+  ctx.globalAlpha=.5;ctx.lineWidth=scale*1;
+  ctx.strokeRect(scale*7,scale*7,w-scale*14,h-scale*14);
+  ctx.globalAlpha=1;
+  ctx.fillStyle=color;
+  ctx.font=`700 ${scale*19}px 'JetBrains Mono','Noto Sans Mono',monospace`;
+  ctx.textBaseline='alphabetic';
+  ctx.fillText(name,scale*18,scale*36);
+  ctx.globalAlpha=.45;ctx.fillRect(scale*18,scale*45,w-scale*36,scale*1.4);ctx.globalAlpha=1;
+  ctx.font=`400 ${scale*14}px 'JetBrains Mono','Noto Sans Mono',monospace`;
+  ctx.fillText(pos+'  ·  '+dateStr,scale*18,scale*70);
+  ctx.restore();
+}
+function qrImage(url,size){
+  try{
+    if(typeof QRious==='undefined')return null;
+    const q=new QRious({value:url,size:size,background:'transparent',level:'M'});
+    return q.canvas;
+  }catch(e){return null;}
+}
+
+function posterContent(){
+  const P=T[L].p, l=lib(), i=ST.period;
+  if(ST.tpl===0){
+    const val=l.r[i]||0;
+    return {top:P.monthTitle(T[L].monthsIn[i],YEAR),num:nf(val),tail:P.monthTail,
+            sub:val?insight(i).join(' · '):T[L].needData};
+  }
+  if(ST.tpl===1){
+    const q=i, val=l.r.slice(q*3,q*3+3).reduce((a,b)=>a+b,0);
+    const vis=l.v.slice(q*3,q*3+3).reduce((a,b)=>a+b,0);
+    return {top:P.qTitle(T[L].quarters[q],YEAR),num:nf(val),tail:P.qTail,
+            sub:`${nf(vis)} ${P.visits} · ${nf(l.issued)} ${P.issued}`};
+  }
+  if(ST.tpl===2){
+    const b=DB.books[i];
+    return {top:P.bookTitle(T[L].cats[i]),num:b.title[L],tail:b.author,
+            sub:`${nf(b.cnt)} ${L==='kk'?'рет оқылды':'прочтений'} · ${YEAR}`,small:true};
+  }
+  const rows=DB.libs.map((x,k)=>({k,tot:x.r.reduce((a,b)=>a+b,0)})).sort((a,b)=>b.tot-a.tot);
+  const place=rows.findIndex(x=>x.k===CUR)+1;
+  return {top:P.rankTitle(l.reg[L]),num:place+(L==='kk'?'-орын':'-е место'),
+          tail:'',sub:`${nf(l.r.reduce((a,b)=>a+b,0))} ${L==='kk'?'жылдық оқырман':'читателей за год'}`,small:true};
+}
+
+function drawOn(canvas,fmtIdx,content,themeIdx){
+  const F=FORMATS[fmtIdx],TH=THEMES[themeIdx??ST.theme];
+  canvas.width=F.w;canvas.height=F.h;
+  const ctx=canvas.getContext('2d');
+  const W=F.w,H=F.h,s=Math.min(W,H)/1080;   /* масштаб */
+  const acc = themeIdx===undefined && ST.theme===0 ? ST.brand : TH.acc;
+  const pad=W*0.085;
+
+  ctx.fillStyle=TH.bg;ctx.fillRect(0,0,W,H);
+  /* сызылған карта фактурасы */
+  ctx.strokeStyle=TH.ink;ctx.globalAlpha=.05;ctx.lineWidth=1;
+  for(let y=pad*1.2;y<H;y+=44*s){ctx.beginPath();ctx.moveTo(pad*.5,y);ctx.lineTo(W-pad*.5,y);ctx.stroke();}
+  ctx.globalAlpha=1;
+  /* ою-өрнек жолағы */
+  ornBand(ctx,pad*.72,W,26*s,acc,TH.orn);
+  ornBand(ctx,H-pad*.5,W,26*s,acc,TH.orn*.8);
+
+  const cx=pad;let y=pad*1.75;
+  /* eyebrow — кітапхана аты */
+  ctx.fillStyle=acc;ctx.font=`700 ${20*s}px 'JetBrains Mono','Noto Sans Mono',monospace`;ctx.textBaseline='top';
+  const eb=libName().toUpperCase();
+  ctx.fillText(ctx.measureText(eb).width>W-pad*2?eb.slice(0,34)+'…':eb,cx,y);
+  y+=34*s;
+
+  /* тақырып */
+  ctx.fillStyle=TH.ink;
+  const titleSize=(F.k==='fb'?34:44)*s;
+  ctx.font=`400 ${titleSize}px 'Inter','Noto Sans',Arial,sans-serif`;
+  wrapText(ctx,content.top,W-pad*2).forEach(ln=>{ctx.fillText(ln,cx,y);y+=titleSize*1.28;});
+
+  /* негізгі сан */
+  y+=18*s;
+  const isBig=!content.small;
+  let numSize=(isBig?(F.k==='fb'?120:170):(F.k==='fb'?52:74))*s;
+  ctx.fillStyle=acc;
+  ctx.font=`800 ${numSize}px 'Manrope','Inter',Arial,sans-serif`;
+  let lines=wrapText(ctx,content.num,W-pad*2);
+  while(lines.length>2&&numSize>30*s){numSize*=.85;ctx.font=`800 ${numSize}px 'Manrope','Inter',Arial,sans-serif`;lines=wrapText(ctx,content.num,W-pad*2);}
+  lines.forEach(ln=>{ctx.fillText(ln,cx,y);y+=numSize*1.02;});
+
+  /* құйрық жол */
+  if(content.tail){
+    y+=6*s;ctx.fillStyle=TH.ink;
+    const ts=(F.k==='fb'?30:40)*s;
+    ctx.font=`500 ${ts}px 'Inter','Noto Sans',Arial,sans-serif`;
+    ctx.fillText(content.tail,cx,y);y+=ts*1.35;
+  }
+  /* инсайт */
+  if(content.sub){
+    y+=10*s;ctx.fillStyle=TH.soft;
+    const ss=(F.k==='fb'?21:27)*s;
+    ctx.font=`400 ${ss}px 'Inter','Noto Sans',Arial,sans-serif`;
+    wrapText(ctx,content.sub,W-pad*2).slice(0,3).forEach(ln=>{ctx.fillText(ln,cx,y);y+=ss*1.35;});
+  }
+
+  /* төменгі мөр + QR */
+  const stW=Math.min(W-pad*2-(ST.qr?150*s:0),520*s);
+  const stY=H-pad*1.15-86*s;
+  stampBlock(ctx,cx,stY,stW,ME?ME.name:'—',ME?ME.pos:'—',today(),acc,s);
+  if(ST.qr){
+    const qs=Math.round(120*s);
+    const qc=qrImage($('#gSite')?$('#gSite').value||'https://kitap.studio':'https://kitap.studio',qs*2);
+    const qx=W-pad-qs,qy=stY-6*s;
+    ctx.save();
+    ctx.fillStyle=TH.ink;ctx.globalAlpha=.92;ctx.fillRect(qx-6*s,qy-6*s,qs+12*s,qs+12*s);
+    ctx.globalAlpha=1;
+    if(qc){ctx.drawImage(qc,qx,qy,qs,qs);}
+    else{ctx.fillStyle=TH.bg;ctx.font=`700 ${16*s}px 'JetBrains Mono','Noto Sans Mono',monospace`;ctx.fillText('QR',qx+qs/2-12*s,qy+qs/2-8*s);}
+    ctx.restore();
+  }
+  return canvas;
+}
+function drawPoster(){
+  const cv=$('#cv');if(!cv)return;
+  drawOn(cv,ST.fmt,posterContent());
+}
+
+/* ==========================================================
+   Экспорт
+========================================================== */
+function fname(ext,fmtIdx){
+  const f=FORMATS[fmtIdx??ST.fmt].k;
+  const tag=['ai','toqsan','kitap','reiting'][ST.tpl];
+  return `kitap-${tag}-${f}-${YEAR}.${ext}`;
+}
+function dlBlob(blob,name){
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;
+  document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},400);
+}
+function dlJPG(){
+  $('#cv').toBlob(b=>{dlBlob(b,fname('jpg'));toast(T[L].toastJpg);},'image/jpeg',.94);
+}
+function canvasPDF(canvas,name){
+  const jsPDF=window.jspdf&&window.jspdf.jsPDF;
+  const img=canvas.toDataURL('image/jpeg',.94);
+  if(!jsPDF){const w=window.open('');w.document.write('<img src="'+img+'" style="width:100%">');w.print();return;}
+  const p=new jsPDF({orientation:canvas.width>canvas.height?'l':'p',unit:'pt',format:[canvas.width*.72,canvas.height*.72]});
+  p.addImage(img,'JPEG',0,0,canvas.width*.72,canvas.height*.72);
+  p.save(name);
+}
+function dlPDF(){canvasPDF($('#cv'),fname('pdf'));toast(T[L].toastPdf);}
+
+async function dlAll(){
+  const c=posterContent();
+  const tmp=document.createElement('canvas');
+  if(typeof JSZip==='undefined'){
+    for(let i=0;i<FORMATS.length;i++){
+      drawOn(tmp,i,c);
+      await new Promise(r=>tmp.toBlob(b=>{dlBlob(b,fname('jpg',i));setTimeout(r,500);},'image/jpeg',.94));
+    }
+    toast(T[L].toastJpg);return;
+  }
+  const zip=new JSZip();
+  for(let i=0;i<FORMATS.length;i++){
+    drawOn(tmp,i,c);
+    const b=await new Promise(r=>tmp.toBlob(r,'image/jpeg',.94));
+    zip.file(fname('jpg',i),b);
+  }
+  const out=await zip.generateAsync({type:'blob'});
+  dlBlob(out,`kitap-studio-${YEAR}.zip`);toast(T[L].toastZip);
+}
+
+/* ==========================================================
+   Жыл қорытындысы (Wrapped)
+========================================================== */
+let wrapCards=[];
+function wrappedSlides(){
+  const l=lib(),P=T[L].p;
+  const tot=l.r.reduce((a,b)=>a+b,0), vis=l.v.reduce((a,b)=>a+b,0);
+  const bi=l.r.indexOf(Math.max(...l.r));
+  const b0=DB.books[0],b3=DB.books[3];
+  return [
+   {top:`${YEAR} · ${P.wrapped}`,num:nf(tot),tail:P.readersYear,sub:libName(),th:0},
+   {top:P.visitsYear,num:nf(vis),tail:'',sub:`${nf(l.issued)} ${P.issued}`,th:3},
+   {top:P.record,num:T[L].months[bi],tail:nf(l.r[bi])+' '+(L==='kk'?'оқырман':'читателей'),sub:P.bestMonth,small:true,th:1},
+   {top:P.bookTitle(T[L].cats[0]),num:b0.title[L],tail:b0.author,sub:nf(b0.cnt)+(L==='kk'?' рет оқылды':' прочтений'),small:true,th:2},
+   {top:P.bookTitle(T[L].cats[3]),num:b3.title[L],tail:b3.author,sub:nf(b3.cnt)+(L==='kk'?' рет оқылды':' прочтений'),small:true,th:4},
+   {top:P.thanks,num:nf(l.fund),tail:P.fund,sub:P.thanksSub,th:0}
+  ];
+}
+function buildWrapped(){
+  wrapCards=wrappedSlides();
+  $('#wrapGrid').innerHTML=wrapCards.map((s,i)=>
+    `<div class="wcard" onclick="openWrap(${i})"><canvas id="wc${i}"></canvas><p>${i+1}/6 · ${s.top}</p></div>`).join('');
+  wrapCards.forEach((s,i)=>drawOn($('#wc'+i),1,s,s.th));
+  toast(T[L].p.wrapped+' ✓');
+}
+function openWrap(i){
+  const c=document.createElement('canvas');drawOn(c,1,wrapCards[i],wrapCards[i].th);
+  c.toBlob(b=>dlBlob(b,`wrapped-${i+1}-${YEAR}.jpg`),'image/jpeg',.94);
+}
+async function dlWrapped(){
+  if(!wrapCards.length)buildWrapped();
+  const tmp=document.createElement('canvas');
+  if(typeof JSZip==='undefined'){openWrap(0);return;}
+  const zip=new JSZip();
+  for(let i=0;i<wrapCards.length;i++){
+    drawOn(tmp,1,wrapCards[i],wrapCards[i].th);
+    const b=await new Promise(r=>tmp.toBlob(r,'image/jpeg',.94));
+    zip.file(`wrapped-${i+1}.jpg`,b);
+  }
+  dlBlob(await zip.generateAsync({type:'blob'}),`wrapped-${YEAR}.zip`);toast(T[L].toastZip);
+}
+
+/* ==========================================================
+   Іске қосу
+========================================================== */
+renderLanding();renderChips();renderBooks();renderRoll();renderMonths();
+
+/* Canvas қаріпті өзі жүктемейді — қажет салмақтарды алдын ала жүктейміз.
+   Тексеру жолында қазақ әріптері бар: ә ғ қ ң ө ұ ү һ і */
+const KZ='ӘҒҚҢӨҰҮҺІәғқңөұүһі';
+const FACES=[`800 100px Manrope`,`700 100px Manrope`,`600 100px Manrope`,
+             `700 40px Inter`,`500 40px Inter`,`400 40px Inter`,`300 40px Inter`,
+             `700 20px "JetBrains Mono"`,`400 20px "JetBrains Mono"`];
+if(document.fonts&&document.fonts.load){
+  Promise.all(FACES.map(f=>document.fonts.load(f,KZ).catch(()=>{})))
+    .then(()=>document.fonts.ready)
+    .then(()=>{drawPoster();renderLanding();});
+}else{
+  setTimeout(()=>{drawPoster();renderLanding();},600);
+}
+</script>
+</body>
+</html>
