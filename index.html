@@ -3,12 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KITAP.STUDIO — кітапхана деректерін визуалды контентке айналдыру</title>
-<meta name="description" content="Кітапхана статистикасын Instagram посты, сторис, Facebook суреті және A4 құжатына айналдыратын платформа. 2025 жылғы республикалық есеп негізінде.">
-<meta property="og:title" content="KITAP.STUDIO — кітапхана деректерін визуалды контентке айналдыру">
+<title>LibGen — кітапхана деректерін визуалды контентке айналдыру</title>
+<meta name="description" content="Кітапхана статистикасын Instagram посты, сторис, Facebook суреті және A4 құжатына айналдыратын платформа.">
+<meta property="og:title" content="LibGen — кітапхана деректерін визуалды контентке айналдыру">
 <meta property="og:description" content="Санды енгіз — постер өзі шықсын. 3 889 кітапхана, 5,5 млн оқырман.">
 <meta property="og:locale" content="kk_KZ">
-<!-- Барлық қаріп қазақ кириллицасын толық жабады: ә ғ қ ң ө ұ ү һ і -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,210 +16,280 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <style>
 :root{
-  --sia:#4B3A9E; --sia-2:#6B57C7; --sia-soft:#EDE8FB;
-  --tun:#141021; --tun-2:#1E1833;
-  --kart:#F8F4EC; --tor:#E3DACB;
-  --altyn:#D6A032; --kok:#1F6F7A; --qyzyl:#B3402F; --jasyl:#2F7D4F;
+  --bg:#F4F5F7; --box:#EDEFF3; --card:#FFFFFF;
+  --ink:#0B0D14; --mute:#6B7280; --line:#E4E7EC;
+  --blue:#2C5CFF; --blue-s:#EDF2FF;
+  --dark:#141A38;
+  --lime:#C9F45C; --violet:#8B5CF6; --violet-s:#F3EEFF;
+  --green-s:#EDF8E4; --pink-s:#FBEEF8; --amber-s:#FFF4E2;
+  --ok:#2F7D4F; --bad:#D0473A;
   --disp:'Manrope','Inter','Noto Sans',"Segoe UI",Arial,sans-serif;
   --body:'Inter','Noto Sans',"Segoe UI",Arial,sans-serif;
   --mono:'JetBrains Mono','Noto Sans Mono',ui-monospace,Consolas,monospace;
-  --r:8px;
+  --r:26px; --r2:18px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{margin:0;font-family:var(--body);color:var(--tun);background:var(--kart);line-height:1.55;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;font-family:var(--body);color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
-a{color:var(--sia);text-decoration:none}
-:focus-visible{outline:3px solid var(--sia-2);outline-offset:2px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+a{color:var(--blue);text-decoration:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
-/* ---------- topbar ---------- */
-.topbar{position:sticky;top:0;z-index:70;background:rgba(20,16,33,.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.1)}
-.topbar .wrap{display:flex;align-items:center;gap:16px;height:62px}
-.logo{display:flex;align-items:center;gap:9px;font-family:var(--disp);font-weight:800;font-size:16px;letter-spacing:-.02em;color:#fff}
-.logo i{width:21px;height:21px;border:2.5px solid var(--altyn);border-radius:3px;position:relative;flex:none}
-.logo i::after{content:"";position:absolute;inset:4px 4px auto 4px;height:2.5px;background:var(--altyn);box-shadow:0 5px 0 var(--altyn)}
-.tnav{display:flex;gap:4px;margin-left:10px}
-.tnav a{color:rgba(255,255,255,.62);font-size:14px;padding:7px 11px;border-radius:999px}
-.tnav a:hover{color:#fff;background:rgba(255,255,255,.08)}
-.sp{flex:1}
-.langsw{display:flex;border:1px solid rgba(255,255,255,.26);border-radius:999px;overflow:hidden;flex:none}
-.langsw button{background:none;border:0;color:rgba(255,255,255,.62);padding:5px 12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em}
-.langsw button[aria-pressed="true"]{background:var(--altyn);color:var(--tun);font-weight:700}
-.tbtn{background:none;border:1px solid rgba(255,255,255,.28);color:#fff;padding:8px 15px;border-radius:999px;font-size:14px;white-space:nowrap}
-.tbtn:hover{background:rgba(255,255,255,.1)}
-.tbtn.solid{background:var(--altyn);border-color:var(--altyn);color:var(--tun);font-weight:600}
+/* ---------- nav ---------- */
+.topbar{position:sticky;top:0;z-index:70;background:rgba(244,245,247,.86);backdrop-filter:blur(14px)}
+.topbar .wrap{display:flex;align-items:center;gap:18px;height:74px}
+.logo{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:-.03em;color:var(--ink)}
+.logo i{width:24px;height:24px;border-radius:8px;background:var(--blue);position:relative;flex:none}
+.logo i::after{content:"";position:absolute;inset:6px 6px auto 6px;height:2.5px;background:#fff;border-radius:2px;box-shadow:0 5px 0 rgba(255,255,255,.65)}
+.tnav{display:flex;gap:2px;margin:0 auto}
+.tnav a{color:var(--mute);font-size:14.5px;padding:8px 14px;border-radius:999px;font-weight:500}
+.tnav a:hover{color:var(--ink);background:rgba(0,0,0,.05)}
+.langsw{display:flex;background:#E7E9EE;border-radius:999px;padding:3px;flex:none}
+.langsw button{background:none;border:0;color:var(--mute);padding:5px 11px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;border-radius:999px}
+.langsw button[aria-pressed="true"]{background:#fff;color:var(--ink);font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.btn-dark{background:var(--ink);color:#fff;border:0;padding:11px 22px;border-radius:999px;font-size:14.5px;font-weight:600;white-space:nowrap}
+.btn-dark:hover{background:#232839}
+.btn-blue{background:var(--blue);color:#fff;border:0;padding:11px 22px;border-radius:999px;font-size:14.5px;font-weight:600}
+.btn-blue:hover{background:#1E4BE0}
+.btn-out{background:none;border:1px solid var(--line);color:var(--ink);padding:11px 22px;border-radius:999px;font-size:14.5px;font-weight:500}
+.btn-out:hover{background:#fff}
 
 /* ---------- hero ---------- */
-.hero{background:var(--tun);color:#fff;padding:66px 0 78px;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(to bottom,transparent 0 47px,rgba(255,255,255,.04) 47px 48px)}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center}
-.badge{display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:var(--altyn);border:1px solid rgba(214,160,50,.45);background:rgba(214,160,50,.1);padding:5px 13px;border-radius:999px}
-h1.hh{font-family:var(--disp);font-weight:800;font-size:clamp(32px,4.5vw,56px);line-height:1.04;letter-spacing:-.035em;margin:18px 0 0}
-h1.hh em{font-style:normal;color:var(--altyn)}
-.lead{font-size:17px;color:rgba(255,255,255,.7);max-width:47ch;margin:18px 0 28px}
-.cta{display:flex;gap:11px;flex-wrap:wrap}
+.hero{padding:44px 0 26px}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
+.pill{display:inline-flex;align-items:center;gap:7px;background:var(--violet-s);color:#6D3FE0;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px}
+h1.hh{font-family:var(--disp);font-weight:800;font-size:clamp(38px,5.2vw,62px);line-height:1.02;letter-spacing:-.045em;margin:20px 0 0}
+h1.hh em{font-style:normal;color:var(--blue);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
+.lead{font-size:16.5px;color:var(--mute);max-width:46ch;margin:18px 0 26px}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
 
-.stamp{border:3px solid var(--altyn);border-radius:4px;padding:11px 15px;font-family:var(--mono);color:var(--altyn);transform:rotate(-3.5deg);background:rgba(214,160,50,.07);display:inline-block}
-.stamp b{display:block;font-size:12.5px}
-.stamp .rule{height:1px;background:currentColor;opacity:.4;margin:7px 0}
-.stamp span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-.hcard{background:var(--kart);color:var(--tun);border-radius:var(--r);padding:22px;box-shadow:0 30px 60px -24px rgba(0,0,0,.65);transform:rotate(1.2deg);
-  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--tor) 31px 32px);background-position:0 10px}
-.hcard .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sia)}
-.hcard .big{font-family:var(--disp);font-weight:800;font-size:58px;line-height:.96;letter-spacing:-.04em;margin:8px 0 2px}
-.hcard .cap{font-size:14px;color:#5b5468}
-.hcard .stamp{border-color:var(--sia);color:var(--sia);background:rgba(75,58,158,.06);margin-top:16px;transform:rotate(-2deg)}
+.mock{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:0 24px 60px -30px rgba(11,13,20,.4);position:relative}
+.mock .bar{display:flex;gap:6px;margin-bottom:16px}
+.mock .bar i{width:9px;height:9px;border-radius:50%;background:#E4E7EC;display:block}
+.mrow{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.mrow .lft{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px}
+.mrow .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:14px}
+.mrow .val{font-family:var(--mono);font-size:13px;color:var(--mute)}
+.float{position:absolute;right:18px;top:64px;background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 18px 40px -14px rgba(44,92,255,.7);min-width:180px}
+.float .t{font-size:12px;opacity:.85}
+.float .n{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.03em;margin-top:2px}
+.mstat{border-top:1px solid var(--line);margin-top:14px;padding-top:14px}
+.mstat .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.mstat .big{font-family:var(--disp);font-weight:800;font-size:34px;letter-spacing:-.04em;line-height:1.1;margin:4px 0 2px}
+.mstat .cap{font-size:13px;color:var(--mute)}
+.spark{display:flex;align-items:flex-end;gap:5px;height:52px;margin-top:14px}
+.spark i{flex:1;background:#EDEFF3;border-radius:4px 4px 0 0;display:block}
+.spark i.on{background:linear-gradient(180deg,var(--blue),#7BA0FF)}
+
+/* ---------- trust ---------- */
+.trust{background:var(--box);padding:22px 0;margin-top:18px}
+.trust .wrap{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:wrap}
+.trust .lbl{font-size:13px;color:var(--mute);width:100%;text-align:center;margin-bottom:2px}
+.trust b{font-family:var(--disp);font-weight:800;font-size:20px;letter-spacing:-.03em}
+.trust span{font-size:13px;color:var(--mute);margin-left:6px}
 
 /* ---------- sections ---------- */
 section{padding:62px 0}
-section.alt{background:#fff;border-top:1px solid var(--tor);border-bottom:1px solid var(--tor)}
-.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--sia);margin-bottom:8px}
-.eyebrow.gold{color:var(--altyn)}
-h2.sh{font-family:var(--disp);font-weight:700;font-size:clamp(23px,2.8vw,33px);letter-spacing:-.03em;margin:0 0 8px}
-.sub{color:#6b6478;margin:0 0 26px;max-width:64ch}
+.head{text-align:center;max-width:640px;margin:0 auto 34px}
+.eyebrow{font-size:12.5px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+h2.sh{font-family:var(--disp);font-weight:800;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.04em;margin:0 0 10px;line-height:1.08}
+h2.sh em{font-style:normal;color:var(--blue)}
+.sub{color:var(--mute);margin:0;font-size:15.5px}
+.box{background:var(--box);border-radius:var(--r);padding:26px}
+.box+.box{margin-top:16px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+.split.rev>*:first-child{order:2}
+.pane{background:var(--card);border-radius:var(--r2);padding:22px}
+h3.ph{font-family:var(--disp);font-weight:800;font-size:clamp(21px,2.5vw,28px);letter-spacing:-.035em;margin:0 0 10px;line-height:1.14}
+h3.ph em{font-style:normal;color:var(--blue)}
+.ticks{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-top:16px}
+.ticks div{font-size:13.5px;display:flex;gap:8px;align-items:flex-start}
+.ticks div::before{content:"✓";color:var(--blue);font-weight:700;flex:none}
 
-/* stats */
-.bignums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--tor);border:1px solid var(--tor);border-radius:var(--r);overflow:hidden}
-.bignums div{background:var(--kart);padding:22px 18px}
-section.alt .bignums div{background:#fff}
-.bignums .n{font-family:var(--disp);font-weight:800;font-size:clamp(26px,3.4vw,36px);letter-spacing:-.035em;line-height:1}
-.bignums .l{font-size:13px;color:#6b6478;margin-top:6px}
-.bignums .d{font-family:var(--mono);font-size:11px;margin-top:4px}
-.up{color:var(--jasyl)} .dn{color:var(--qyzyl)}
-.live{margin-top:14px;font-size:13.5px;color:#6b6478;display:flex;align-items:center;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--jasyl);animation:p 1.8s infinite}
+/* stat cards */
+.bignums{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.bignums div{background:var(--card);border-radius:var(--r2);padding:22px}
+.bignums .n{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;line-height:1}
+.bignums .l{font-size:13px;color:var(--mute);margin-top:7px}
+.bignums .d{font-family:var(--mono);font-size:11px;margin-top:5px}
+.up{color:var(--ok)} .dn{color:var(--bad)}
+.live{margin-top:16px;font-size:13.5px;color:var(--mute);display:flex;align-items:center;gap:8px;justify-content:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:p 1.8s infinite}
 @keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
 
-/* rank table */
-.tblbox{border:1px solid var(--tor);border-radius:var(--r);overflow:auto;background:#fff}
-table.rank{width:100%;border-collapse:collapse;min-width:640px}
-table.rank th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#6b6478;text-align:left;padding:11px 13px;border-bottom:1px solid var(--tor);background:#fbf9f5;white-space:nowrap;cursor:pointer;user-select:none}
-table.rank th:hover{color:var(--sia)}
-table.rank th[data-on]{color:var(--sia)}
-table.rank td{padding:10px 13px;border-bottom:1px solid var(--tor);font-size:14px;white-space:nowrap}
+/* tables */
+.tblbox{border-radius:var(--r2);overflow:auto;background:var(--card)}
+table.rank{width:100%;border-collapse:collapse;min-width:600px}
+table.rank th{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);white-space:nowrap;cursor:pointer}
+table.rank th:hover{color:var(--blue)}
+table.rank th[data-on]{color:var(--blue)}
+table.rank td{padding:12px 16px;border-bottom:1px solid var(--line);font-size:14px;white-space:nowrap}
 table.rank tr:last-child td{border-bottom:0}
-table.rank tr.me{background:var(--sia-soft)}
+table.rank tfoot td{font-weight:700;background:#FAFBFC}
 td.num{font-family:var(--mono);font-weight:600;text-align:right}
-.medal{display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;border-radius:999px;background:var(--sia-soft);color:var(--sia);font-family:var(--mono);font-size:11px;font-weight:700}
-.medal.g{background:rgba(214,160,50,.18);color:#8a6212}
-.mbar{height:5px;background:var(--sia-soft);border-radius:3px;min-width:26px}
-.mbar i{display:block;height:100%;background:var(--sia);border-radius:3px}
+.medal{display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;border-radius:8px;background:var(--blue-s);color:var(--blue);font-family:var(--mono);font-size:11.5px;font-weight:700}
+.medal.g{background:var(--lime);color:#2E3B00}
 
-/* numbered cards */
+/* tinted feature cards */
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.nc{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:20px;position:relative}
-section.alt .nc{background:var(--kart)}
-.nc .idx{font-family:var(--disp);font-weight:800;font-size:34px;color:var(--sia-soft);line-height:1;letter-spacing:-.04em}
-section.alt .nc .idx{color:#e8e2f6}
-.nc h3{font-family:var(--disp);font-weight:700;font-size:16px;margin:6px 0 6px;letter-spacing:-.015em}
-.nc p{margin:0;font-size:14px;color:#6b6478}
+.nc{border-radius:var(--r2);padding:24px;background:var(--card)}
+.nc:nth-child(6n+1){background:var(--blue-s)}
+.nc:nth-child(6n+2){background:var(--green-s)}
+.nc:nth-child(6n+3){background:var(--violet-s)}
+.nc:nth-child(6n+4){background:var(--amber-s)}
+.nc:nth-child(6n+5){background:var(--pink-s)}
+.nc:nth-child(6n+6){background:#E9F4F7}
+.nc .idx{font-family:var(--disp);font-weight:800;font-size:15px;width:34px;height:34px;border-radius:11px;background:#fff;display:grid;place-items:center;letter-spacing:-.02em}
+.nc h3{font-family:var(--disp);font-weight:800;font-size:17px;margin:14px 0 7px;letter-spacing:-.025em}
+.nc p{margin:0;font-size:14px;color:#4B5563}
+#gdCards .nc{background:var(--card)}
+#gdCards .nc .idx{background:var(--ink);color:#fff}
+
+/* media */
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+.pj{border-radius:var(--r2);padding:24px;background:var(--card)}
+.pj:nth-child(1){background:var(--violet-s)}
+.pj:nth-child(2){background:var(--green-s)}
+.pj:nth-child(3){background:var(--blue-s)}
+.pj .tag{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.pj:nth-child(1) .tag{color:#6D3FE0}
+.pj:nth-child(2) .tag{color:#3F7D20}
+.pj h3{font-family:var(--disp);font-weight:800;font-size:18px;margin:10px 0 7px;letter-spacing:-.025em}
+.pj p{margin:0;font-size:14px;color:#4B5563}
+.feed{display:grid;gap:12px}
+.post{border-radius:var(--r2);padding:22px 24px;background:var(--card)}
+.post .meta{font-size:12px;color:var(--mute);display:flex;gap:12px;flex-wrap:wrap}
+.post .meta .pr{color:var(--blue);font-weight:600}
+.post h3{font-family:var(--disp);font-weight:800;font-size:18px;margin:9px 0 7px;letter-spacing:-.025em}
+.post p{margin:0;font-size:14.5px;color:#4B5563}
+.post .who{margin-top:12px;font-size:13px;color:var(--mute);border-top:1px solid var(--line);padding-top:10px}
+.more{display:block;width:100%;margin-top:14px;background:var(--card);border:0;border-radius:999px;padding:14px;color:var(--blue);font-size:14px;font-weight:600}
+.more:hover{background:var(--blue-s)}
 
 /* studio */
-.studio{display:grid;grid-template-columns:330px 1fr;gap:20px;align-items:start}
-.panel{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:18px}
-section.alt .panel{background:var(--kart)}
-.grp{margin-bottom:15px}
-.grp>span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#6b6478;margin-bottom:7px}
+.studio{display:grid;grid-template-columns:320px 1fr;gap:16px;align-items:start}
+.panel{background:var(--card);border-radius:var(--r2);padding:20px}
+.grp{margin-bottom:16px}
+.grp>span{display:block;font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
 .chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{border:1px solid var(--tor);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px}
-section.alt .chip{background:#fff}
-.chip.on{background:var(--sia);color:#fff;border-color:var(--sia)}
-.chip.th{border-radius:var(--r);padding-left:9px;display:flex;align-items:center;gap:7px}
-.chip.th i{width:12px;height:12px;border-radius:3px;display:block;border:1px solid rgba(0,0,0,.2)}
-.preview{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;align-items:center;gap:14px}
-section.alt .preview{background:var(--kart)}
-.cvwrap{background:repeating-conic-gradient(#f0ece3 0% 25%,#fff 0% 50%) 50%/16px 16px;padding:12px;border-radius:var(--r);width:100%;display:flex;justify-content:center}
-canvas#cv{max-width:100%;max-height:500px;box-shadow:0 12px 30px -12px rgba(20,16,33,.45);border-radius:2px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:13px}
+.chip:hover{border-color:var(--blue)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.th{border-radius:12px;padding-left:9px;display:flex;align-items:center;gap:7px}
+.chip.th i{width:15px;height:15px;border-radius:5px;display:block;border:1px solid rgba(0,0,0,.12)}
+.preview{background:var(--card);border-radius:var(--r2);padding:20px;display:flex;flex-direction:column;align-items:center;gap:15px}
+.cvwrap{background:var(--box);padding:16px;border-radius:var(--r2);width:100%;display:flex;justify-content:center}
+canvas#cv{max-width:100%;max-height:480px;border-radius:8px;box-shadow:0 16px 40px -18px rgba(11,13,20,.5)}
 .dl{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-select.sel{width:100%;padding:9px 11px;border:1px solid var(--tor);border-radius:var(--r);background:#fff}
+select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:#fff}
 
 /* forms */
-.field{margin-bottom:13px}
-.field label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#6b6478;margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1px solid var(--tor);border-radius:var(--r);background:#fff}
-.field input:focus,.field select:focus{border-color:var(--sia)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff;font-family:inherit}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{background:var(--sia);color:#fff;border:0;padding:11px 19px;border-radius:var(--r);font-weight:600;font-size:14.5px}
-.btn:hover{background:var(--sia-2)}
-.btn.ghost{background:none;color:var(--sia);border:1px solid var(--tor)}
-.btn.ghost:hover{background:var(--sia-soft)}
-.btn.gold{background:var(--altyn);color:var(--tun)}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.hint{font-size:12.5px;color:#6b6478}
-.err{font-size:12.5px;color:var(--qyzyl);margin-top:6px;display:none}
+.btn{background:var(--ink);color:#fff;border:0;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14.5px}
+.btn:hover{background:#232839}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--blue);color:var(--blue)}
+.btn.gold{background:var(--blue);color:#fff}
+.btn.gold:hover{background:#1E4BE0}
+.hint{font-size:13px;color:var(--mute)}
+.err{font-size:13px;color:var(--bad);margin-top:6px;display:none}
 .err.on{display:block}
-.formbox{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:24px;max-width:720px}
-section.alt .formbox{background:var(--kart)}
+.formbox{background:var(--card);border-radius:var(--r);padding:30px;max-width:760px;margin:0 auto}
+
+/* dark banner */
+.banner{background:var(--dark);border-radius:var(--r);padding:44px;color:#fff;display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;overflow:hidden;position:relative}
+.banner h2{font-family:var(--disp);font-weight:800;font-size:clamp(25px,3.2vw,38px);letter-spacing:-.04em;margin:0 0 12px;line-height:1.1}
+.banner h2 em{font-style:normal;color:var(--lime)}
+.banner p{color:rgba(255,255,255,.7);margin:0 0 22px;font-size:15.5px}
+.banner .btn-blue{padding:13px 26px}
+.bstack{display:grid;gap:10px}
+.bpill{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.bpill b{font-family:var(--mono);font-weight:700;color:var(--lime)}
+
+/* two big cards */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.duo>div{border-radius:var(--r);padding:34px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+.duo .a{background:var(--violet);color:#fff}
+.duo .b{background:var(--lime);color:#22300A}
+.duo h3{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.035em;margin:16px 0 6px}
+.duo p{margin:0 0 20px;font-size:14.5px;opacity:.85}
+.duo .ic{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:20px}
+.duo .b .ic{background:rgba(0,0,0,.12)}
+.duo button{align-self:flex-start;border:0;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14.5px;background:#fff;color:var(--ink)}
+.duo .b button{background:var(--ink);color:#fff}
 
 /* about */
-.abt{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:start}
-.quote{border-left:3px solid var(--altyn);padding-left:16px;color:#5b5468;font-size:15px;margin:18px 0}
-.kv{display:grid;grid-template-columns:150px 1fr;gap:7px 14px;font-size:14px}
-.kv b{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#6b6478;font-weight:400}
-.idcard{background:var(--tun);color:#fff;border-radius:var(--r);padding:20px}
-.idcard .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--altyn);text-transform:uppercase}
-.idcard h4{font-family:var(--disp);font-weight:700;margin:8px 0 10px;font-size:17px}
-.idcard p{font-size:13.5px;color:rgba(255,255,255,.68);margin:0}
+.abt p{max-width:72ch;color:#4B5563;font-size:15.5px}
 
-footer{background:var(--tun);color:rgba(255,255,255,.55);padding:34px 0;font-size:13.5px}
-footer a{color:rgba(255,255,255,.8)}
-footer .fl{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+/* footer */
+footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
+.fgrid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:28px}
+.fgrid h4{font-family:var(--disp);font-weight:800;font-size:13.5px;margin:0 0 12px}
+.fgrid a,.fgrid div.li{display:block;color:var(--mute);font-size:14px;padding:4px 0}
+.fgrid a:hover{color:var(--ink)}
+.fbot{border-top:1px solid var(--line);margin-top:32px;padding-top:20px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13.5px;color:var(--mute)}
 
 /* modal */
-.modal{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(20,16,33,.66)}
+.modal{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(11,13,20,.55);backdrop-filter:blur(4px)}
 .modal.on{display:flex}
-.sheet{background:var(--kart);border-radius:10px;width:min(440px,100%);max-height:92vh;overflow:auto;box-shadow:0 30px 80px -20px rgba(0,0,0,.6)}
-.sheet header{padding:22px 24px 6px}
-.sheet header h3{font-family:var(--disp);font-weight:700;font-size:20px;margin:6px 0 4px;letter-spacing:-.02em}
-.sheet .body{padding:8px 24px 24px}
+.sheet{background:var(--card);border-radius:var(--r);width:min(440px,100%);max-height:92vh;overflow:auto;box-shadow:0 40px 90px -30px rgba(0,0,0,.5)}
+.sheet header{padding:28px 28px 6px}
+.sheet header h3{font-family:var(--disp);font-weight:800;font-size:22px;margin:8px 0 5px;letter-spacing:-.03em}
+.sheet .body{padding:8px 28px 28px}
 
 /* cabinet */
-#app{display:none;position:fixed;inset:0;z-index:110;background:var(--kart);overflow:auto}
+#app{display:none;position:fixed;inset:0;z-index:110;background:var(--bg);overflow:auto}
 #app.on{display:block}
-.cabbar{background:var(--tun);color:#fff;position:sticky;top:0;z-index:5}
-.cabbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
-.cabbar .who{font-size:12.5px;color:rgba(255,255,255,.6);line-height:1.3}
-.cabbar .who b{display:block;color:#fff;font-family:var(--disp);font-size:13.5px;font-weight:700}
-.tabs{display:flex;gap:2px;overflow:auto;border-bottom:1px solid var(--tor);background:#fff;position:sticky;top:58px;z-index:4}
-.tabs button{background:none;border:0;padding:13px 15px;font-size:14px;color:#6b6478;border-bottom:3px solid transparent;white-space:nowrap}
-.tabs button.on{color:var(--sia);border-bottom-color:var(--sia);font-weight:600}
+.cabbar{background:var(--card);position:sticky;top:0;z-index:5;border-bottom:1px solid var(--line)}
+.cabbar .wrap{display:flex;align-items:center;gap:14px;height:68px}
+.cabbar .who{font-size:12.5px;color:var(--mute);line-height:1.3;text-align:right}
+.cabbar .who b{display:block;color:var(--ink);font-family:var(--disp);font-size:14px;font-weight:800;letter-spacing:-.02em}
+.tabs{display:flex;gap:2px;overflow:auto;background:var(--card);position:sticky;top:68px;z-index:4;border-bottom:1px solid var(--line)}
+.tabs button{background:none;border:0;padding:15px 16px;font-size:14px;color:var(--mute);border-bottom:2px solid transparent;white-space:nowrap;font-weight:500}
+.tabs button.on{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
 .view{display:none;padding:26px 0 70px}
 .view.on{display:block}
-.card{background:#fff;border:1px solid var(--tor);border-radius:var(--r);padding:20px;margin-bottom:16px}
-.card>h4{font-family:var(--disp);font-weight:700;font-size:15px;margin:0 0 13px}
+.card{background:var(--card);border-radius:var(--r2);padding:24px;margin-bottom:16px}
+.card>h4{font-family:var(--disp);font-weight:800;font-size:16px;margin:0 0 15px;letter-spacing:-.025em}
 .g5{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px}
-.months{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}
-.months button{border:1px solid var(--tor);background:#fff;border-radius:var(--r);padding:9px 4px;font-size:13px;text-align:center}
-.months button.on{background:var(--sia);color:#fff;border-color:var(--sia);font-weight:600}
-.months button .v{display:block;font-family:var(--mono);font-size:10px;opacity:.65}
-.bars{display:flex;align-items:flex-end;gap:5px;height:110px}
-.bars div{flex:1;background:var(--sia-soft);border-radius:3px 3px 0 0;position:relative;min-height:3px}
-.bars div.max{background:var(--altyn)}
-.bars div span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9.5px;color:#6b6478}
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.months button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 4px;font-size:13px;text-align:center}
+.months button.on{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+.months button .v{display:block;font-family:var(--mono);font-size:10px;opacity:.6}
+.bars{display:flex;align-items:flex-end;gap:6px;height:120px}
+.bars div{flex:1;background:#E8EBF0;border-radius:5px 5px 0 0;position:relative;min-height:3px}
+.bars div.max{background:linear-gradient(180deg,var(--blue),#7BA0FF)}
+.bars div span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9.5px;color:var(--mute)}
 .barwrap{padding-bottom:22px}
-.warnbox,.okbox{border-radius:var(--r);padding:11px 13px;font-size:13px;margin-top:10px;display:none}
-.warnbox{border:1px solid var(--altyn);background:rgba(214,160,50,.1)}
-.okbox{border:1px solid var(--jasyl);background:rgba(47,125,79,.08)}
+.warnbox,.okbox{border-radius:12px;padding:12px 14px;font-size:13.5px;margin-top:12px;display:none}
+.warnbox{background:var(--amber-s);color:#7A4E05}
+.okbox{background:var(--green-s);color:#2F5D18}
 .warnbox.on,.okbox.on{display:block}
 .wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}
-.wcard{border:1px solid var(--tor);border-radius:var(--r);overflow:hidden;background:#fff;cursor:pointer}
+.wcard{border-radius:14px;overflow:hidden;background:var(--box);cursor:pointer}
 .wcard canvas{width:100%;display:block}
-.wcard p{margin:0;padding:8px 10px;font-size:12.5px;border-top:1px solid var(--tor)}
-code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:#d8d2ea;border-radius:var(--r);padding:14px;font-family:var(--mono);font-size:12px;line-height:1.55}
+.wcard p{margin:0;padding:9px 11px;font-size:12.5px}
 
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(160%);background:var(--tun);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;z-index:200;transition:transform .35s cubic-bezier(.2,.8,.3,1);box-shadow:0 14px 40px -10px rgba(0,0,0,.5);max-width:90vw;text-align:center}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(160%);background:var(--ink);color:#fff;padding:13px 22px;border-radius:999px;font-size:14px;z-index:200;transition:transform .35s cubic-bezier(.2,.8,.3,1);box-shadow:0 18px 40px -12px rgba(0,0,0,.5);max-width:90vw;text-align:center}
 .toast.on{transform:translateX(-50%) translateY(0)}
 
 @media (max-width:960px){
-  .hero .wrap{grid-template-columns:1fr;gap:32px}
+  .hero .wrap,.split,.banner,.duo,.fgrid{grid-template-columns:1fr}
+  .split.rev>*:first-child{order:0}
   .bignums{grid-template-columns:1fr 1fr}
-  .cards{grid-template-columns:1fr}
+  .cards,.projects{grid-template-columns:1fr}
   .studio{grid-template-columns:1fr}
-  .abt{grid-template-columns:1fr}
   .tnav{display:none}
   .months{grid-template-columns:repeat(3,1fr)}
+  .float{position:static;margin-bottom:12px}
+  .banner{padding:30px}
+  .fgrid{gap:20px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
@@ -228,58 +297,72 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
 <body>
 
 <header class="topbar"><div class="wrap">
-  <a class="logo" href="#top"><i></i> KITAP.STUDIO</a>
+  <a class="logo" href="#top"><i></i> <span class="bn">LibGen</span></a>
   <nav class="tnav">
     <a href="#stat" data-i="nav.stat">Статистика</a>
     <a href="#rank" data-i="nav.rank">Рейтинг</a>
+    <a href="#libs" data-i="nav.libs">Кітапханалар</a>
     <a href="#studio" data-i="nav.studio">Студия</a>
-    <a href="#reg" data-i="nav.reg">Тіркелу</a>
+    <a href="#media" data-i="nav.media">Медиа</a>
   </nav>
-  <div class="sp"></div>
   <div class="langsw">
     <button id="lkk" aria-pressed="true" onclick="setLang('kk')">ҚАЗ</button>
     <button id="lru" aria-pressed="false" onclick="setLang('ru')">РУС</button>
   </div>
-  <button class="tbtn solid" onclick="openM('login')" data-i="nav.login">Кабинет</button>
+  <button class="btn-dark" onclick="openM()" data-i="nav.login">Кабинет</button>
 </div></header>
 
 <div id="top" class="hero"><div class="wrap">
   <div>
-    <span class="badge" data-i="hero.badge">📊 2025 жыл қорытындысы · ҚР көпшілік кітапханалары</span>
+    <span class="pill" data-i="hero.badge">📊 2025 жыл қорытындысы</span>
     <h1 class="hh" data-i="hero.h1">Сан емес — <em>сөйлейтін</em> контент.</h1>
-    <p class="lead" data-i="hero.lead">Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды. Мәтінді де өзі жазады. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.</p>
+    <p class="lead" data-i="hero.lead">Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды.</p>
     <div class="cta">
-      <a class="tbtn solid" href="#studio" data-i="hero.c1">Постер жасап көру</a>
-      <a class="tbtn" href="#reg" data-i="hero.c2">Кітапхананы тіркеу</a>
+      <a class="btn-dark" href="#studio" data-i="hero.c1">Постер жасап көру</a>
+      <a class="btn-out" href="#reg" data-i="hero.c2">Кітапхананы тіркеу</a>
     </div>
   </div>
-  <div class="hcard">
-    <div class="mini" id="hcMini">ТҮРКІСТАН ОБЛЫСЫ · 2025</div>
-    <div class="big" id="hcBig">439 702</div>
-    <div class="cap" id="hcCap">оқырман — ел бойынша ең жоғары көрсеткіш</div>
-    <div class="stamp">
-      <b data-i="hero.stamp.n">Сәрсенова А.Қ.</b>
-      <div class="rule"></div>
-      <span data-i="hero.stamp.p">Кітапхана меңгерушісі · 20.08.2026</span>
+  <div class="mock">
+    <div class="bar"><i></i><i></i><i></i></div>
+    <div class="mrow"><div class="lft"><span class="ic" style="background:var(--blue-s)">📕</span><span data-i="mk.r1">Оқырман</span></div><span class="val" id="mkR">—</span></div>
+    <div class="mrow"><div class="lft"><span class="ic" style="background:var(--green-s)">🚪</span><span data-i="mk.r2">Келушi</span></div><span class="val" id="mkV">—</span></div>
+    <div class="float">
+      <div class="t" id="hcMini">—</div>
+      <div class="n" id="hcBig">—</div>
+    </div>
+    <div class="mstat">
+      <div class="mini" data-i="mk.top">Ел бойынша ең жоғары көрсеткіш</div>
+      <div class="big" id="mkFund">—</div>
+      <div class="cap" id="hcCap">—</div>
+      <div class="spark"><i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i><i class="on" style="height:100%"></i><i style="height:71%"></i><i style="height:58%"></i><i style="height:80%"></i></div>
     </div>
   </div>
 </div></div>
 
-<!-- СТАТИСТИКА -->
-<section id="stat" class="alt"><div class="wrap">
-  <div class="eyebrow">// <span data-i="st.eye">Республика бойынша</span></div>
-  <h2 class="sh" data-i="st.h">Кітапхана статистикасы</h2>
-  <p class="sub" data-i="st.sub">Мәдениет және ақпарат министрлігінің 2025 жылғы жиынтық есебі. Дерек Google Sheets-те сақталады, платформа сол көзден оқиды.</p>
+<div class="trust"><div class="wrap">
+  <div class="lbl" data-i="tr.lbl">ҚР көпшілік кітапханаларының 2025 жылғы жиынтық есебі негізінде</div>
+  <div><b>3 889</b><span data-i="tr.a">кітапхана</span></div>
+  <div><b>23</b><span data-i="tr.b">өңір</span></div>
+  <div><b>5,5 млн</b><span data-i="tr.c">оқырман</span></div>
+  <div><b>4</b><span data-i="tr.d">формат</span></div>
+</div></div>
+
+<section id="stat"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="st.eye">Республика бойынша</div>
+    <h2 class="sh" data-i="st.h">Кітапхана <em>статистикасы</em></h2>
+  </div>
   <div class="bignums" id="bigNums"></div>
   <div class="live"><span class="dot"></span><span id="liveTxt">—</span></div>
 </div></section>
 
-<!-- РЕЙТИНГ -->
-<section id="rank"><div class="wrap">
-  <div class="eyebrow">// <span data-i="rk.eye">Өңірлік салыстыру</span></div>
-  <h2 class="sh" data-i="rk.h">23 өңір бойынша рейтинг</h2>
-  <p class="sub" data-i="rk.sub">Бағанның атын басып сұрыптаңыз. Әр өңір өз көрсеткішін бірден постер етіп жүктей алады — төмендегі студиядан.</p>
-  <div class="tblbox"><table class="rank"><thead><tr>
+<section id="rank" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="rk.eye">Өңірлік салыстыру</div>
+    <h2 class="sh" data-i="rk.h">23 өңір бойынша <em>рейтинг</em></h2>
+    <p class="sub" data-i="rk.sub">Бағанның атын басып сұрыптаңыз.</p>
+  </div>
+  <div class="box"><div class="tblbox"><table class="rank"><thead><tr>
     <th data-k="rank" data-i="rk.c0">Орын</th>
     <th data-k="name" data-i="rk.c1">Өңір</th>
     <th data-k="libs" data-i="rk.c2">Кітапхана</th>
@@ -289,23 +372,44 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
     <th data-k="fund" data-i="rk.c6">Қор</th>
     <th data-k="staff" data-i="rk.c7">Маман</th>
   </tr></thead><tbody id="rankBody"></tbody></table></div>
-  <p class="hint" style="margin-top:10px" data-i="rk.note">(+/−) — 2024 жылмен салыстыру. Дереккөз: «СВОД / ШОЛУ КЕСТЕЛЕР 01.01.2026».</p>
+  <p class="hint" style="margin:12px 4px 0" data-i="rk.note">(+/−) — 2024 жылмен салыстыру.</p></div>
 </div></section>
 
-<!-- МҮМКІНДІКТЕР -->
-<section class="alt"><div class="wrap">
-  <div class="eyebrow">// <span data-i="fe.eye">Платформа не істейді</span></div>
-  <h2 class="sh" data-i="fe.h">Алты мүмкіндік</h2>
-  <p class="sub" data-i="fe.sub">Кітапханашы Canva ашпайды, мәтін ойлап таппайды, форматты өлшеп отырмайды. Ол тек санды енгізеді.</p>
+<section id="libs" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="lb.eye">Платформадағы кітапханалар</div>
+    <h2 class="sh" data-i="lb.h">Тіркелген кітапханалар <em>рейтингі</em></h2>
+    <p class="sub" data-i="lb.sub">Есеп берген кітапханалар өзара салыстырылады.</p>
+  </div>
+  <div class="box">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+      <select class="sel" id="lbReg" style="max-width:280px" onchange="renderLibs()"></select>
+      <span class="hint" id="lbCount">—</span>
+    </div>
+    <div class="tblbox"><table class="rank"><thead><tr>
+      <th data-i="lb.c0">Орын</th><th data-i="lb.c1">Кітапхана</th><th data-i="lb.c2">Орналасқан жері</th>
+      <th data-i="lb.c3">Оқырман</th><th data-i="lb.c4">Келушi</th><th data-i="lb.c5">Соңғы есеп</th>
+    </tr></thead><tbody id="libsBody"></tbody></table></div>
+    <p class="hint" id="lbNote" style="margin:12px 4px 0"></p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="fe.eye">Платформа не істейді</div>
+    <h2 class="sh" data-i="fe.h">Алты <em>мүмкіндік</em></h2>
+    <p class="sub" data-i="fe.sub">Кітапханашы Canva ашпайды, мәтін ойлап таппайды, форматты өлшеп отырмайды.</p>
+  </div>
   <div class="cards" id="feCards"></div>
 </div></section>
 
-<!-- СТУДИЯ -->
-<section id="studio"><div class="wrap">
-  <div class="eyebrow">// <span data-i="su.eye">Контент студиясы</span></div>
-  <h2 class="sh" data-i="su.h">Өз өңіріңнің постерін жасап көр</h2>
-  <p class="sub" data-i="su.sub">Тіркелудің қажеті жоқ — бұл нақты 2025 жылғы дерекпен жұмыс істейді. Айлық және кітап постерлері жеке кабинетте.</p>
-  <div class="studio">
+<section id="studio" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="su.eye">Контент студиясы</div>
+    <h2 class="sh" data-i="su.h">Өз өңіріңнің <em>постерін</em> жасап көр</h2>
+    <p class="sub" data-i="su.sub">Тіркелудің қажеті жоқ. Айлық және кітап постерлері жеке кабинетте.</p>
+  </div>
+  <div class="box"><div class="studio">
     <div class="panel">
       <div class="grp"><span data-i="su.reg">Өңір</span><select class="sel" id="pReg" onchange="setRegion(this.selectedIndex)"></select></div>
       <div class="grp"><span data-i="su.tpl">Шаблон</span><div class="chips" id="tplChips"></div></div>
@@ -322,23 +426,58 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
         <button class="btn ghost" onclick="dlPDF()" data-i="su.pdf">PDF жүктеу</button>
         <button class="btn gold" onclick="dlZip()" data-i="su.zip">4 форматты бірден</button>
       </div>
-      <p class="hint" style="text-align:center;margin:0" data-i="su.note">Постердің төменгі жағында деректі енгізген қызметкердің аты-жөні мен лауазымы автоматты қойылады.</p>
+      <p class="hint" style="text-align:center;margin:0" data-i="su.note">Постердің төменгі жағында қызметкердің аты-жөні мен лауазымы автоматты қойылады.</p>
+    </div>
+  </div></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="gd.eye">Практикалық нұсқаулық</div>
+    <h2 class="sh" data-i="gd.h">Кітапханашы <em>қалай</em> жұмыс істейді?</h2>
+  </div>
+  <div class="cards" id="gdCards"></div>
+</div></section>
+
+<section id="media" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="md.eye">Медиа және әдістеме</div>
+    <h2 class="sh" data-i="md.h">Кітапхана <em>тәжірибесі</em></h2>
+    <p class="sub" data-i="md.sub">Әдістемелік көмек, кітап пен кітапханаға қатысты жобалар.</p>
+  </div>
+  <div class="projects" id="pjGrid"></div>
+  <div class="box">
+    <div class="feed" id="feed"></div>
+    <button class="more" id="moreBtn" onclick="showMore()"></button>
+    <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button class="btn" onclick="writePost()" data-i="md.write">Блог жазу ✍️</button>
+      <span class="hint" data-i="md.writeh">Тіркелген кітапхана қызметкерлері үшін</span>
     </div>
   </div>
 </div></section>
 
-<!-- НҰСҚАУЛЫҚ -->
-<section class="alt"><div class="wrap">
-  <div class="eyebrow">// <span data-i="gd.eye">Практикалық нұсқаулық</span></div>
-  <h2 class="sh" data-i="gd.h">Кітапханашы қалай жұмыс істейді?</h2>
-  <div class="cards" id="gdCards"></div>
+<section style="padding-top:0"><div class="wrap">
+  <div class="banner">
+    <div>
+      <h2 data-i="bn.h">Кітапханаңызды <em>тіркеңіз</em></h2>
+      <p data-i="bn.p">Айына бес минут — жыл бойы дайын контент. Тіркелу тегін, растау коды поштаға келеді.</p>
+      <a class="btn-blue" href="#reg" data-i="bn.b">Тіркелуді бастау</a>
+    </div>
+    <div class="bstack">
+      <div class="bpill"><span data-i="bn.s1">Есеп енгізу уақыты</span><b>5 мин</b></div>
+      <div class="bpill"><span data-i="bn.s2">Бір деректен шығатын формат</span><b>4</b></div>
+      <div class="bpill"><span data-i="bn.s3">Жыл соңында дайын сторис</span><b>6</b></div>
+      <div class="bpill"><span data-i="bn.s4">Төлем</span><b data-i="bn.s4v">тегін</b></div>
+    </div>
+  </div>
 </div></section>
 
-<!-- ТІРКЕЛУ -->
-<section id="reg"><div class="wrap">
-  <div class="eyebrow">// <span data-i="rg.eye">Қабылдау бөлмесі</span></div>
-  <h2 class="sh" data-i="rg.h">Кітапхананы тіркеу</h2>
-  <p class="sub" data-i="rg.sub">Тіркелу — кітапхана қызметкері үшін. Растау коды поштаңызға жіберіледі және құпия сөз орнына қызмет етеді.</p>
+<section id="reg" style="padding-top:0"><div class="wrap">
+  <div class="head">
+    <div class="eyebrow" data-i="rg.eye">Қабылдау бөлмесі</div>
+    <h2 class="sh" data-i="rg.h">Кітапхананы <em>тіркеу</em></h2>
+    <p class="sub" data-i="rg.sub">Растау коды поштаңызға жіберіледі және құпия сөз орнына қызмет етеді.</p>
+  </div>
   <div class="formbox">
     <div id="rgStep1">
       <div class="field"><label data-i="f.lib">Кітапхана атауы *</label><input id="rLib" placeholder="Қарасу ауылдық кітапханасы"></div>
@@ -353,27 +492,23 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
       </div>
       <div class="row2">
         <div class="field"><label data-i="f.ph">Телефон *</label><input id="rPhone" placeholder="+7 701 000 00 00"></div>
-        <div class="field"><label data-i="f.iin">ЖСН (12 сан) *</label><input id="rIin" inputmode="numeric" maxlength="12"></div>
-      </div>
-      <div class="row2">
         <div class="field"><label data-i="f.mail">Электрондық пошта *</label><input id="rMail" type="email" placeholder="aigul@karasu.kz"></div>
-        <div class="field"><label data-i="f.role">Рөлі *</label><select id="rRole">
-          <option value="lib" data-i="ro.lib">Кітапханашы</option>
-          <option value="dist" data-i="ro.dist">Аудандық жинақтаушы</option>
-          <option value="obl" data-i="ro.obl">Облыстық үйлестіруші</option>
-          <option value="min" data-i="ro.min">Министрлік</option></select></div>
       </div>
-      <p class="hint" data-i="rg.priv">ЖСН тек кітапханашының жеке басын растау үшін жиналады және Google Sheets-те сақталады. Үшінші тұлғаға берілмейді.</p>
+      <div class="field"><label data-i="f.role">Рөлі *</label><select id="rRole">
+        <option value="lib" data-i="ro.lib">Кітапханашы</option>
+        <option value="dist" data-i="ro.dist">Аудандық жинақтаушы</option>
+        <option value="obl" data-i="ro.obl">Облыстық үйлестіруші</option>
+        <option value="min" data-i="ro.min">Министрлік</option></select></div>
       <div class="err" id="rgErr"></div>
       <button class="btn" style="width:100%;margin-top:10px" onclick="sendCode()" data-i="rg.send">Кодты поштаға жіберу 🚀</button>
     </div>
     <div id="rgStep2" style="display:none">
-      <div style="border:1px dashed var(--sia);background:var(--sia-soft);border-radius:var(--r);padding:15px">
-        <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sia)" data-i="rg.mail">Кіріс хат · no-reply@kitap.studio</div>
-        <p style="font-size:13.5px;margin:7px 0" data-i="rg.mailtxt">Кіру кодыңыз поштаңызға жіберілді. Ол 15 минут жарамды.</p>
-        <div id="codeShown" style="font-family:var(--mono);font-weight:700;font-size:28px;letter-spacing:.3em;color:var(--sia)">•••••</div>
+      <div style="background:var(--blue-s);border-radius:16px;padding:18px">
+        <div style="font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)" data-i="rg.mail">Кіріс хат</div>
+        <p style="font-size:14px;margin:8px 0" data-i="rg.mailtxt">Кіру кодыңыз поштаңызға жіберілді. Ол 15 минут жарамды.</p>
+        <div id="codeShown" style="font-family:var(--mono);font-weight:700;font-size:28px;letter-spacing:.3em;color:var(--blue)">•••••</div>
       </div>
-      <div class="field" style="margin-top:15px"><label data-i="f.code">Кодты енгізіңіз</label>
+      <div class="field" style="margin-top:16px"><label data-i="f.code">Кодты енгізіңіз</label>
         <input id="rCode" inputmode="numeric" maxlength="6" style="font-family:var(--mono);letter-spacing:.3em;font-size:20px;text-align:center"></div>
       <div class="err" id="cdErr"></div>
       <button class="btn" style="width:100%" onclick="confirmCode()" data-i="rg.done">Растап, кабинетке кіру</button>
@@ -381,74 +516,80 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
   </div>
 </div></section>
 
-<!-- ЖОБА ТУРАЛЫ -->
-<section class="alt"><div class="wrap">
-  <div class="eyebrow">// <span data-i="ab.eye">Жоба туралы</span></div>
-  <h2 class="sh" data-i="ab.h">KITAP.STUDIO дегеніміз не?</h2>
-  <div class="abt">
-    <div>
-      <p data-i="ab.p1">Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды. Оқырман оны көрмейді, әлеуметтік желіде жарияланбайды, кітапхананың еңбегі көрінбейді.</p>
-      <p data-i="ab.p2">KITAP.STUDIO сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ — жүйе мәтінді өзі жазады, форматты өзі өлшейді, автордың мөрін өзі қояды.</p>
-      <blockquote class="quote" data-i="ab.q">«Есеп — министрлікке. Постер — оқырманға. Бір дерек, екі мақсат.»</blockquote>
-      <div class="kv">
-        <b>Дереккөз</b><span data-i="ab.k1">ҚР көпшілік кітапханаларының 2025 жылғы жиынтық есебі</span>
-        <b>Дерек қоры</b><span data-i="ab.k2">Google Sheets — Libraries, Monthly, Books, AuthCodes, Log</span>
-        <b>Логика</b><span data-i="ab.k3">Google Apps Script Web App</span>
-        <b>Интерфейс</b><span data-i="ab.k4">GitHub Pages, бір HTML файл</span>
-        <b>Форматтар</b><span>1080×1080 · 1080×1920 · 1200×630 · A4</span>
-      </div>
-    </div>
-    <div class="idcard">
-      <div class="t" data-i="ab.id">Жүйе күйі</div>
-      <h4 data-i="ab.idh">Дерек қайда сақталады?</h4>
-      <p data-i="ab.idp">Барлық дерек кітапхананың өз Google Sheets файлында тұрады. GitHub-та тек интерфейс жатыр — ЖСН де, пошта да репозиторийге түспейді.</p>
-      <div style="margin-top:14px;font-family:var(--mono);font-size:12px" id="modeBadge">● Demo</div>
-    </div>
+<section style="padding-top:0"><div class="wrap"><div class="duo">
+  <div class="a">
+    <div><div class="ic">✍️</div>
+      <h3 data-i="du.ah">Медиа блог</h3>
+      <p data-i="du.ap">Кітапханаңыздың жұмысы туралы жазыңыз — басқалар оқысын.</p></div>
+    <button onclick="writePost()" data-i="du.ab">Жазба қосу</button>
   </div>
+  <div class="b">
+    <div><div class="ic">👀</div>
+      <h3 data-i="du.bh">Демо кабинет</h3>
+      <p data-i="du.bp">Тіркелмей-ақ кабинеттің ішін көріңіз: дерек енгізу, есеп, сторис.</p></div>
+    <button onclick="demoLogin()" data-i="du.bb">Демоны ашу</button>
+  </div>
+</div></div></section>
+
+<section style="padding-top:0"><div class="wrap abt">
+  <div class="eyebrow" data-i="ab.eye">Жоба туралы</div>
+  <h2 class="sh" id="abH" style="margin-bottom:16px">—</h2>
+  <p data-i="ab.p1">Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды.</p>
+  <p data-i="ab.p2">Платформа сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ.</p>
 </div></section>
 
 <footer><div class="wrap">
-  <div class="logo" style="margin-bottom:8px"><i></i> KITAP.STUDIO</div>
-  <div data-i="ft.c">© 2026 · Кітапхана деректерін визуалды контентке айналдыратын платформа.</div>
-  <div class="fl">
-    <a href="#stat" data-i="nav.stat">Статистика</a>
-    <a href="#rank" data-i="nav.rank">Рейтинг</a>
-    <a href="#studio" data-i="nav.studio">Студия</a>
-    <a href="#reg" data-i="nav.reg">Тіркелу</a>
+  <div class="fgrid">
+    <div>
+      <div class="logo" style="margin-bottom:12px"><i></i> <span class="bn">LibGen</span></div>
+      <p class="hint" style="max-width:34ch" data-i="ft.about">Кітапхана деректерін визуалды контентке айналдыратын платформа.</p>
+    </div>
+    <div><h4 data-i="ft.h1">Платформа</h4>
+      <a href="#stat" data-i="nav.stat">Статистика</a>
+      <a href="#rank" data-i="nav.rank">Рейтинг</a>
+      <a href="#libs" data-i="nav.libs">Кітапханалар</a></div>
+    <div><h4 data-i="ft.h2">Құралдар</h4>
+      <a href="#studio" data-i="nav.studio">Студия</a>
+      <a href="#media" data-i="nav.media">Медиа</a>
+      <a href="#reg" data-i="nav.reg">Тіркелу</a></div>
+    <div><h4 data-i="ft.h3">Форматтар</h4>
+      <div class="li">Instagram 1080×1080</div>
+      <div class="li">Stories 1080×1920</div>
+      <div class="li">Facebook 1200×630</div>
+      <div class="li">A4 · PDF</div></div>
   </div>
-  <p class="hint" style="color:rgba(255,255,255,.42);margin-top:16px" data-i="ft.t">Техникалық сұрақ болса — репозиторийдің Issues бөліміне жазыңыз.</p>
+  <div class="fbot"><span id="ftC">—</span></div>
 </div></footer>
 
-<!-- LOGIN -->
 <div class="modal" id="mLogin"><div class="sheet">
   <header>
-    <div class="eyebrow" data-i="lg.eye">// Жеке кабинет</div>
+    <div class="eyebrow" data-i="lg.eye">Жеке кабинет</div>
     <h3 data-i="lg.h">Кіру</h3>
     <p class="hint" data-i="lg.hint">Пошта мен поштаға келген код арқылы кіресіз.</p>
   </header>
   <div class="body">
-    <div class="field"><label data-i="f.mail">Электрондық пошта</label><input id="lMail" type="email"></div>
-    <button class="btn ghost" style="width:100%;margin-bottom:11px" onclick="askCode()" data-i="lg.ask">Поштаға код жіберу</button>
-    <div class="field"><label data-i="f.code">Код</label><input id="lCode" inputmode="numeric" maxlength="6" style="font-family:var(--mono);letter-spacing:.3em;text-align:center"></div>
+    <div class="field"><label data-i="f.mail">Электрондық пошта *</label><input id="lMail" type="email"></div>
+    <button class="btn ghost" style="width:100%;margin-bottom:12px" onclick="askCode()" data-i="lg.ask">Поштаға код жіберу</button>
+    <div class="field"><label data-i="f.code">Кодты енгізіңіз</label><input id="lCode" inputmode="numeric" maxlength="6" style="font-family:var(--mono);letter-spacing:.3em;text-align:center"></div>
     <div class="err" id="lgErr"></div>
     <button class="btn" style="width:100%" onclick="doLogin()" data-i="lg.go">Кабинетке кіру</button>
-    <button class="btn ghost" style="width:100%;margin-top:9px" onclick="demoLogin()" data-i="lg.demo">Демо аккаунтпен қарау</button>
+    <button class="btn ghost" style="width:100%;margin-top:10px" onclick="demoLogin()" data-i="lg.demo">Демо аккаунтпен қарау</button>
   </div>
 </div></div>
 
-<!-- CABINET -->
 <div id="app">
   <div class="cabbar"><div class="wrap">
-    <a class="logo" href="#"><i></i> KITAP.STUDIO</a>
-    <div class="sp"></div>
+    <a class="logo" href="#"><i></i> <span class="bn">LibGen</span></a>
+    <div style="flex:1"></div>
     <div class="who"><b id="uLib">—</b><span id="uPer">—</span></div>
-    <button class="tbtn" onclick="logout()" data-i="cb.out">Шығу</button>
+    <button class="btn-out" onclick="logout()" data-i="cb.out">Шығу</button>
   </div></div>
   <div class="tabs"><div class="wrap" style="display:flex;gap:2px">
     <button class="on" onclick="tab('data',this)" data-i="cb.t1">Дерек енгізу</button>
     <button onclick="tab('books',this)" data-i="cb.t2">Кітап рейтингі</button>
     <button onclick="tab('wrap',this)" data-i="cb.t3">Жыл қорытындысы</button>
     <button onclick="tab('roll',this)" data-i="cb.t4">Жиынтық есеп</button>
+    <button onclick="tab('blog',this)" data-i="cb.t6">Блог</button>
     <button onclick="tab('set',this)" data-i="cb.t5">Баптаулар</button>
   </div></div>
   <div class="wrap">
@@ -463,16 +604,11 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
           <div class="field"><label data-i="m5">Кітапханашы саны</label><input id="mStaff" type="number" min="0"></div>
         </div>
         <div class="warnbox" id="dWarn"></div><div class="okbox" id="dOk"></div>
-        <button class="btn" style="margin-top:13px" onclick="saveMonth()" data-i="cb.save">Сақтау</button>
+        <button class="btn" style="margin-top:14px" onclick="saveMonth()" data-i="cb.save">Сақтау</button>
       </div>
       <div class="card"><h4 data-i="cb.year">Жылдық динамика — оқырман</h4>
         <div class="barwrap"><div class="bars" id="bars"></div></div>
         <p class="hint" id="insight"></p>
-      </div>
-      <div class="card"><h4 data-i="cb.csv">CSV импорт — 12 айды бірден</h4>
-        <p class="hint" data-i="cb.csvh">Формат: ай;оқырман;келушi;берілген</p>
-        <textarea id="csv" rows="4" style="width:100%;padding:10px;border:1px solid var(--tor);border-radius:8px;font-family:var(--mono);font-size:12.5px" placeholder="1;980;2210;1740&#10;2;1284;2680;1920"></textarea>
-        <button class="btn ghost" style="margin-top:10px" onclick="importCsv()" data-i="cb.csvb">Импорттау</button>
       </div>
     </div>
     <div class="view" id="v-books">
@@ -484,33 +620,40 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
       <div class="card"><h4 data-i="cb.wh">Жыл қорытындысы — алты сторис</h4>
         <button class="btn gold" onclick="buildWrapped()" data-i="cb.wb">Қорытындыны жинау</button>
         <button class="btn ghost" style="margin-left:9px" onclick="dlWrapped()" data-i="cb.wz">Барлығын ZIP-пен</button>
-        <div class="wgrid" id="wGrid" style="margin-top:16px"></div></div>
+        <div class="wgrid" id="wGrid" style="margin-top:18px"></div></div>
     </div>
     <div class="view" id="v-roll">
+      <div class="card"><h4 id="myRepH">—</h4>
+        <div class="tblbox"><table class="rank"><thead><tr>
+          <th data-i="cb.mo">Ай</th><th data-i="m1">Оқырман</th><th data-i="m2">Келушi</th><th data-i="cb.chg">Өзгеріс</th>
+        </tr></thead><tbody id="myBody"></tbody>
+        <tfoot><tr id="myFoot"></tr></tfoot></table></div>
+      </div>
       <div class="card"><h4 data-i="cb.rh">Өңірлер бойынша жиынтық</h4>
         <div class="tblbox"><table class="rank"><thead><tr>
           <th data-i="rk.c1">Өңір</th><th data-i="rk.c2">Кітапхана</th><th data-i="rk.c4">Оқырман</th>
           <th data-i="rk.c5">Келушi</th><th data-i="rk.c6">Қор</th></tr></thead>
           <tbody id="rollBody"></tbody></table></div></div>
-      <div class="card"><h4 data-i="cb.pl">Google Sheets-ке кететін жол</h4>
-        <code class="pl" id="payload">—</code></div>
+    </div>
+    <div class="view" id="v-blog">
+      <div class="card"><h4 data-i="cb.bl">Жоба туралы блог жазу</h4>
+        <div class="field"><label data-i="cb.pj">Жоба / айдар</label><select id="bPj"></select></div>
+        <div class="field"><label data-i="cb.ti">Тақырып</label><input id="bTi" placeholder="Кітапханада «Зерделі ұлт» апталығы өтті"></div>
+        <div class="field"><label data-i="cb.tx">Мәтін</label><textarea id="bTx" rows="7" placeholder="Не істедіңіз, кім қатысты, қандай нәтиже болды?"></textarea></div>
+        <div class="err" id="bErr"></div>
+        <button class="btn" onclick="savePost()" data-i="cb.bp">Жариялау 📢</button>
+        <p class="hint" style="margin-top:12px" data-i="cb.bph">Жазба Медиа бөлімінде кітапхананың аты, автордың аты-жөні мен лауазымымен бірге шығады.</p>
+      </div>
+      <div class="card"><h4 data-i="cb.mine">Менің жазбаларым</h4><div id="myPosts"></div></div>
     </div>
     <div class="view" id="v-set">
-      <div class="card"><h4 data-i="cb.br">Кітапхананың бренд түсі</h4><div class="chips" id="brChips"></div>
-        <div class="field" style="margin-top:14px"><label data-i="cb.site">Профиль сілтемесі (QR-ға түседі)</label>
-          <input id="gSite" value="https://instagram.com/kitap.studio"></div></div>
-      <div class="card"><h4 data-i="cb.gs">Google Sheets қосылымы</h4>
-        <div class="field"><label>Apps Script Web App URL</label>
-          <input id="gUrl" value="https://script.google.com/macros/s/AKfycby7RH9hQAS13wyuOSoZg2SBD3WDOllUle97pU0PVIqi7Id5eNZg8UdDl69Pvg2ro2e9/exec"></div>
-        <div class="kv">
-          <b>Libraries</b><span data-i="sh1">кітапханалар тізілімі, ЖСН, рөл</span>
-          <b>Monthly</b><span data-i="sh2">ай сайынғы бес көрсеткіш</span>
-          <b>Books</b><span data-i="sh3">санат бойынша ең көп оқылған кітап</span>
-          <b>Regions</b><span data-i="sh4">2025 жылғы республикалық жиынтық</span>
-          <b>AuthCodes</b><span data-i="sh5">кіру кодтары мен мерзімі</span>
-          <b>Log</b><span data-i="sh6">кім, қашан, нені өзгертті</span>
-        </div>
-        <button class="btn ghost" style="margin-top:14px" onclick="testSync()" data-i="cb.test">Қосылымды тексеру</button></div>
+      <div class="card"><h4 data-i="cb.br">Кітапхананың бренд түсі</h4>
+        <p class="hint" data-i="cb.brs">Бір түс</p>
+        <div class="chips" id="brChips" style="margin-bottom:18px"></div>
+        <p class="hint" data-i="cb.brg">Градиент</p>
+        <div class="chips" id="grChips"></div>
+        <div class="field" style="margin-top:18px"><label data-i="cb.site">Профиль сілтемесі (QR-ға түседі)</label>
+          <input id="gSite" value="https://instagram.com/"></div></div>
     </div>
   </div>
 </div>
@@ -518,11 +661,14 @@ code.pl{display:block;white-space:pre;overflow:auto;background:var(--tun);color:
 <div class="toast" id="toast"></div>
 
 <script>
+
 /* ==========================================================
-   1. ӨҢІРЛІК ДЕРЕК — «СВОД / ШОЛУ КЕСТЕЛЕР 01.01.2026»
-   [аты, кітапхана25, кітапхана24, ауылда, қор, қорҚАЗ, берілген,
-    берілгенҚАЗ, оқырман25, оқырман24, балалар, келушi, маман]
+   БРЕНД — атауды осы жерден өзгертесіз, ол барлық жерге таралады
 ========================================================== */
+const BRAND='LibGen';
+const API_URL='https://script.google.com/macros/s/AKfycby7RH9hQAS13wyuOSoZg2SBD3WDOllUle97pU0PVIqi7Id5eNZg8UdDl69Pvg2ro2e9/exec';
+
+/* 2025 жылғы республикалық жиынтық есеп */
 const RAW=[
 ["Абай","Абай",137,137,122,2423740,1033329,2422398,1382406,174080,171123,45063,3690466,303],
 ["Ақмола","Акмолинская",329,329,282,4347408,1517268,5551023,2288642,315938,315923,96446,3940923,554],
@@ -546,70 +692,79 @@ const RAW=[
 ["Шымкент қаласы","город Шымкент",43,43,0,1846216,636458,4063994,2490571,297894,294757,107481,1957904,302],
 ["ҚР ЗНКААК","РБ для НЗ и слабовидящих",1,1,0,263069,38357,98822,26172,3006,2900,66,51624,26],
 ["ҚР Ұлттық кітапханасы","Национальная библиотека РК",1,1,0,7212272,1037486,2115647,1156395,85569,84000,11349,1811736,183],
-["ҚР Ұлттық академиялық кітапханасы","Национальная академическая",1,1,0,1315446,524342,2263474,1225342,57518,58742,6052,1360052,111]
-];
-const REGIONS=RAW.map((r,i)=>({id:'REG-'+String(i+1).padStart(2,'0'),
- n:{kk:r[0],ru:r[1]},libs:r[2],libsPrev:r[3],rural:r[4],fund:r[5],fundKz:r[6],
- issued:r[7],issuedKz:r[8],users:r[9],usersPrev:r[10],kids:r[11],visits:r[12],staff:r[13]}));
+["ҚР Ұлттық академиялық кітапханасы","Национальная академическая",1,1,0,1315446,524342,2263474,1225342,57518,58742,6052,1360052,111]];
+const REGIONS=RAW.map((r,i)=>({id:'REG-'+String(i+1).padStart(2,'0'),n:{kk:r[0],ru:r[1]},
+ libs:r[2],libsPrev:r[3],rural:r[4],fund:r[5],fundKz:r[6],issued:r[7],issuedKz:r[8],
+ users:r[9],usersPrev:r[10],kids:r[11],visits:r[12],staff:r[13]}));
 const TOTAL={libs:3889,fund:72740847,issued:88957968,users:5540606,visits:57010974,staff:9579};
 const YEAR=2025;
 
 /* ==========================================================
-   2. i18n
+   i18n
 ========================================================== */
 const T={
 kk:{
- 'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.reg':'Тіркелу','nav.login':'Кабинет',
+ 'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.media':'Медиа','nav.reg':'Тіркелу','nav.login':'Кабинет',
+ 'nav.libs':'Кітапханалар',
+ 'mk.r1':'Оқырман','mk.r2':'Келушi','mk.top':'Ел бойынша ең жоғары көрсеткіш',
+ 'tr.lbl':'ҚР көпшілік кітапханаларының 2025 жылғы жиынтық есебі негізінде',
+ 'tr.a':'кітапхана','tr.b':'өңір','tr.c':'оқырман','tr.d':'формат',
+ 'bn.h':'Кітапханаңызды <em>тіркеңіз</em>',
+ 'bn.p':'Айына бес минут — жыл бойы дайын контент. Тіркелу тегін, растау коды поштаға келеді.',
+ 'bn.b':'Тіркелуді бастау','bn.s1':'Есеп енгізу уақыты','bn.s2':'Бір деректен шығатын формат',
+ 'bn.s3':'Жыл соңында дайын сторис','bn.s4':'Төлем','bn.s4v':'тегін',
+ 'du.ah':'Медиа блог','du.ap':'Кітапханаңыздың жұмысы туралы жазыңыз — басқалар оқысын.','du.ab':'Жазба қосу',
+ 'du.bh':'Демо кабинет','du.bp':'Тіркелмей-ақ кабинеттің ішін көріңіз: дерек енгізу, есеп, сторис.','du.bb':'Демоны ашу',
+ 'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.',
+ 'ft.h1':'Платформа','ft.h2':'Құралдар','ft.h3':'Форматтар',
+
+ 'lb.eye':'Платформадағы кітапханалар','lb.h':'Тіркелген кітапханалар рейтингі',
+ 'lb.sub':'Есеп берген кітапханалар өзара салыстырылады. Өз кітапханаңызды тіркеп, тізімге қосылыңыз.',
+ 'lb.c0':'Орын','lb.c1':'Кітапхана','lb.c2':'Орналасқан жері','lb.c3':'Оқырман','lb.c4':'Келушi','lb.c5':'Соңғы есеп',
+
  'hero.badge':'📊 2025 жыл қорытындысы · ҚР көпшілік кітапханалары',
  'hero.h1':'Сан емес — <em>сөйлейтін</em> контент.',
  'hero.lead':'Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды. Мәтінді де өзі жазады. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
  'hero.c1':'Постер жасап көру','hero.c2':'Кітапхананы тіркеу',
- 'hero.stamp.n':'Сәрсенова А.Қ.','hero.stamp.p':'Кітапхана меңгерушісі · 20.08.2026',
+ 'hero.sn':'Сәрсенова А.Қ.','hero.sp':'Кітапхана меңгерушісі',
  'st.eye':'Республика бойынша','st.h':'Кітапхана статистикасы',
- 'st.sub':'Мәдениет және ақпарат министрлігінің 2025 жылғы жиынтық есебі. Дерек Google Sheets-те сақталады, платформа сол көзден оқиды.',
  'rk.eye':'Өңірлік салыстыру','rk.h':'23 өңір бойынша рейтинг',
- 'rk.sub':'Бағанның атын басып сұрыптаңыз. Әр өңір өз көрсеткішін бірден постер етіп жүктей алады — төмендегі студиядан.',
+ 'rk.sub':'Бағанның атын басып сұрыптаңыз. Әр өңір өз көрсеткішін бірден постер етіп жүктей алады.',
  'rk.c0':'Орын','rk.c1':'Өңір','rk.c2':'Кітапхана','rk.c3':'Ауылда','rk.c4':'Оқырман','rk.c5':'Келушi','rk.c6':'Қор','rk.c7':'Маман',
- 'rk.note':'(+/−) — 2024 жылмен салыстыру. Дереккөз: «СВОД / ШОЛУ КЕСТЕЛЕР 01.01.2026».',
+ 'rk.note':'(+/−) — 2024 жылмен салыстыру.',
  'fe.eye':'Платформа не істейді','fe.h':'Алты мүмкіндік',
  'fe.sub':'Кітапханашы Canva ашпайды, мәтін ойлап таппайды, форматты өлшеп отырмайды. Ол тек санды енгізеді.',
  'su.eye':'Контент студиясы','su.h':'Өз өңіріңнің постерін жасап көр',
- 'su.sub':'Тіркелудің қажеті жоқ — бұл нақты 2025 жылғы дерекпен жұмыс істейді. Айлық және кітап постерлері жеке кабинетте.',
+ 'su.sub':'Тіркелудің қажеті жоқ. Айлық және кітап постерлері жеке кабинетте.',
  'su.reg':'Өңір','su.tpl':'Шаблон','su.th':'Стиль / мереке','su.fmt':'Формат','su.qr':'QR-код','su.on':'Қосу','su.off':'Өшіру',
  'su.jpg':'JPG жүктеу','su.pdf':'PDF жүктеу','su.zip':'4 форматты бірден',
  'su.note':'Постердің төменгі жағында деректі енгізген қызметкердің аты-жөні мен лауазымы автоматты қойылады.',
  'gd.eye':'Практикалық нұсқаулық','gd.h':'Кітапханашы қалай жұмыс істейді?',
+ 'md.eye':'Медиа және әдістеме','md.h':'Кітапхана тәжірибесі',
+ 'md.sub':'Әдістемелік көмек, кітап пен кітапханаға қатысты жобалар. Тіркелген кітапханалар өз жұмысы туралы блог жаза алады.',
+ 'md.write':'Блог жазу ✍️','md.writeh':'Тіркелген кітапхана қызметкерлері үшін',
  'rg.eye':'Қабылдау бөлмесі','rg.h':'Кітапхананы тіркеу',
  'rg.sub':'Тіркелу — кітапхана қызметкері үшін. Растау коды поштаңызға жіберіледі және құпия сөз орнына қызмет етеді.',
- 'rg.priv':'ЖСН тек кітапханашының жеке басын растау үшін жиналады және Google Sheets-те сақталады. Үшінші тұлғаға берілмейді.',
  'rg.send':'Кодты поштаға жіберу 🚀','rg.done':'Растап, кабинетке кіру',
- 'rg.mail':'Кіріс хат · no-reply@kitap.studio','rg.mailtxt':'Кіру кодыңыз поштаңызға жіберілді. Ол 15 минут жарамды.',
+ 'rg.mail':'Кіріс хат','rg.mailtxt':'Кіру кодыңыз поштаңызға жіберілді. Ол 15 минут жарамды.',
  'f.lib':'Кітапхана атауы *','f.reg':'Өңір *','f.dist':'Аудан *','f.loc':'Ауыл / қала *','f.name':'Аты-жөні *',
- 'f.pos':'Лауазымы *','f.ph':'Телефон *','f.iin':'ЖСН (12 сан) *','f.mail':'Электрондық пошта *','f.role':'Рөлі *','f.code':'Кодты енгізіңіз',
+ 'f.pos':'Лауазымы *','f.ph':'Телефон *','f.mail':'Электрондық пошта *','f.role':'Рөлі *','f.code':'Кодты енгізіңіз',
  'ro.lib':'Кітапханашы','ro.dist':'Аудандық жинақтаушы','ro.obl':'Облыстық үйлестіруші','ro.min':'Министрлік',
- 'ab.eye':'Жоба туралы','ab.h':'KITAP.STUDIO дегеніміз не?',
+ 'ab.eye':'Жоба туралы',
  'ab.p1':'Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды. Оқырман оны көрмейді, әлеуметтік желіде жарияланбайды, кітапхананың еңбегі көрінбейді.',
- 'ab.p2':'KITAP.STUDIO сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ — жүйе мәтінді өзі жазады, форматты өзі өлшейді, автордың мөрін өзі қояды.',
- 'ab.q':'«Есеп — министрлікке. Постер — оқырманға. Бір дерек, екі мақсат.»',
- 'ab.k1':'ҚР көпшілік кітапханаларының 2025 жылғы жиынтық есебі',
- 'ab.k2':'Google Sheets — Libraries, Monthly, Books, AuthCodes, Log',
- 'ab.k3':'Google Apps Script Web App','ab.k4':'GitHub Pages, бір HTML файл',
- 'ab.id':'Жүйе күйі','ab.idh':'Дерек қайда сақталады?',
- 'ab.idp':'Барлық дерек кітапхананың өз Google Sheets файлында тұрады. GitHub-та тек интерфейс жатыр — ЖСН де, пошта да репозиторийге түспейді.',
- 'ft.c':'© 2026 · Кітапхана деректерін визуалды контентке айналдыратын платформа.',
- 'ft.t':'Техникалық сұрақ болса — репозиторийдің Issues бөліміне жазыңыз.',
+ 'ab.p2':'Платформа сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ — жүйе мәтінді өзі жазады, форматты өзі өлшейді, автордың мөрін өзі қояды.',
  'lg.eye':'// Жеке кабинет','lg.h':'Кіру','lg.hint':'Пошта мен поштаға келген код арқылы кіресіз.',
  'lg.ask':'Поштаға код жіберу','lg.go':'Кабинетке кіру','lg.demo':'Демо аккаунтпен қарау',
- 'cb.out':'Шығу','cb.t1':'Дерек енгізу','cb.t2':'Кітап рейтингі','cb.t3':'Жыл қорытындысы','cb.t4':'Жиынтық есеп','cb.t5':'Баптаулар',
+ 'cb.out':'Шығу','cb.t1':'Дерек енгізу','cb.t2':'Кітап рейтингі','cb.t3':'Жыл қорытындысы','cb.t4':'Жиынтық есеп','cb.t5':'Баптаулар','cb.t6':'Блог',
  'cb.month':'Есепті ай','cb.metrics':'Бес көрсеткіш','cb.save':'Сақтау','cb.year':'Жылдық динамика — оқырман',
- 'cb.csv':'CSV импорт — 12 айды бірден','cb.csvh':'Формат: ай;оқырман;келушi;берілген','cb.csvb':'Импорттау',
  'cb.bh':'Ең көп оқылған кітап — төрт жас санаты','cb.bs':'Сақтап, постер жасау',
  'cb.wh':'Жыл қорытындысы — алты сторис','cb.wb':'Қорытындыны жинау','cb.wz':'Барлығын ZIP-пен',
- 'cb.rh':'Өңірлер бойынша жиынтық','cb.pl':'Google Sheets-ке кететін жол',
- 'cb.br':'Кітапхананың бренд түсі','cb.site':'Профиль сілтемесі (QR-ға түседі)','cb.gs':'Google Sheets қосылымы','cb.test':'Қосылымды тексеру',
+ 'cb.rh':'Өңірлер бойынша жиынтық','cb.mo':'Ай','cb.chg':'Өзгеріс',
+ 'cb.bl':'Жоба туралы блог жазу','cb.pj':'Жоба / айдар','cb.ti':'Тақырып','cb.tx':'Мәтін','cb.bp':'Жариялау 📢',
+ 'cb.bph':'Жазба Медиа бөлімінде кітапхананың аты, автордың аты-жөні мен лауазымымен бірге шығады.',
+ 'cb.mine':'Менің жазбаларым',
+ 'cb.br':'Кітапхананың бренд түсі','cb.brs':'Бір түс','cb.brg':'Градиент','cb.site':'Профиль сілтемесі (QR-ға түседі)',
  'm1':'Оқырман саны','m2':'Келушi саны','m3':'Кітапхана қоры','m4':'Берілген құжат','m5':'Кітапханашы саны',
- 'sh1':'кітапханалар тізілімі, ЖСН, рөл','sh2':'ай сайынғы бес көрсеткіш','sh3':'санат бойынша ең көп оқылған кітап',
- 'sh4':'2025 жылғы республикалық жиынтық','sh5':'кіру кодтары мен мерзімі','sh6':'кім, қашан, нені өзгертті',
  stats:['Кітапхана','Оқырман','Келушi','Кітап қоры'],
  statL:['ел бойынша барлығы','2025 жылы','2025 жылы','дана'],
  live:(n,r)=>`Соңғы есепте ${n} кітапхана, оның ${r}-і ауылдық жерде`,
@@ -628,87 +783,115 @@ kk:{
  guide:[
   ['A','Айына бір рет кіресің','Ай аяқталған соң кабинетке кіріп, бес санды енгізесің. Бес минут кетеді.'],
   ['B','Жүйе тексереді','Сан өткен айдан 70%-дан артық ауытқыса, жүйе «дұрыс па?» деп сұрайды.'],
-  ['C','Шаблон таңдайсың','Айлық, тоқсандық, ең көп оқылған кітап немесе рейтингтегі орын.'],
+  ['C','Шаблон таңдайсың','Айлық, ең көп оқылған кітап немесе рейтингтегі орын.'],
   ['D','Форматты таңдайсың','Instagram-ға пост па, сторис пе, Facebook-ке ме, әлде әкімшілікке A4 па.'],
   ['E','Жүктеп, жариялайсың','JPG не PDF. Мөрі қойылған, мәтіні жазылған, өлшемі дұрыс.']],
+ projects:[
+  ['Ұлттық жоба','Зерделі ұлт','Оқуға деген қызығушылықты арттыруға бағытталған жоба. Кітапханалар осы аяда өткізген іс-шаралары туралы жаза алады.'],
+  ['Әдістеме','Әдістемелік көмек','Есеп жүргізу, іс-шара ұйымдастыру, оқырманмен жұмыс — тәжірибелі мамандардың нұсқаулықтары.'],
+  ['Тәжірибе','Кітапхана тәжірибесі','Басқа кітапханалар не істеп жатыр? Жұмыс істеген идеялар мен қателіктер.']],
+ tpl:['Рейтингтегі орын','Өңірдегі кітапхана','Жылдық оқырман','Кітапхана қоры'],
+ tplCab:['Айлық есеп','Ең көп оқылған кітап','Кітапханалар рейтингі'],
+ allReg:'Барлық өңір',
+ lbCount:n=>`${n} кітапхана есеп берген`,
+ lbEmpty:'Әзірге бірде-бір кітапхана есеп бермеген. Бірінші болыңыз — тіркеліңіз.',
+ lbDemo:'Үлгі ретінде көрсетілген. Нақты тізім кітапханалар тіркелген соң шығады.',
+ lbNote:'Рейтинг ағымдағы жылдағы оқырман саны бойынша құрылады.',
+ noRep:'есеп жоқ',
+ myPlace:(n,m)=>`Сіздің орныңыз: ${n} / ${m}`,
+ grads:['Күн батысы','Дала','Көктем','Алтын','Тау','Түн'],
  p:{
-  rankT:(n)=>`ҚР кітапханалары арасында`, rankTail:(n)=>`${n}-орын`,
-  libsT:(r)=>`${r} өңірінде`, libsTail:'кітапхана жұмыс істейді',
-  usersT:(r)=>`${r} кітапханаларына ${YEAR} жылы`, usersTail:'оқырман тіркелді',
-  fundT:(r)=>`${r} кітапхана қоры`, fundTail:'дана құжат',
+  rankT:()=>`ҚР кітапханалары арасында`,rankTail:n=>`${n}-орын`,
+  libsT:r=>`${r} өңірінде`,libsTail:'кітапхана жұмыс істейді',
+  usersT:r=>`${r} кітапханаларына ${YEAR} жылы`,usersTail:'оқырман тіркелді',
+  fundT:r=>`${r} кітапхана қоры`,fundTail:'дана құжат',
   rural:(n,p)=>`оның ${n}-і ауылдық жерде (${p}%)`,
   kids:(n,p)=>`${n} оқырман — 15 жасқа дейінгі бала (${p}%)`,
   kz:(n,p)=>`${n} дана қазақ тілінде (${p}%)`,
-  vsPrev:(d)=>`өткен жылмен салыстырғанда ${d>=0?'+':''}${d}%`,
-  staff:(n)=>`${n} кітапхана маманы`,
-  monthT:(m)=>`Кітапханаға ${YEAR+1} жылдың ${m} айында`, monthTail:'оқырман келді',
-  bookT:(c)=>`${c} ең көп оқыған кітап`,
+  vsPrev:d=>`өткен жылмен салыстырғанда ${d>=0?'+':''}${d}%`,
+  staff:n=>`${n} кітапхана маманы`,
+  monthT:m=>`Кітапханаға ${YEAR+1} жылдың ${m} айында`,monthTail:'оқырман келді',
+  bookT:c=>`${c} ең көп оқыған кітап`,
   wrapped:'Жыл қорытындысы',best:'жылдағы ең белсенді ай',
-  daily:(n)=>`күніне орта есеппен ${n} оқырман`,
-  thanks:'Рахмет, оқырман!',thanksSub:'Келесі жылы да кітап оқып жүріңіз'},
- tpl:['Рейтингтегі орын','Өңірдегі кітапхана','Жылдық оқырман','Кітапхана қоры'],
- tplCab:['Айлық есеп','Ең көп оқылған кітап'],
+  daily:n=>`күніне орта есеппен ${n} оқырман`,
+  thanks:'Рахмет, оқырман!',thanksSub:'Келесі жылы да кітап оқып жүріңіз',
+  libRankT:()=>'Платформадағы кітапханалар арасында',libRankTail:n=>`${n}-орын`,
+  credit:b=>`Деректерді ${b} ұсынады`},
  warn:(p,c,d)=>`Өткен айда ${p}, қазір ${c} — өзгеріс ${d}%. Сан дұрыс па? Тексеріп, қайта сақтаңыз.`,
- saved:(m)=>`${m} айының дерегі сақталды.`,
- errFill:'Барлық өрісті толтырыңыз',errIin:'ЖСН 12 саннан тұруы керек',errMail:'Пошта дұрыс емес',
+ saved:m=>`${m} айының дерегі сақталды.`,
+ errFill:'Барлық өрісті толтырыңыз',errMail:'Пошта дұрыс емес',
  errCode:'Код сәйкес келмейді',errLogin:'Мұндай пошта табылмады.',
  bT:'Кітап атауы',bA:'Авторы',bC:'Оқылым саны',
- needApi:'Sheets қосылмаған — демо аккаунтты қолданыңыз',
+ needApi:'Қосылым жоқ — демо аккаунтты қолданыңыз',
  sent:'Код поштаға жіберілді',
- tJpg:'JPG жүктелді',tPdf:'PDF жүктелді',tZip:'ZIP жүктелді',tCsv:(n)=>`${n} айдың дерегі импортталды`
+ needLogin:'Блог жазу үшін алдымен кабинетке кіріңіз',
+ posted:'Жазба жарияланды',noPosts:'Әзірге жазба жоқ',
+ more:n=>`Тағы да (${n}) ↓`,myRep:l=>`${l} — 12 айлық есеп`,tot:'Барлығы',
+ tJpg:'JPG жүктелді',tPdf:'PDF жүктелді',tZip:'ZIP жүктелді',
+ abH:b=>`${b} дегеніміз не?`,ft:b=>`© 2026 · ${b} — кітапхана деректерін визуалды контентке айналдыратын платформа.`
 },
 ru:{
- 'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.reg':'Регистрация','nav.login':'Кабинет',
+ 'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.media':'Медиа','nav.reg':'Регистрация','nav.login':'Кабинет',
+ 'nav.libs':'Библиотеки',
+ 'mk.r1':'Читатели','mk.r2':'Посещения','mk.top':'Лучший показатель по стране',
+ 'tr.lbl':'По сводному отчёту публичных библиотек РК за 2025 год',
+ 'tr.a':'библиотек','tr.b':'регионов','tr.c':'читателей','tr.d':'формата',
+ 'bn.h':'Зарегистрируйте <em>свою библиотеку</em>',
+ 'bn.p':'Пять минут в месяц — готовый контент весь год. Регистрация бесплатна, код подтверждения придёт на почту.',
+ 'bn.b':'Начать регистрацию','bn.s1':'Время на ввод отчёта','bn.s2':'Форматов из одних данных',
+ 'bn.s3':'Готовых сторис в конце года','bn.s4':'Оплата','bn.s4v':'бесплатно',
+ 'du.ah':'Медиа-блог','du.ap':'Напишите о работе своей библиотеки — пусть прочитают другие.','du.ab':'Добавить запись',
+ 'du.bh':'Демо-кабинет','du.bp':'Загляните внутрь кабинета без регистрации: ввод данных, отчёт, сторис.','du.bb':'Открыть демо',
+ 'ft.about':'Платформа превращения библиотечных данных в визуальный контент.',
+ 'ft.h1':'Платформа','ft.h2':'Инструменты','ft.h3':'Форматы',
+
+ 'lb.eye':'Библиотеки на платформе','lb.h':'Рейтинг зарегистрированных библиотек',
+ 'lb.sub':'Сравниваются библиотеки, сдавшие отчёт. Зарегистрируйте свою и попадите в список.',
+ 'lb.c0':'Место','lb.c1':'Библиотека','lb.c2':'Расположение','lb.c3':'Читателей','lb.c4':'Посещений','lb.c5':'Последний отчёт',
+
  'hero.badge':'📊 Итоги 2025 года · публичные библиотеки РК',
  'hero.h1':'Не цифра — <em>говорящий</em> контент.',
  'hero.lead':'Введите статистику библиотеки — платформа сама соберёт из неё пост для Instagram, сторис, картинку для Facebook и документ A4. И сама напишет текст. Внизу будет ваше имя и должность.',
  'hero.c1':'Попробовать студию','hero.c2':'Зарегистрировать библиотеку',
- 'hero.stamp.n':'Сарсенова А.К.','hero.stamp.p':'Заведующая библиотекой · 20.08.2026',
+ 'hero.sn':'Сарсенова А.К.','hero.sp':'Заведующая библиотекой',
  'st.eye':'По республике','st.h':'Статистика библиотек',
- 'st.sub':'Сводный отчёт Министерства культуры и информации за 2025 год. Данные хранятся в Google Sheets, платформа читает оттуда.',
  'rk.eye':'Сравнение регионов','rk.h':'Рейтинг по 23 регионам',
- 'rk.sub':'Нажмите на название столбца для сортировки. Каждый регион может скачать свой показатель постером — в студии ниже.',
+ 'rk.sub':'Нажмите на название столбца для сортировки. Каждый регион может скачать свой показатель постером.',
  'rk.c0':'Место','rk.c1':'Регион','rk.c2':'Библиотек','rk.c3':'На селе','rk.c4':'Читателей','rk.c5':'Посещений','rk.c6':'Фонд','rk.c7':'Специалистов',
- 'rk.note':'(+/−) — сравнение с 2024 годом. Источник: «СВОД / ШОЛУ КЕСТЕЛЕР 01.01.2026».',
+ 'rk.note':'(+/−) — сравнение с 2024 годом.',
  'fe.eye':'Что делает платформа','fe.h':'Шесть возможностей',
  'fe.sub':'Библиотекарь не открывает Canva, не придумывает текст и не подгоняет форматы. Он вводит только цифру.',
  'su.eye':'Студия контента','su.h':'Соберите постер своего региона',
- 'su.sub':'Регистрация не нужна — работает на реальных данных 2025 года. Месячные и книжные постеры — в личном кабинете.',
+ 'su.sub':'Регистрация не нужна. Месячные и книжные постеры — в личном кабинете.',
  'su.reg':'Регион','su.tpl':'Шаблон','su.th':'Стиль / праздник','su.fmt':'Формат','su.qr':'QR-код','su.on':'Включить','su.off':'Выключить',
  'su.jpg':'Скачать JPG','su.pdf':'Скачать PDF','su.zip':'Все 4 формата',
  'su.note':'Внизу постера автоматически ставится ФИО и должность сотрудника, внёсшего данные.',
  'gd.eye':'Практическое руководство','gd.h':'Как работает библиотекарь?',
+ 'md.eye':'Медиа и методика','md.h':'Опыт библиотек',
+ 'md.sub':'Методическая помощь, проекты о книге и библиотеке. Зарегистрированные библиотеки могут вести блог о своей работе.',
+ 'md.write':'Написать в блог ✍️','md.writeh':'Для сотрудников зарегистрированных библиотек',
  'rg.eye':'Приёмная','rg.h':'Регистрация библиотеки',
  'rg.sub':'Регистрация — для сотрудника библиотеки. Код подтверждения придёт на почту и служит паролем.',
- 'rg.priv':'ИИН собирается только для подтверждения личности сотрудника и хранится в Google Sheets. Третьим лицам не передаётся.',
  'rg.send':'Отправить код на почту 🚀','rg.done':'Подтвердить и войти',
- 'rg.mail':'Входящее письмо · no-reply@kitap.studio','rg.mailtxt':'Код входа отправлен на вашу почту. Действует 15 минут.',
+ 'rg.mail':'Входящее письмо','rg.mailtxt':'Код входа отправлен на вашу почту. Действует 15 минут.',
  'f.lib':'Название библиотеки *','f.reg':'Регион *','f.dist':'Район *','f.loc':'Село / город *','f.name':'ФИО *',
- 'f.pos':'Должность *','f.ph':'Телефон *','f.iin':'ИИН (12 цифр) *','f.mail':'Электронная почта *','f.role':'Роль *','f.code':'Введите код',
+ 'f.pos':'Должность *','f.ph':'Телефон *','f.mail':'Электронная почта *','f.role':'Роль *','f.code':'Введите код',
  'ro.lib':'Библиотекарь','ro.dist':'Районный координатор','ro.obl':'Областной координатор','ro.min':'Министерство',
- 'ab.eye':'О проекте','ab.h':'Что такое KITAP.STUDIO?',
+ 'ab.eye':'О проекте',
  'ab.p1':'Библиотеки ежегодно сдают тысячи показателей в отчёт, но цифра остаётся на бумаге. Читатель её не видит, в соцсетях она не появляется, труд библиотеки остаётся незаметным.',
- 'ab.p2':'KITAP.STUDIO превращает эту цифру в видимый контент одной кнопкой. Библиотекарю не нужно знать дизайн — система сама пишет текст, сама подбирает формат, сама ставит печать автора.',
- 'ab.q':'«Отчёт — министерству. Постер — читателю. Одни данные, две цели.»',
- 'ab.k1':'Сводный отчёт публичных библиотек РК за 2025 год',
- 'ab.k2':'Google Sheets — Libraries, Monthly, Books, AuthCodes, Log',
- 'ab.k3':'Google Apps Script Web App','ab.k4':'GitHub Pages, один HTML-файл',
- 'ab.id':'Состояние системы','ab.idh':'Где хранятся данные?',
- 'ab.idp':'Все данные лежат в собственном файле Google Sheets библиотеки. На GitHub — только интерфейс: ни ИИН, ни почта в репозиторий не попадают.',
- 'ft.c':'© 2026 · Платформа превращения библиотечных данных в визуальный контент.',
- 'ft.t':'По техническим вопросам — в раздел Issues репозитория.',
+ 'ab.p2':'Платформа превращает эту цифру в видимый контент одной кнопкой. Библиотекарю не нужно знать дизайн — система сама пишет текст, сама подбирает формат, сама ставит печать автора.',
  'lg.eye':'// Личный кабинет','lg.h':'Вход','lg.hint':'Вход по почте и коду, который пришёл на неё.',
  'lg.ask':'Отправить код на почту','lg.go':'Войти в кабинет','lg.demo':'Посмотреть демо-аккаунт',
- 'cb.out':'Выйти','cb.t1':'Ввод данных','cb.t2':'Рейтинг книг','cb.t3':'Итоги года','cb.t4':'Сводный отчёт','cb.t5':'Настройки',
+ 'cb.out':'Выйти','cb.t1':'Ввод данных','cb.t2':'Рейтинг книг','cb.t3':'Итоги года','cb.t4':'Сводный отчёт','cb.t5':'Настройки','cb.t6':'Блог',
  'cb.month':'Отчётный месяц','cb.metrics':'Пять показателей','cb.save':'Сохранить','cb.year':'Динамика за год — читатели',
- 'cb.csv':'Импорт CSV — 12 месяцев сразу','cb.csvh':'Формат: месяц;читатели;посещения;выдано','cb.csvb':'Импортировать',
  'cb.bh':'Самая читаемая книга — четыре категории','cb.bs':'Сохранить и создать постер',
  'cb.wh':'Итоги года — шесть сторис','cb.wb':'Собрать итоги','cb.wz':'Всё в ZIP',
- 'cb.rh':'Сводка по регионам','cb.pl':'Что уходит в Google Sheets',
- 'cb.br':'Фирменный цвет библиотеки','cb.site':'Ссылка на профиль (попадёт в QR)','cb.gs':'Подключение Google Sheets','cb.test':'Проверить подключение',
+ 'cb.rh':'Сводка по регионам','cb.mo':'Месяц','cb.chg':'Изменение',
+ 'cb.bl':'Написать в блог о проекте','cb.pj':'Проект / рубрика','cb.ti':'Заголовок','cb.tx':'Текст','cb.bp':'Опубликовать 📢',
+ 'cb.bph':'Запись появится в разделе Медиа вместе с названием библиотеки, ФИО и должностью автора.',
+ 'cb.mine':'Мои записи',
+ 'cb.br':'Фирменный цвет библиотеки','cb.brs':'Один цвет','cb.brg':'Градиент','cb.site':'Ссылка на профиль (попадёт в QR)',
  'm1':'Читателей','m2':'Посещений','m3':'Фонд библиотеки','m4':'Выдано документов','m5':'Библиотекарей',
- 'sh1':'реестр библиотек, ИИН, роль','sh2':'пять показателей помесячно','sh3':'самая читаемая книга по категориям',
- 'sh4':'сводные данные по РК за 2025 год','sh5':'коды входа и срок действия','sh6':'кто, когда и что изменил',
  stats:['Библиотек','Читателей','Посещений','Книжный фонд'],
  statL:['всего по стране','в 2025 году','в 2025 году','экземпляров'],
  live:(n,r)=>`В последнем отчёте ${n} библиотек, из них ${r} в сельской местности`,
@@ -727,37 +910,54 @@ ru:{
  guide:[
   ['A','Заходите раз в месяц','После окончания месяца входите в кабинет и вводите пять цифр. Пять минут.'],
   ['B','Система проверяет','Если цифра отклонилась от прошлого месяца больше чем на 70%, система переспросит.'],
-  ['C','Выбираете шаблон','Месячный, квартальный, самая читаемая книга или место в рейтинге.'],
+  ['C','Выбираете шаблон','Месячный, самая читаемая книга или место в рейтинге.'],
   ['D','Выбираете формат','Пост в Instagram, сторис, Facebook или A4 для акимата.'],
   ['E','Скачиваете и публикуете','JPG или PDF. С печатью, с текстом, в нужном размере.']],
+ projects:[
+  ['Национальный проект','Зерделі ұлт','Проект, направленный на рост интереса к чтению. Библиотеки могут писать о мероприятиях в его рамках.'],
+  ['Методика','Методическая помощь','Ведение отчётности, организация мероприятий, работа с читателем — инструкции опытных специалистов.'],
+  ['Опыт','Опыт библиотек','Что делают другие библиотеки? Работающие идеи и ошибки.']],
+ tpl:['Место в рейтинге','Библиотеки региона','Читателей за год','Фонд библиотек'],
+ tplCab:['Месячный отчёт','Самая читаемая книга','Рейтинг библиотек'],
+ allReg:'Все регионы',
+ lbCount:n=>`Отчитались библиотек: ${n}`,
+ lbEmpty:'Пока ни одна библиотека не отчиталась. Станьте первой — зарегистрируйтесь.',
+ lbDemo:'Показано как пример. Реальный список появится после регистрации библиотек.',
+ lbNote:'Рейтинг строится по числу читателей за текущий год.',
+ noRep:'нет отчёта',
+ myPlace:(n,m)=>`Ваше место: ${n} / ${m}`,
+ grads:['Закат','Степь','Весна','Золото','Горы','Ночь'],
  p:{
-  rankT:(n)=>`Среди библиотек РК`, rankTail:(n)=>`${n}-е место`,
-  libsT:(r)=>`В регионе ${r}`, libsTail:'работает библиотек',
-  usersT:(r)=>`В библиотеках региона ${r} в ${YEAR} году`, usersTail:'зарегистрировано читателей',
-  fundT:(r)=>`Фонд библиотек региона ${r}`, fundTail:'экземпляров',
+  rankT:()=>`Среди библиотек РК`,rankTail:n=>`${n}-е место`,
+  libsT:r=>`В регионе ${r}`,libsTail:'работает библиотек',
+  usersT:r=>`В библиотеках региона ${r} в ${YEAR} году`,usersTail:'зарегистрировано читателей',
+  fundT:r=>`Фонд библиотек региона ${r}`,fundTail:'экземпляров',
   rural:(n,p)=>`из них ${n} в сельской местности (${p}%)`,
   kids:(n,p)=>`${n} читателей — дети до 15 лет (${p}%)`,
   kz:(n,p)=>`${n} экз. на казахском языке (${p}%)`,
-  vsPrev:(d)=>`${d>=0?'+':''}${d}% к прошлому году`,
-  staff:(n)=>`${n} библиотечных специалистов`,
-  monthT:(m)=>`В ${m} ${YEAR+1} года в библиотеку`, monthTail:'пришло читателей',
-  bookT:(c)=>`Категория «${c}» читала чаще всего`,
+  vsPrev:d=>`${d>=0?'+':''}${d}% к прошлому году`,
+  staff:n=>`${n} библиотечных специалистов`,
+  monthT:m=>`В ${m} ${YEAR+1} года в библиотеку`,monthTail:'пришло читателей',
+  bookT:c=>`Категория «${c}» читала чаще всего`,
   wrapped:'Итоги года',best:'самый активный месяц года',
-  daily:(n)=>`в среднем ${n} читателей в день`,
-  thanks:'Спасибо, читатель!',thanksSub:'Читайте с нами и в новом году'},
- tpl:['Место в рейтинге','Библиотеки региона','Читателей за год','Фонд библиотек'],
- tplCab:['Месячный отчёт','Самая читаемая книга'],
+  daily:n=>`в среднем ${n} читателей в день`,
+  thanks:'Спасибо, читатель!',thanksSub:'Читайте с нами и в новом году',
+  libRankT:()=>'Среди библиотек платформы',libRankTail:n=>`${n}-е место`,
+  credit:b=>`Данные предоставлены ${b}`},
  warn:(p,c,d)=>`В прошлом месяце ${p}, сейчас ${c} — изменение ${d}%. Цифра верная? Проверьте и сохраните снова.`,
- saved:(m)=>`Данные за ${m} сохранены.`,
- errFill:'Заполните все поля',errIin:'ИИН должен состоять из 12 цифр',errMail:'Некорректная почта',
+ saved:m=>`Данные за ${m} сохранены.`,
+ errFill:'Заполните все поля',errMail:'Некорректная почта',
  errCode:'Код не совпадает',errLogin:'Такая почта не найдена.',
  bT:'Название книги',bA:'Автор',bC:'Количество прочтений',
- needApi:'Sheets не подключён — используйте демо-аккаунт',
+ needApi:'Нет подключения — используйте демо-аккаунт',
  sent:'Код отправлен на почту',
- tJpg:'JPG скачан',tPdf:'PDF скачан',tZip:'ZIP скачан',tCsv:(n)=>`Импортировано месяцев: ${n}`
+ needLogin:'Чтобы писать в блог, сначала войдите в кабинет',
+ posted:'Запись опубликована',noPosts:'Пока нет записей',
+ more:n=>`Ещё (${n}) ↓`,myRep:l=>`${l} — отчёт за 12 месяцев`,tot:'Всего',
+ tJpg:'JPG скачан',tPdf:'PDF скачан',tZip:'ZIP скачан',
+ abH:b=>`Что такое ${b}?`,ft:b=>`© 2026 · ${b} — платформа превращения библиотечных данных в визуальный контент.`
 }};
 let L='kk';
-const t=k=>T[L][k]??k;
 const $=s=>document.querySelector(s);
 const nf=n=>Math.round(n).toLocaleString('ru-RU').replace(/,/g,' ');
 const pct=(a,b)=>b?Math.round(a/b*100):0;
@@ -765,30 +965,29 @@ const today=()=>{const d=new Date();return[String(d.getDate()).padStart(2,'0'),S
 function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('on'),2800);}
 
 /* ==========================================================
-   3. API — Apps Script Web App
+   API
 ========================================================== */
 const API=(()=>{
-  let B=$('#gUrl')?$('#gUrl').value:'';
-  const set=u=>{B=(u||'').trim();};
+  const B=API_URL;
   const ok=()=>/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(B);
   const rd=async(a,p={})=>{const r=await fetch(B+'?'+new URLSearchParams({action:a,...p}));const j=await r.json();if(!j.ok)throw new Error(j.error);return j.data;};
-  const wr=async(a,p={})=>{const r=await fetch(B,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:a,...p})});const j=await r.json();if(!j.ok)throw new Error(j.error);return j;};
-  return{set,ok,get:()=>B,
-   summary:()=>rd('summary'),library:id=>rd('library',{libraryId:id}),
+  const wr=async(a,p={})=>{const r=await fetch(B,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({action:a,client:navigator.userAgent,lang:L,...p})});
+    const j=await r.json();if(!j.ok)throw new Error(j.error);return j;};
+  return{ok,summary:()=>rd('summary'),library:id=>rd('library',{libraryId:id}),posts:()=>rd('posts'),
+   ranking:()=>rd('ranking'),
    requestCode:e=>wr('requestCode',{email:e}),verifyCode:(e,c)=>wr('verifyCode',{email:e,code:c}),
-   register:f=>wr('register',f),saveMonthly:r=>wr('saveMonthly',{row:r}),saveBook:r=>wr('saveBook',{row:r})};
+   register:f=>wr('register',f),saveMonthly:r=>wr('saveMonthly',{row:r}),
+   saveBook:r=>wr('saveBook',{row:r}),savePost:r=>wr('savePost',{row:r})};
 })();
 let MODE='demo';
-function setMode(m,msg){MODE=m;const b=$('#modeBadge');if(b){b.textContent=(m==='api'?'● Sheets':'● Demo')+(msg?' · '+msg:'');b.style.color=m==='api'?'#8ED9A8':'#D6A032';}}
 async function probe(){
-  API.set($('#gUrl').value);
-  if(!API.ok()){setMode('demo','URL жоқ');return false;}
-  try{const s=await API.summary();setMode('api',(s.libraries||0)+' lib');return true;}
-  catch(e){setMode('demo',String(e.message).slice(0,28));return false;}
+  if(!API.ok()){MODE='demo';return false;}
+  try{await API.summary();MODE='api';loadPosts();loadLibs();return true;}catch(e){MODE='demo';return false;}
 }
 
 /* ==========================================================
-   4. Күй
+   Күй
 ========================================================== */
 const THEMES=[
  {bg:'#141021',ink:'#FFFFFF',acc:'#D6A032',soft:'rgba(255,255,255,.62)',orn:.16,sw:'#141021'},
@@ -797,18 +996,46 @@ const THEMES=[
  {bg:'#1B3A8C',ink:'#FFFFFF',acc:'#7FD4C1',soft:'rgba(255,255,255,.66)',orn:.2,sw:'#1B3A8C'},
  {bg:'#F8F4EC',ink:'#141021',acc:'#4B3A9E',soft:'rgba(20,16,33,.6)',orn:.14,sw:'#F8F4EC'}];
 const FORMATS=[{k:'ig',w:1080,h:1080},{k:'story',w:1080,h:1920},{k:'fb',w:1200,h:630},{k:'a4',w:1240,h:1754}];
-const BRANDS=['#4B3A9E','#0E5A63','#B3402F','#2F7D4F','#D6A032','#1B3A8C'];
-const ST={reg:14,tpl:0,theme:0,fmt:0,qr:1,brand:'#4B3A9E',cabTpl:-1,cabPeriod:0};
-let ME=null,EDIT=0,pending=null,pendingCode=null;
+const SOLIDS=['#4B3A9E','#0E5A63','#B3402F','#2F7D4F','#D6A032','#1B3A8C'];
+const GRADS=[['#FF9A5A','#FF4E7A'],['#2AB07C','#B8E062'],['#4FC3F7','#7C4DFF'],
+             ['#F7C948','#F2711C'],['#00B4DB','#0F3057'],['#7F00FF','#E100FF']];
+const ST={reg:14,tpl:0,theme:0,fmt:0,qr:1,brand:'#4B3A9E',cabPeriod:0};
+let ME=null,EDIT=0,pending=null,pendingCode=null,shown=3;
+/* Тіркелген кітапханалар. Бос болса — төмендегі үлгі көрсетіледі. */
+let LIBS=[],LIBS_DEMO=true;
+const DEMO_LIBS=[
+ {id:'LIB-0001',library:'Түркістан қалалық орталық кітапханасы',region:'Түркістан',district:'Түркістан қ.',readers:31240,visits:74800,last:'2026-07'},
+ {id:'LIB-0002',library:'Абай атындағы облыстық кітапхана',region:'Абай',district:'Семей қ.',readers:28610,visits:69300,last:'2026-07'},
+ {id:'LIB-0003',library:'Талдықорған балалар кітапханасы',region:'Жетісу',district:'Талдықорған қ.',readers:19480,visits:44100,last:'2026-07'},
+ {id:'LIB-0004',library:'Қарасу ауылдық кітапханасы',region:'Алматы облысы',district:'Іле ауданы',readers:16404,visits:34350,last:'2026-06'},
+ {id:'LIB-0005',library:'Көкшетау балалар кітапханасы',region:'Ақмола',district:'Көкшетау қ.',readers:15880,visits:37200,last:'2026-07'},
+ {id:'LIB-0006',library:'Ақсу ауылдық кітапханасы',region:'Павлодар',district:'Ақсу ауданы',readers:9120,visits:21400,last:'2026-06'},
+ {id:'LIB-0007',library:'Бейнеу аудандық кітапханасы',region:'Маңғыстау',district:'Бейнеу ауданы',readers:7640,visits:17900,last:'2026-05'}];
 const MY={r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,staff:0,name:'',region:''};
 const BOOKS=[
  {t:{kk:'Менің атым Қожа',ru:'Меня зовут Кожа'},a:'Б. Соқпақбаев',c:412},
  {t:{kk:'Абай жолы',ru:'Путь Абая'},a:'М. Әуезов',c:308},
  {t:{kk:'Көшпенділер',ru:'Кочевники'},a:'І. Есенберлин',c:264},
  {t:{kk:'Қан мен тер',ru:'Кровь и пот'},a:'Ә. Нұрпейісов',c:197}];
+let POSTS=[
+ {pj:0,ti:{kk:'«Зерделі ұлт» аптасында 340 оқушы кітапханаға келді',ru:'На неделе «Зерделі ұлт» библиотеку посетили 340 школьников'},
+  tx:{kk:'Апта бойы «Кітап оқы — зердеңді ашы» атты бес іс-шара өтті. Ең белсенді сынып арнайы диплом алды.',
+      ru:'В течение недели прошло пять мероприятий под названием «Читай книгу — открой разум». Самый активный класс получил диплом.'},
+  lib:{kk:'Қарасу ауылдық кітапханасы',ru:'Сельская библиотека Карасу'},reg:'Алматы облысы',
+  au:'Сәрсенова А.Қ.',po:{kk:'Кітапхана меңгерушісі',ru:'Заведующая библиотекой'},dt:'12.08.2026'},
+ {pj:1,ti:{kk:'Айлық есепті бес минутта қалай дайындауға болады',ru:'Как подготовить месячный отчёт за пять минут'},
+  tx:{kk:'Көрсеткіштерді ай сайын жинамай, апта сайын белгілеп отырсаңыз, ай соңында тек қосу қалады. Қарапайым кесте жеткілікті.',
+      ru:'Если отмечать показатели не раз в месяц, а еженедельно, в конце месяца остаётся только сложить. Достаточно простой таблицы.'},
+  lib:{kk:'Түркістан қалалық кітапханасы',ru:'Городская библиотека Туркестана'},reg:'Түркістан',
+  au:'Оразбаев Д.М.',po:{kk:'Әдіскер',ru:'Методист'},dt:'05.08.2026'},
+ {pj:2,ti:{kk:'Жасөспірімдер бұрышы: не істедік, не істемедік',ru:'Подростковый уголок: что сработало, а что нет'},
+  tx:{kk:'Жеке отыратын орын мен розетка — ең маңыздысы болып шықты. Ал «үнсіздік» талабы керісінше кедергі келтірді.',
+      ru:'Отдельное место и розетка оказались главным. А требование тишины, наоборот, мешало.'},
+  lib:{kk:'Көкшетау балалар кітапханасы',ru:'Детская библиотека Кокшетау'},reg:'Ақмола',
+  au:'Жақсылық А.Б.',po:{kk:'Кітапханашы',ru:'Библиотекарь'},dt:'28.07.2026'}];
 
 /* ==========================================================
-   5. Рендер — лендинг
+   Рендер
 ========================================================== */
 function setLang(l){
   L=l;document.documentElement.lang=l;
@@ -817,8 +1044,11 @@ function setLang(l){
   renderAll();
 }
 function renderAll(){
-  renderHero();renderNums();renderRank();renderCards();renderRegSel();renderChips();
-  renderMonths();renderBooks();renderRoll();renderBars();draw();
+  document.querySelectorAll('.bn').forEach(e=>e.textContent=BRAND);
+  $('#abH').textContent=T[L].abH(BRAND);
+  $('#ftC').textContent=T[L].ft(BRAND);
+  renderHero();renderNums();renderRank();renderCards();renderProjects();renderFeed();
+  renderRegSel();renderLibs();renderChips();renderMonths();renderBooks();renderRoll();renderBars();renderMyPosts();draw();
 }
 function renderHero(){
   const top=[...REGIONS].sort((a,b)=>b.users-a.users)[0];
@@ -827,48 +1057,97 @@ function renderHero(){
   $('#hcCap').textContent=L==='kk'?'оқырман — ел бойынша ең жоғары көрсеткіш':'читателей — лучший показатель по стране';
 }
 function renderNums(){
-  const rural=REGIONS.reduce((s,r)=>s+r.rural,0);
-  const prevU=REGIONS.reduce((s,r)=>s+r.usersPrev,0);
+  const rural=REGIONS.reduce((s,r)=>s+r.rural,0),prevU=REGIONS.reduce((s,r)=>s+r.usersPrev,0);
   const d=Math.round((TOTAL.users-prevU)/prevU*1000)/10;
   const v=[nf(TOTAL.libs),nf(TOTAL.users),nf(TOTAL.visits),nf(TOTAL.fund)];
-  const dd=['', (d>=0?'+':'')+d+'%','',''];
   $('#bigNums').innerHTML=T[L].stats.map((s,i)=>
     `<div><div class="n">${v[i]}</div><div class="l">${s} · ${T[L].statL[i]}</div>
-     ${dd[i]?`<div class="d ${d>=0?'up':'dn'}">${dd[i]} ${L==='kk'?'2024-ке қарағанда':'к 2024'}</div>`:''}</div>`).join('');
+     ${i===1?`<div class="d ${d>=0?'up':'dn'}">${d>=0?'+':''}${d}% ${L==='kk'?'2024-ке қарағанда':'к 2024'}</div>`:''}</div>`).join('');
   $('#liveTxt').textContent=T[L].live(nf(TOTAL.libs),nf(rural));
 }
 let sortKey='users',sortDir=-1;
 function renderRank(){
-  const key=sortKey;
-  const arr=[...REGIONS].map((r,i)=>({...r,i}));
-  arr.sort((a,b)=>key==='name'?a.n[L].localeCompare(b.n[L])*sortDir*-1:(a[key]-b[key])*sortDir);
-  const mx=Math.max(...REGIONS.map(r=>r.users));
-  document.querySelectorAll('table.rank th[data-k]').forEach(th=>
-    th.toggleAttribute('data-on',th.getAttribute('data-k')===key));
-  $('#rankBody').innerHTML=arr.map((r,k)=>{
-    const dl=r.libs-r.libsPrev, du=r.users-r.usersPrev;
-    const dtag=(n)=>n===0?'':`<span class="${n>0?'up':'dn'}" style="font-size:11px"> ${n>0?'+':''}${nf(n)}</span>`;
-    return `<tr><td><span class="medal ${k===0?'g':''}">${k+1}</span></td>
-      <td>${r.n[L]}</td>
-      <td class="num">${nf(r.libs)}${dtag(dl)}</td>
-      <td class="num">${r.rural?nf(r.rural):'—'}</td>
-      <td class="num">${nf(r.users)}${dtag(du)}</td>
-      <td class="num">${nf(r.visits)}</td>
-      <td class="num">${nf(r.fund)}</td>
-      <td class="num">${nf(r.staff)}</td></tr>`;
-  }).join('');
+  const arr=[...REGIONS];
+  arr.sort((a,b)=>sortKey==='name'?a.n[L].localeCompare(b.n[L])*-sortDir:(a[sortKey]-b[sortKey])*sortDir);
+  document.querySelectorAll('table.rank th[data-k]').forEach(th=>th.toggleAttribute('data-on',th.getAttribute('data-k')===sortKey));
+  const dt=n=>n===0?'':`<span class="${n>0?'up':'dn'}" style="font-size:11px"> ${n>0?'+':''}${nf(n)}</span>`;
+  $('#rankBody').innerHTML=arr.map((r,k)=>
+   `<tr><td><span class="medal ${k===0?'g':''}">${k+1}</span></td><td>${r.n[L]}</td>
+    <td class="num">${nf(r.libs)}${dt(r.libs-r.libsPrev)}</td>
+    <td class="num">${r.rural?nf(r.rural):'—'}</td>
+    <td class="num">${nf(r.users)}${dt(r.users-r.usersPrev)}</td>
+    <td class="num">${nf(r.visits)}</td><td class="num">${nf(r.fund)}</td><td class="num">${nf(r.staff)}</td></tr>`).join('');
 }
 document.querySelectorAll('table.rank th[data-k]').forEach(th=>th.addEventListener('click',()=>{
-  const k=th.getAttribute('data-k');
-  if(k==='rank')return;
+  const k=th.getAttribute('data-k');if(k==='rank')return;
   if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=k==='name'?1:-1;}
-  renderRank();
-}));
+  renderRank();}));
 function renderCards(){
-  $('#feCards').innerHTML=T[L].feats.map((f,i)=>
-   `<div class="nc"><div class="idx">${i+1}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
-  $('#gdCards').innerHTML=T[L].guide.map(g=>
-   `<div class="nc"><div class="idx">${g[0]}</div><h3>${g[1]}</h3><p>${g[2]}</p></div>`).join('');
+  $('#feCards').innerHTML=T[L].feats.map((f,i)=>`<div class="nc"><div class="idx">${i+1}</div><h3>${f[1]}</h3><p>${f[2]}</p></div>`).join('');
+  $('#gdCards').innerHTML=T[L].guide.map(g=>`<div class="nc"><div class="idx">${g[0]}</div><h3>${g[1]}</h3><p>${g[2]}</p></div>`).join('');
+}
+function renderProjects(){
+  $('#pjGrid').innerHTML=T[L].projects.map(p=>`<div class="pj"><div class="tag">${p[0]}</div><h3>${p[1]}</h3><p>${p[2]}</p></div>`).join('');
+  const sel=$('#bPj');if(sel)sel.innerHTML=T[L].projects.map((p,i)=>`<option value="${i}">${p[1]}</option>`).join('');
+}
+function renderFeed(){
+  const list=POSTS.slice(0,shown);
+  $('#feed').innerHTML=list.length?list.map(p=>{
+    const ti=typeof p.ti==='string'?p.ti:p.ti[L], tx=typeof p.tx==='string'?p.tx:p.tx[L];
+    const lib=typeof p.lib==='string'?p.lib:p.lib[L], po=typeof p.po==='string'?p.po:p.po[L];
+    return `<article class="post">
+      <div class="meta"><span class="pr">${T[L].projects[p.pj]?T[L].projects[p.pj][1]:''}</span><span>${p.reg}</span><span>${p.dt}</span></div>
+      <h3>${ti}</h3><p>${tx}</p>
+      <div class="who">${lib} · ${p.au}, ${po}</div></article>`;}).join('')
+    :`<p class="hint">${T[L].noPosts}</p>`;
+  const rest=POSTS.length-shown;
+  $('#moreBtn').style.display=rest>0?'block':'none';
+  $('#moreBtn').textContent=T[L].more(rest);
+}
+function showMore(){shown+=3;renderFeed();}
+async function loadPosts(){
+  try{const d=await API.posts();
+    if(d&&d.length){POSTS=d.map(x=>({pj:+x.project||0,ti:x.title,tx:x.body,lib:x.library,reg:x.region,
+      au:x.author,po:x.position,dt:new Date(x.createdAt).toLocaleDateString('ru-RU')})).concat(POSTS);
+      renderFeed();}
+  }catch(e){}
+}
+async function loadLibs(){
+  try{
+    const d=await API.ranking();
+    if(d&&d.length){LIBS=d.map(x=>({id:x.libraryId||'',library:x.library||x.name,region:x.region||'',
+      district:x.district||'',readers:+x.readers||0,visits:+x.visits||0,last:x.lastReport||''}));
+      LIBS_DEMO=false;renderLibs();}
+  }catch(e){}
+}
+function libList(){return LIBS_DEMO?DEMO_LIBS:LIBS;}
+function renderLibs(){
+  const sel=$('#lbReg'),body=$('#libsBody');if(!body)return;
+  const all=libList();
+  const regs=[...new Set(all.map(x=>x.region))].sort();
+  const cur=sel.value||'*';
+  sel.innerHTML=`<option value="*">${T[L].allReg}</option>`+regs.map(r=>`<option ${r===cur?'selected':''}>${r}</option>`).join('');
+  const rows=(cur==='*'?all:all.filter(x=>x.region===cur)).slice().sort((a,b)=>b.readers-a.readers);
+  $('#lbCount').textContent=T[L].lbCount(all.length);
+  $('#lbNote').textContent=LIBS_DEMO?T[L].lbDemo:T[L].lbNote;
+  body.innerHTML=rows.length?rows.map((x,k)=>
+   `<tr${ME&&x.id===ME.libraryId?' style="background:var(--sia-soft)"':''}>
+     <td><span class="medal ${k===0?'g':''}">${k+1}</span></td>
+     <td>${x.library}</td><td>${[x.region,x.district].filter(Boolean).join(', ')}</td>
+     <td class="num">${nf(x.readers)}</td><td class="num">${x.visits?nf(x.visits):'—'}</td>
+     <td class="num" style="font-weight:400">${x.last||T[L].noRep}</td></tr>`).join('')
+   :`<tr><td colspan="6" class="hint" style="padding:20px">${T[L].lbEmpty}</td></tr>`;
+}
+/* Өз кітапханамның орны */
+function myRank(){
+  const all=libList().slice();
+  const mine=all.find(x=>ME&&x.id===ME.libraryId);
+  const me={readers:MY.r.reduce((a,b)=>a+b,0)};
+  if(!mine)all.push({id:'ME',readers:me.readers});
+  else mine.readers=me.readers||mine.readers;
+  all.sort((a,b)=>b.readers-a.readers);
+  const idx=all.findIndex(x=>x.id===(ME?ME.libraryId:'ME'));
+  return{place:(idx<0?all.length:idx+1),total:all.length};
 }
 function renderRegSel(){
   $('#pReg').innerHTML=REGIONS.map((r,i)=>`<option ${i===ST.reg?'selected':''}>${r.n[L]}</option>`).join('');
@@ -880,48 +1159,47 @@ function renderChips(){
   $('#tplChips').innerHTML=tpls.map((x,i)=>`<button class="chip ${ST.tpl===i?'on':''}" onclick="setTpl(${i})">${x}</button>`).join('');
   $('#thChips').innerHTML=T[L].themes.map((x,i)=>`<button class="chip th ${ST.theme===i?'on':''}" onclick="setTh(${i})"><i style="background:${THEMES[i].sw}"></i>${x}</button>`).join('');
   $('#fmChips').innerHTML=T[L].fmts.map((x,i)=>`<button class="chip ${ST.fmt===i?'on':''}" onclick="setFm(${i})">${x}</button>`).join('');
-  const b=$('#brChips');if(b)b.innerHTML=BRANDS.map(c=>`<button class="chip th ${ST.brand===c?'on':''}" onclick="setBr('${c}')"><i style="background:${c}"></i>${c}</button>`).join('');
+  const b=$('#brChips');
+  if(b){b.innerHTML=SOLIDS.map(c=>`<button class="chip th ${ST.brand===c?'on':''}" onclick="setBr('${c}')"><i style="background:${c}"></i>${c}</button>`).join('');
+    $('#grChips').innerHTML=GRADS.map((g,i)=>{
+      const on=Array.isArray(ST.brand)&&ST.brand[0]===g[0];
+      return `<button class="chip th ${on?'on':''}" onclick="setBr(${i},1)"><i style="background:linear-gradient(135deg,${g[0]},${g[1]})"></i>${T[L].grads[i]}</button>`;}).join('');}
 }
 function setTpl(i){ST.tpl=i;renderChips();draw();}
 function setTh(i){ST.theme=i;renderChips();draw();}
 function setFm(i){ST.fmt=i;renderChips();draw();}
-function setBr(c){ST.brand=c;renderChips();draw();}
+function setBr(c,isGrad){ST.brand=isGrad?GRADS[c]:c;renderChips();draw();}
 function setQR(v,b){ST.qr=v;b.parentNode.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));b.classList.add('on');draw();}
 
 /* ==========================================================
-   6. Постер мазмұны
+   Постер мазмұны
 ========================================================== */
 function content(){
   const P=T[L].p,r=REGIONS[ST.reg];
   if(ST.tpl===0){
-    const sorted=[...REGIONS].sort((a,b)=>b.users-a.users);
-    const place=sorted.findIndex(x=>x.id===r.id)+1;
+    const place=[...REGIONS].sort((a,b)=>b.users-a.users).findIndex(x=>x.id===r.id)+1;
     return{eb:r.n[L],top:P.rankT(),num:P.rankTail(place),tail:'',
-      sub:`${nf(r.users)} ${L==='kk'?'оқырман':'читателей'} · ${P.staff(nf(r.staff))}`,small:true};
-  }
-  if(ST.tpl===1)
-    return{eb:r.n[L],top:P.libsT(r.n[L]),num:nf(r.libs),tail:P.libsTail,
+      sub:`${nf(r.users)} ${L==='kk'?'оқырман':'читателей'} · ${P.staff(nf(r.staff))}`,small:true};}
+  if(ST.tpl===1)return{eb:r.n[L],top:P.libsT(r.n[L]),num:nf(r.libs),tail:P.libsTail,
       sub:r.rural?P.rural(nf(r.rural),pct(r.rural,r.libs)):P.staff(nf(r.staff))};
-  if(ST.tpl===2){
-    const d=Math.round((r.users-r.usersPrev)/r.usersPrev*1000)/10;
+  if(ST.tpl===2){const d=Math.round((r.users-r.usersPrev)/r.usersPrev*1000)/10;
     return{eb:r.n[L],top:P.usersT(r.n[L]),num:nf(r.users),tail:P.usersTail,
-      sub:`${P.vsPrev(d)} · ${P.kids(nf(r.kids),pct(r.kids,r.users))}`};
-  }
-  if(ST.tpl===3)
-    return{eb:r.n[L],top:P.fundT(r.n[L]),num:nf(r.fund),tail:P.fundTail,
+      sub:`${P.vsPrev(d)} · ${P.kids(nf(r.kids),pct(r.kids,r.users))}`};}
+  if(ST.tpl===3)return{eb:r.n[L],top:P.fundT(r.n[L]),num:nf(r.fund),tail:P.fundTail,
       sub:P.kz(nf(r.fundKz),pct(r.fundKz,r.fund))};
-  if(ST.tpl===4){
-    const v=MY.r[ST.cabPeriod]||0;
+  if(ST.tpl===4){const v=MY.r[ST.cabPeriod]||0;
     return{eb:MY.name||r.n[L],top:P.monthT(T[L].monthsIn[ST.cabPeriod]),num:nf(v),tail:P.monthTail,
-      sub:v?insight(ST.cabPeriod).join(' · '):'—'};
-  }
-  const b=BOOKS[ST.cabPeriod%4];
-  return{eb:MY.name||r.n[L],top:P.bookT(T[L].cats[ST.cabPeriod%4]),num:b.t[L],tail:b.a,
-    sub:`${nf(b.c)} ${L==='kk'?'рет оқылды':'прочтений'}`,small:true};
+      sub:v?insight(ST.cabPeriod).filter(Boolean).join(' · '):'—'};}
+  if(ST.tpl===5){const b=BOOKS[ST.cabPeriod%4];
+    return{eb:MY.name||r.n[L],top:P.bookT(T[L].cats[ST.cabPeriod%4]),num:b.t[L],tail:b.a,
+      sub:`${nf(b.c)} ${L==='kk'?'рет оқылды':'прочтений'}`,small:true};}
+  const mr=myRank();
+  return{eb:MY.name||r.n[L],top:P.libRankT(),num:P.libRankTail(mr.place),tail:'',
+    sub:`${nf(MY.r.reduce((a,b)=>a+b,0))} ${L==='kk'?'оқырман':'читателей'} · ${mr.total} ${L==='kk'?'кітапхана ішінде':'библиотек'}`,small:true};
 }
 
 /* ==========================================================
-   7. Canvas
+   Canvas
 ========================================================== */
 function wrapT(ctx,s,w){const ws=String(s).split(' '),o=[];let c='';
   ws.forEach(x=>{const p=c?c+' '+x:x;if(ctx.measureText(p).width>w&&c){o.push(c);c=x;}else c=p;});
@@ -947,13 +1225,20 @@ function qr(u,sz){try{return typeof QRious==='undefined'?null:new QRious({value:
 function drawOn(cv,fi,c,ti){
   const F=FORMATS[fi],TH=THEMES[ti??ST.theme];
   cv.width=F.w;cv.height=F.h;
-  const ctx=cv.getContext('2d'),W=F.w,H=F.h,s=Math.min(W,H)/1080;
-  const acc=(ti===undefined&&ST.theme===0)?ST.brand:TH.acc, pad=W*.085;
+  const ctx=cv.getContext('2d'),W=F.w,H=F.h,s=Math.min(W,H)/1080,pad=W*.085;
+  /* акцент: бір түс не градиент */
+  let acc=TH.acc;
+  if(ti===undefined&&ST.theme===0){
+    if(Array.isArray(ST.brand)){
+      const g=ctx.createLinearGradient(pad,H*.28,W-pad,H*.62);
+      g.addColorStop(0,ST.brand[0]);g.addColorStop(1,ST.brand[1]);acc=g;
+    }else acc=ST.brand;
+  }
   ctx.fillStyle=TH.bg;ctx.fillRect(0,0,W,H);
   ctx.strokeStyle=TH.ink;ctx.globalAlpha=.05;ctx.lineWidth=1;
   for(let y=pad*1.2;y<H;y+=44*s){ctx.beginPath();ctx.moveTo(pad*.5,y);ctx.lineTo(W-pad*.5,y);ctx.stroke();}
   ctx.globalAlpha=1;
-  band(ctx,pad*.72,W,26*s,acc,TH.orn);band(ctx,H-pad*.5,W,26*s,acc,TH.orn*.8);
+  band(ctx,pad*.72,W,26*s,acc,TH.orn);band(ctx,H-pad*.86,W,26*s,acc,TH.orn*.8);
 
   const cx=pad;let y=pad*1.75;
   ctx.textBaseline='top';
@@ -961,8 +1246,7 @@ function drawOn(cv,fi,c,ti){
   const eb=String(c.eb||'').toUpperCase();
   ctx.fillText(ctx.measureText(eb).width>W-pad*2?eb.slice(0,32)+'…':eb,cx,y);y+=34*s;
 
-  ctx.fillStyle=TH.ink;
-  const ts=(F.k==='fb'?32:42)*s;
+  ctx.fillStyle=TH.ink;const ts=(F.k==='fb'?32:42)*s;
   ctx.font=`400 ${ts}px 'Inter','Noto Sans',Arial,sans-serif`;
   wrapT(ctx,c.top,W-pad*2).forEach(l=>{ctx.fillText(l,cx,y);y+=ts*1.28;});
 
@@ -980,25 +1264,30 @@ function drawOn(cv,fi,c,ti){
     ctx.font=`400 ${q}px 'Inter','Noto Sans',Arial,sans-serif`;
     wrapT(ctx,c.sub,W-pad*2).slice(0,3).forEach(l=>{ctx.fillText(l,cx,y);y+=q*1.35;});}
 
-  const sw=Math.min(W-pad*2-(ST.qr?150*s:0),520*s),sy=H-pad*1.15-86*s;
-  const who=ME?ME.name:(L==='kk'?'KITAP.STUDIO':'KITAP.STUDIO');
-  const pos=ME?ME.pos:(L==='kk'?'Ашық дерек · 2025 жылғы есеп':'Открытые данные · отчёт 2025');
-  stamp(ctx,cx,sy,sw,who,pos,today(),acc,s);
+  const sw=Math.min(W-pad*2-(ST.qr?150*s:0),520*s),sy=H-pad*1.5-86*s;
+  stamp(ctx,cx,sy,sw,ME?ME.name:BRAND,ME?ME.pos:(L==='kk'?'Ашық дерек · 2025':'Открытые данные · 2025'),today(),acc,s);
   if(ST.qr){
-    const q=Math.round(120*s),c2=qr(($('#gSite')?$('#gSite').value:'')||'https://kitap.studio',q*2);
+    const q=Math.round(120*s),c2=qr(($('#gSite')?$('#gSite').value:'')||'https://'+BRAND.toLowerCase(),q*2);
     const qx=W-pad-q,qy=sy-6*s;
     ctx.save();ctx.fillStyle=TH.ink;ctx.globalAlpha=.92;ctx.fillRect(qx-6*s,qy-6*s,q+12*s,q+12*s);ctx.globalAlpha=1;
     if(c2)ctx.drawImage(c2,qx,qy,q,q);
     else{ctx.fillStyle=TH.bg;ctx.font=`700 ${16*s}px 'JetBrains Mono',monospace`;ctx.fillText('QR',qx+q/2-12*s,qy+q/2-8*s);}
     ctx.restore();}
+
+  /* деректің көзі */
+  ctx.fillStyle=TH.soft;ctx.textAlign='center';ctx.textBaseline='alphabetic';
+  ctx.font=`500 ${15*s}px 'JetBrains Mono','Noto Sans Mono',monospace`;
+  ctx.fillText(T[L].p.credit(BRAND),W/2,H-pad*.34);
+  ctx.textAlign='left';
   return cv;
 }
 function draw(){const cv=$('#cv');if(cv)drawOn(cv,ST.fmt,content());}
 
 /* ==========================================================
-   8. Экспорт
+   Экспорт
 ========================================================== */
-const fname=(e,f)=>`kitap-${['reiting','kitapkhana','oqyrman','qor','ai','kitap'][ST.tpl]}-${FORMATS[f??ST.fmt].k}-${YEAR}.${e}`;
+const slug=()=>BRAND.toLowerCase();
+const fname=(e,f)=>`${slug()}-${['reiting','kitapkhana','oqyrman','qor','ai','kitap','orын'][ST.tpl]}-${FORMATS[f??ST.fmt].k}.${e}`;
 function dlBlob(b,n){const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=n;
   document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},400);}
 function dlJPG(){$('#cv').toBlob(b=>{dlBlob(b,fname('jpg'));toast(T[L].tJpg);},'image/jpeg',.94);}
@@ -1013,46 +1302,40 @@ async function dlZip(){
     await new Promise(r=>tmp.toBlob(b=>{dlBlob(b,fname('jpg',i));setTimeout(r,500);},'image/jpeg',.94));}return;}
   const z=new JSZip();
   for(let i=0;i<4;i++){drawOn(tmp,i,c);z.file(fname('jpg',i),await new Promise(r=>tmp.toBlob(r,'image/jpeg',.94)));}
-  dlBlob(await z.generateAsync({type:'blob'}),`kitap-studio-${YEAR}.zip`);toast(T[L].tZip);
+  dlBlob(await z.generateAsync({type:'blob'}),`${slug()}-${YEAR}.zip`);toast(T[L].tZip);
 }
 
 /* ==========================================================
-   9. Тіркелу / кіру
+   Тіркелу / кіру
 ========================================================== */
-function openM(k){$('#mLogin').classList.add('on');}
+function openM(){$('#mLogin').classList.add('on');}
 function closeM(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('on'));}
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeM();}));
 
 async function sendCode(){
   const v=id=>$('#'+id).value.trim();
   const f={lib:v('rLib'),reg:$('#rReg').value,dist:v('rDist'),loc:v('rLoc'),name:v('rName'),
-           pos:v('rPos'),phone:v('rPhone'),iin:v('rIin'),mail:v('rMail'),role:$('#rRole').value};
+           pos:v('rPos'),phone:v('rPhone'),mail:v('rMail'),role:$('#rRole').value};
   const e=$('#rgErr');e.classList.remove('on');
   if(Object.values(f).some(x=>!x)){e.textContent=T[L].errFill;e.classList.add('on');return;}
-  if(!/^\d{12}$/.test(f.iin)){e.textContent=T[L].errIin;e.classList.add('on');return;}
   if(!/^\S+@\S+\.\S+$/.test(f.mail)){e.textContent=T[L].errMail;e.classList.add('on');return;}
   pending=f;
   if(MODE==='api'){
     try{
       const r=await API.register({name:f.lib,region:f.reg,district:f.dist,locality:f.loc,
-        fullName:f.name,position:f.pos,phone:f.phone,email:f.mail,iin:f.iin,role:f.role});
+        fullName:f.name,position:f.pos,phone:f.phone,email:f.mail,role:f.role});
       pending.libraryId=r.libraryId;await API.requestCode(f.mail);
       pendingCode=null;$('#codeShown').textContent='• • • • • •';
     }catch(err){e.textContent=err.message;e.classList.add('on');return;}
-  }else{
-    pendingCode=String(Math.floor(100000+Math.random()*900000));
-    $('#codeShown').textContent=pendingCode;
-  }
+  }else{pendingCode=String(Math.floor(100000+Math.random()*900000));$('#codeShown').textContent=pendingCode;}
   $('#rgStep1').style.display='none';$('#rgStep2').style.display='block';
 }
 async function confirmCode(){
   const e=$('#cdErr');e.classList.remove('on');const c=$('#rCode').value.trim();
-  if(MODE==='api'){
-    try{await API.verifyCode(pending.mail,c);}catch(err){e.textContent=T[L].errCode;e.classList.add('on');return;}
-  }else if(c!==pendingCode){e.textContent=T[L].errCode;e.classList.add('on');return;}
+  if(MODE==='api'){try{await API.verifyCode(pending.mail,c);}catch(err){e.textContent=T[L].errCode;e.classList.add('on');return;}}
+  else if(c!==pendingCode){e.textContent=T[L].errCode;e.classList.add('on');return;}
   ME={libraryId:pending.libraryId||'LIB-DEMO',name:pending.name,pos:pending.pos,mail:pending.mail,role:pending.role};
-  MY.name=pending.lib;MY.region=pending.reg;
-  enterApp();
+  MY.name=pending.lib;MY.region=pending.reg;enterApp();
 }
 async function askCode(){
   const m=$('#lMail').value.trim(),e=$('#lgErr');e.classList.remove('on');
@@ -1068,28 +1351,25 @@ async function doLogin(){
     const r=await API.verifyCode(m,c),u=r.user;
     if(!u){e.textContent=T[L].errLogin;e.classList.add('on');return;}
     ME={libraryId:u.libraryId,name:u.fullName,pos:u.position,mail:u.email,role:u.role};
-    MY.name=u.name;MY.region=u.region;
-    enterApp();
+    MY.name=u.name;MY.region=u.region;enterApp();
     try{const d=await API.library(u.libraryId);
       if(d.readers)MY.r=d.readers;if(d.visits)MY.v=d.visits;
-      renderMonths();renderBars();loadMonth();draw();}catch(_){}
+      renderMonths();renderBars();renderRoll();loadMonth();draw();}catch(_){}
   }catch(err){e.textContent=T[L].errCode;e.classList.add('on');}
 }
 function demoLogin(){
-  ME={libraryId:'LIB-DEMO',
-      name:L==='kk'?'Сәрсенова Айгүл Қайратқызы':'Сарсенова Айгуль Кайратовна',
-      pos:L==='kk'?'Кітапхана меңгерушісі':'Заведующая библиотекой',mail:'demo@kitap.studio',role:'lib'};
+  ME={libraryId:'LIB-DEMO',name:L==='kk'?'Сәрсенова Айгүл Қайратқызы':'Сарсенова Айгуль Кайратовна',
+      pos:L==='kk'?'Кітапхана меңгерушісі':'Заведующая библиотекой',mail:'demo@example.kz',role:'lib'};
   MY.name=L==='kk'?'Қарасу ауылдық кітапханасы':'Сельская библиотека Карасу';
   MY.region=REGIONS[3].n[L];
   MY.r=[980,1284,1410,1330,1520,1180,1090,1240,1620,1710,1580,1460];
   MY.v=[2210,2680,2940,2810,3120,2460,2280,2600,3380,3510,3260,3040];
-  MY.fund=24800;MY.issued=19200;MY.staff=4;
-  enterApp();
+  MY.fund=24800;MY.issued=19200;MY.staff=4;enterApp();
 }
 function enterApp(){
   closeM();$('#app').classList.add('on');document.body.style.overflow='hidden';
   $('#uLib').textContent=MY.name||'—';$('#uPer').textContent=ME.name+' · '+ME.pos;
-  EDIT=1;renderMonths();loadMonth();renderBars();renderBooks();renderRoll();renderChips();payload();draw();
+  EDIT=1;renderMonths();loadMonth();renderBars();renderBooks();renderRoll();renderChips();renderProjects();renderMyPosts();draw();
   $('#app').scrollTop=0;
 }
 function logout(){ME=null;$('#app').classList.remove('on');document.body.style.overflow='';renderChips();draw();}
@@ -1097,12 +1377,17 @@ function tab(v,b){
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
   $('#v-'+v).classList.add('on');
   document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
-  if(v==='roll'){renderRoll();payload();}
+  if(v==='roll')renderRoll();
   $('#app').scrollTop=0;
+}
+function writePost(){
+  if(!ME){toast(T[L].needLogin);openM();return;}
+  enterApp();
+  const btns=document.querySelectorAll('.tabs button');tab('blog',btns[4]);
 }
 
 /* ==========================================================
-   10. Кабинет — дерек
+   Кабинет
 ========================================================== */
 function renderMonths(){
   const el=$('#mPick');if(!el)return;
@@ -1117,22 +1402,18 @@ function loadMonth(){
 }
 function saveMonth(){
   const nr=+$('#mReaders').value||0,prev=EDIT>0?MY.r[EDIT-1]:0;
-  if(prev>0&&nr>0){
-    const d=Math.round((nr-prev)/prev*100);
+  if(prev>0&&nr>0){const d=Math.round((nr-prev)/prev*100);
     if(Math.abs(d)>70&&!$('#dWarn').classList.contains('on')){
-      $('#dWarn').textContent=T[L].warn(nf(prev),nf(nr),(d>0?'+':'')+d);
-      $('#dWarn').classList.add('on');return;}
-  }
+      $('#dWarn').textContent=T[L].warn(nf(prev),nf(nr),(d>0?'+':'')+d);$('#dWarn').classList.add('on');return;}}
   MY.r[EDIT]=nr;MY.v[EDIT]=+$('#mVisits').value||0;
   MY.fund=+$('#mFund').value||0;MY.issued=+$('#mIssued').value||0;MY.staff=+$('#mStaff').value||0;
   $('#dWarn').classList.remove('on');
   $('#dOk').textContent=T[L].saved(T[L].months[EDIT]);$('#dOk').classList.add('on');
-  ST.cabPeriod=EDIT;renderMonths();renderBars();payload();draw();
-  if(MODE==='api'&&ME&&ME.libraryId){
-    API.saveMonthly({libraryId:ME.libraryId,year:YEAR+1,month:EDIT+1,readers:MY.r[EDIT],visits:MY.v[EDIT],
-      fund:MY.fund,issued:MY.issued,staff:MY.staff,enteredBy:ME.name,position:ME.pos})
-     .then(r=>toast('Google Sheets ✓')).catch(e=>toast('Sheets: '+e.message));
-  }
+  ST.cabPeriod=EDIT;renderMonths();renderBars();renderRoll();draw();
+  if(MODE==='api'&&ME&&ME.libraryId)
+    API.saveMonthly({libraryId:ME.libraryId,library:MY.name,region:MY.region,year:YEAR+1,month:EDIT+1,
+      readers:MY.r[EDIT],visits:MY.v[EDIT],fund:MY.fund,issued:MY.issued,staff:MY.staff,
+      enteredBy:ME.name,position:ME.pos}).then(()=>toast('✓')).catch(e=>toast(e.message));
 }
 function insight(i){
   const o=[];if(!MY.r[i])return[''];
@@ -1147,13 +1428,6 @@ function renderBars(){
   el.innerHTML=MY.r.map((x,i)=>`<div class="${x===mx&&x>0?'max':''}" style="height:${Math.max(3,x/mx*100)}%"><span>${T[L].months[i].slice(0,3)}</span></div>`).join('');
   $('#insight').textContent=insight(EDIT).filter(Boolean).join(' · ');
 }
-function importCsv(){
-  const ls=$('#csv').value.trim().split(/\n+/).filter(Boolean);let n=0;
-  ls.forEach(l=>{const p=l.split(/[;,\t]/).map(s=>s.trim()),m=parseInt(p[0],10);
-    if(!(m>=1&&m<=12))return;
-    MY.r[m-1]=+p[1]||MY.r[m-1];MY.v[m-1]=+p[2]||MY.v[m-1];if(p[3])MY.issued=+p[3];n++;});
-  renderMonths();renderBars();loadMonth();draw();toast(T[L].tCsv(n));
-}
 function renderBooks(){
   const el=$('#bookRows');if(!el)return;
   el.innerHTML=BOOKS.map((b,i)=>`
@@ -1161,40 +1435,63 @@ function renderBooks(){
      <div style="font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sia);margin-bottom:7px">${T[L].cats[i]}</div>
      <div class="row2">
        <div class="field"><label>${T[L].bT}</label><input value="${b.t[L]}" oninput="BOOKS[${i}].t['${L}']=this.value"></div>
-       <div class="field"><label>${T[L].bA}</label><input value="${b.a}" oninput="BOOKS[${i}].a=this.value"></div>
-     </div>
+       <div class="field"><label>${T[L].bA}</label><input value="${b.a}" oninput="BOOKS[${i}].a=this.value"></div></div>
      <div class="field" style="max-width:210px"><label>${T[L].bC}</label><input type="number" value="${b.c}" oninput="BOOKS[${i}].c=+this.value"></div>
    </div>`).join('');
 }
 function saveBooks(){
   if(MODE==='api'&&ME&&ME.libraryId)
-    BOOKS.forEach((b,i)=>API.saveBook({libraryId:ME.libraryId,year:YEAR+1,category:i,title:b.t[L],
-      author:b.a,count:b.c,enteredBy:ME.name,position:ME.pos}).catch(()=>{}));
-  ST.tpl=5;ST.cabPeriod=0;renderChips();logoutToStudio();
-}
-function logoutToStudio(){
+    BOOKS.forEach((b,i)=>API.saveBook({libraryId:ME.libraryId,library:MY.name,region:MY.region,year:YEAR+1,
+      category:i,title:b.t[L],author:b.a,count:b.c,enteredBy:ME.name,position:ME.pos}).catch(()=>{}));
+  ST.tpl=5;ST.cabPeriod=0;renderChips();
   $('#app').classList.remove('on');document.body.style.overflow='';
   draw();document.getElementById('studio').scrollIntoView();
 }
 function renderRoll(){
+  const my=$('#myBody');
+  if(my){
+    $('#myRepH').textContent=T[L].myRep(MY.name||'—');
+    my.innerHTML=T[L].months.map((m,i)=>{
+      const d=i>0&&MY.r[i-1]>0?Math.round((MY.r[i]-MY.r[i-1])/MY.r[i-1]*100):null;
+      return `<tr><td>${m}</td><td class="num">${MY.r[i]?nf(MY.r[i]):'—'}</td>
+        <td class="num">${MY.v[i]?nf(MY.v[i]):'—'}</td>
+        <td class="num ${d>0?'up':d<0?'dn':''}">${d===null||!MY.r[i]?'—':(d>0?'+':'')+d+'%'}</td></tr>`;}).join('');
+    $('#myFoot').innerHTML=`<td>${T[L].tot}</td><td class="num">${nf(MY.r.reduce((a,b)=>a+b,0))}</td>
+      <td class="num">${nf(MY.v.reduce((a,b)=>a+b,0))}</td><td></td>`;
+    const mr=myRank();
+    $('#myRepH').textContent=T[L].myRep(MY.name||'—')+' · '+T[L].myPlace(mr.place,mr.total);
+  }
   const el=$('#rollBody');if(!el)return;
   el.innerHTML=[...REGIONS].sort((a,b)=>b.users-a.users).map(r=>
    `<tr><td>${r.n[L]}</td><td class="num">${nf(r.libs)}</td><td class="num">${nf(r.users)}</td>
     <td class="num">${nf(r.visits)}</td><td class="num">${nf(r.fund)}</td></tr>`).join('');
 }
-function payload(){
-  if(!ME)return;
-  $('#payload').textContent='POST /exec\n'+JSON.stringify({action:'saveMonthly',row:{
-    libraryId:ME.libraryId,library:MY.name,region:MY.region,year:YEAR+1,month:EDIT+1,
-    readers:MY.r[EDIT],visits:MY.v[EDIT],fund:MY.fund,issued:MY.issued,staff:MY.staff,
-    enteredBy:ME.name,position:ME.pos,iin:'8801•••••000',ts:new Date().toISOString()}},null,2);
+
+/* ---- блог ---- */
+function savePost(){
+  const e=$('#bErr');e.classList.remove('on');
+  const ti=$('#bTi').value.trim(),tx=$('#bTx').value.trim(),pj=+$('#bPj').value;
+  if(!ti||!tx){e.textContent=T[L].errFill;e.classList.add('on');return;}
+  const row={libraryId:ME.libraryId,library:MY.name,region:MY.region,project:pj,
+    title:ti,body:tx,author:ME.name,position:ME.pos};
+  POSTS.unshift({pj,ti,tx,lib:MY.name,reg:MY.region,au:ME.name,po:ME.pos,dt:today(),mine:true});
+  if(MODE==='api')API.savePost(row).catch(err=>toast(err.message));
+  $('#bTi').value='';$('#bTx').value='';
+  renderFeed();renderMyPosts();toast(T[L].posted);
 }
-async function testSync(){toast('…');const o=await probe();
-  toast(o?(L==='kk'?'Қосылым сәтті — дерек Sheets-ке жазылады':'Подключено — данные пишутся в Sheets')
-        :(L==='kk'?'Қосылым жоқ. Deploy: Who has access = Anyone':'Нет связи. Deploy: Who has access = Anyone'));}
+function renderMyPosts(){
+  const el=$('#myPosts');if(!el)return;
+  const mine=POSTS.filter(p=>p.mine);
+  el.innerHTML=mine.length?mine.map(p=>{
+    const ti=typeof p.ti==='string'?p.ti:p.ti[L];
+    return `<div style="border-bottom:1px solid var(--tor);padding:10px 0">
+      <div class="hint">${p.dt} · ${T[L].projects[p.pj]?T[L].projects[p.pj][1]:''}</div>
+      <div style="font-weight:600">${ti}</div></div>`;}).join('')
+    :`<p class="hint">${T[L].noPosts}</p>`;
+}
 
 /* ==========================================================
-   11. Wrapped
+   Wrapped
 ========================================================== */
 let WC=[];
 function wrappedSlides(){
@@ -1226,7 +1523,7 @@ async function dlWrapped(){
 }
 
 /* ==========================================================
-   12. Іске қосу
+   Іске қосу
 ========================================================== */
 renderAll();
 const KZ='ӘҒҚҢӨҰҮҺІәғқңөұүһі';
