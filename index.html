@@ -400,7 +400,8 @@ footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
     </div>
     <div class="tblbox"><table class="rank"><thead><tr>
       <th data-i="lb.c0">Орын</th><th data-i="lb.c1">Кітапхана</th><th data-i="lb.c2">Орналасқан жері</th>
-      <th data-i="lb.c3">Оқырман</th><th data-i="lb.c4">Келушi</th><th data-i="lb.c5">Соңғы есеп</th>
+      <th data-i="lb.c3">Оқырман</th><th data-i="lb.c4">Келушi</th><th data-i="lb.c6">Берілген кітаптар</th>
+      <th data-i="lb.c5">Соңғы есеп</th>
     </tr></thead><tbody id="libsBody"></tbody></table></div>
     <p class="hint" id="lbNote" style="margin:12px 4px 0"></p>
   </div>
@@ -624,12 +625,13 @@ footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
   <div class="wrap">
     <div class="view on" id="v-data">
       <div class="card"><h4 data-i="cb.month">Есепті ай</h4><div class="months" id="mPick"></div></div>
-      <div class="card"><h4 data-i="cb.metrics">Бес көрсеткіш</h4>
+      <div class="card"><h4 data-i="cb.metrics">Алты көрсеткіш</h4>
         <div class="g5">
           <div class="field"><label data-i="m1">Оқырман саны</label><input id="mReaders" type="number" min="0"></div>
           <div class="field"><label data-i="m2">Келушi саны</label><input id="mVisits" type="number" min="0"></div>
           <div class="field"><label data-i="m3">Кітапхана қоры</label><input id="mFund" type="number" min="0"></div>
           <div class="field"><label data-i="m4">Берілген құжат</label><input id="mIssued" type="number" min="0"></div>
+          <div class="field"><label data-i="m6">Берілген кітаптар</label><input id="mBooks" type="number" min="0"></div>
           <div class="field"><label data-i="m5">Кітапханашы саны</label><input id="mStaff" type="number" min="0"></div>
         </div>
         <div class="warnbox" id="dWarn"></div><div class="okbox" id="dOk"></div>
@@ -759,6 +761,7 @@ kk:{
  'lb.eye':'Платформадағы кітапханалар','lb.h':'Тіркелген кітапханалар рейтингі',
  'lb.sub':'Есеп берген кітапханалар өзара салыстырылады. Өз кітапханаңызды тіркеп, тізімге қосылыңыз.',
  'lb.c0':'Орын','lb.c1':'Кітапхана','lb.c2':'Орналасқан жері','lb.c3':'Оқырман','lb.c4':'Келушi','lb.c5':'Соңғы есеп',
+ 'lb.c6':'Берілген кітаптар',
 
  'hero.badge':'📊 2025 жыл қорытындысы · ҚР көпшілік кітапханалары',
  'hero.h1':'Сан емес — <em>сөйлейтін</em> контент.',
@@ -794,7 +797,7 @@ kk:{
  'lg.eye':'// Жеке кабинет','lg.h':'Кіру','lg.hint':'Пошта мен поштаға келген код арқылы кіресіз.',
  'lg.ask':'Поштаға код жіберу','lg.go':'Кіру',
  'cb.out':'Шығу','cb.t1':'Дерек енгізу','cb.t2':'Кітап рейтингі','cb.t3':'Жыл қорытындысы','cb.t4':'Жиынтық есеп','cb.t5':'Баптаулар','cb.t6':'Блог',
- 'cb.month':'Есепті ай','cb.metrics':'Бес көрсеткіш','cb.save':'Сақтау','cb.year':'Жылдық динамика — оқырман',
+ 'cb.month':'Есепті ай','cb.metrics':'Алты көрсеткіш','cb.save':'Сақтау','cb.year':'Жылдық динамика — оқырман',
  'cb.bh':'Ең көп оқылған кітап — төрт жас санаты','cb.bs':'Сақтап, постер жасау',
  'cb.rec':'Оқырманға ұсынатын кітаптар','cb.recb':'Ұсыныс тізімін сақтау',
  'cb.rech':'Бұл тізім платформаның басты бетінде «Кітапханалар оқырманға ұсынады» бөлімінде шығады.',
@@ -804,7 +807,7 @@ kk:{
  'cb.bph':'Жазба Медиа бөлімінде кітапхананың аты, автордың аты-жөні мен лауазымымен бірге шығады.',
  'cb.mine':'Менің жазбаларым',
  'cb.br':'Кітапхананың бренд түсі','cb.brs':'Бір түс','cb.brg':'Градиент','cb.site':'Профиль сілтемесі (QR-ға түседі)',
- 'm1':'Оқырман саны','m2':'Келушi саны','m3':'Кітапхана қоры','m4':'Берілген құжат','m5':'Кітапханашы саны',
+ 'm1':'Оқырман саны','m2':'Келушi саны','m3':'Кітапхана қоры','m4':'Берілген құжат','m5':'Кітапханашы саны','m6':'Берілген кітаптар',
  stats:['Кітапхана','Оқырман','Келушi','Кітап қоры'],
  statL:['ел бойынша барлығы','2025 жылы','2025 жылы','дана'],
  live:(n,r)=>`Соңғы есепте ${n} кітапхана, оның ${r}-і ауылдық жерде`,
@@ -821,7 +824,7 @@ kk:{
   ['Иерархия','Есеп өзі жиналады','Кітапханашы енгізген дерек ауданға, облысқа, министрлікке автоматты өтеді.'],
   ['Тексеру','Қате санды ұстайды','Көрсеткіш күрт өзгерсе, жүйе сақтамай тұрып сұрайды.']],
  guide:[
-  ['A','Айына бір рет кіресің','Ай аяқталған соң кабинетке кіріп, бес санды енгізесің. Бес минут кетеді.'],
+  ['A','Айына бір рет кіресің','Ай аяқталған соң кабинетке кіріп, алты санды енгізесің. Бес минут кетеді.'],
   ['B','Жүйе тексереді','Сан өткен айдан 70%-дан артық ауытқыса, жүйе «дұрыс па?» деп сұрайды.'],
   ['C','Шаблон таңдайсың','Айлық, ең көп оқылған кітап немесе рейтингтегі орын.'],
   ['D','Форматты таңдайсың','Instagram-ға пост па, сторис пе, Facebook-ке ме, әлде әкімшілікке A4 па.'],
@@ -895,6 +898,7 @@ ru:{
  'lb.eye':'Библиотеки на платформе','lb.h':'Рейтинг зарегистрированных библиотек',
  'lb.sub':'Сравниваются библиотеки, сдавшие отчёт. Зарегистрируйте свою и попадите в список.',
  'lb.c0':'Место','lb.c1':'Библиотека','lb.c2':'Расположение','lb.c3':'Читателей','lb.c4':'Посещений','lb.c5':'Последний отчёт',
+ 'lb.c6':'Выдано книг',
 
  'hero.badge':'📊 Итоги 2025 года · публичные библиотеки РК',
  'hero.h1':'Не цифра — <em>говорящий</em> контент.',
@@ -930,7 +934,7 @@ ru:{
  'lg.eye':'// Личный кабинет','lg.h':'Вход','lg.hint':'Вход по почте и коду, который пришёл на неё.',
  'lg.ask':'Отправить код на почту','lg.go':'Войти',
  'cb.out':'Выйти','cb.t1':'Ввод данных','cb.t2':'Рейтинг книг','cb.t3':'Итоги года','cb.t4':'Сводный отчёт','cb.t5':'Настройки','cb.t6':'Блог',
- 'cb.month':'Отчётный месяц','cb.metrics':'Пять показателей','cb.save':'Сохранить','cb.year':'Динамика за год — читатели',
+ 'cb.month':'Отчётный месяц','cb.metrics':'Шесть показателей','cb.save':'Сохранить','cb.year':'Динамика за год — читатели',
  'cb.bh':'Самая читаемая книга — четыре категории','cb.bs':'Сохранить и создать постер',
  'cb.rec':'Книги, которые вы советуете читателям','cb.recb':'Сохранить список рекомендаций',
  'cb.rech':'Этот список появится на главной странице в разделе «Библиотеки советуют читателям».',
@@ -940,7 +944,7 @@ ru:{
  'cb.bph':'Запись появится в разделе Медиа вместе с названием библиотеки, ФИО и должностью автора.',
  'cb.mine':'Мои записи',
  'cb.br':'Фирменный цвет библиотеки','cb.brs':'Один цвет','cb.brg':'Градиент','cb.site':'Ссылка на профиль (попадёт в QR)',
- 'm1':'Читателей','m2':'Посещений','m3':'Фонд библиотеки','m4':'Выдано документов','m5':'Библиотекарей',
+ 'm1':'Читателей','m2':'Посещений','m3':'Фонд библиотеки','m4':'Выдано документов','m5':'Библиотекарей','m6':'Выдано книг',
  stats:['Библиотек','Читателей','Посещений','Книжный фонд'],
  statL:['всего по стране','в 2025 году','в 2025 году','экземпляров'],
  live:(n,r)=>`В последнем отчёте ${n} библиотек, из них ${r} в сельской местности`,
@@ -957,7 +961,7 @@ ru:{
   ['Иерархия','Отчёт собирается сам','Данные библиотекаря уходят в район, область и министерство автоматически.'],
   ['Проверка','Ловит ошибочную цифру','Если показатель резко изменился, система переспросит до сохранения.']],
  guide:[
-  ['A','Заходите раз в месяц','После окончания месяца входите в кабинет и вводите пять цифр. Пять минут.'],
+  ['A','Заходите раз в месяц','После окончания месяца входите в кабинет и вводите шесть цифр. Пять минут.'],
   ['B','Система проверяет','Если цифра отклонилась от прошлого месяца больше чем на 70%, система переспросит.'],
   ['C','Выбираете шаблон','Месячный, самая читаемая книга или место в рейтинге.'],
   ['D','Выбираете формат','Пост в Instagram, сторис, Facebook или A4 для акимата.'],
@@ -1061,14 +1065,14 @@ let ME=null,EDIT=0,pending=null,pendingCode=null,shown=3;
 /* Тіркелген кітапханалар. Бос болса — төмендегі үлгі көрсетіледі. */
 let LIBS=[],LIBS_DEMO=true;
 const DEMO_LIBS=[
- {id:'LIB-0001',library:'Түркістан қалалық орталық кітапханасы',region:'Түркістан',district:'Түркістан қ.',readers:31240,visits:74800,last:'2026-07'},
- {id:'LIB-0002',library:'Абай атындағы облыстық кітапхана',region:'Абай',district:'Семей қ.',readers:28610,visits:69300,last:'2026-07'},
- {id:'LIB-0003',library:'Талдықорған балалар кітапханасы',region:'Жетісу',district:'Талдықорған қ.',readers:19480,visits:44100,last:'2026-07'},
- {id:'LIB-0004',library:'Қарасу ауылдық кітапханасы',region:'Алматы облысы',district:'Іле ауданы',readers:16404,visits:34350,last:'2026-06'},
- {id:'LIB-0005',library:'Көкшетау балалар кітапханасы',region:'Ақмола',district:'Көкшетау қ.',readers:15880,visits:37200,last:'2026-07'},
- {id:'LIB-0006',library:'Ақсу ауылдық кітапханасы',region:'Павлодар',district:'Ақсу ауданы',readers:9120,visits:21400,last:'2026-06'},
- {id:'LIB-0007',library:'Бейнеу аудандық кітапханасы',region:'Маңғыстау',district:'Бейнеу ауданы',readers:7640,visits:17900,last:'2026-05'}];
-const MY={r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,staff:0,name:'',region:''};
+ {id:'LIB-0001',library:'Түркістан қалалық орталық кітапханасы',region:'Түркістан',district:'Түркістан қ.',readers:31240,visits:74800,books:68420,last:'2026-07'},
+ {id:'LIB-0002',library:'Абай атындағы облыстық кітапхана',region:'Абай',district:'Семей қ.',readers:28610,visits:69300,books:61150,last:'2026-07'},
+ {id:'LIB-0003',library:'Талдықорған балалар кітапханасы',region:'Жетісу',district:'Талдықорған қ.',readers:19480,visits:44100,books:40270,last:'2026-07'},
+ {id:'LIB-0004',library:'Қарасу ауылдық кітапханасы',region:'Алматы облысы',district:'Іле ауданы',readers:16404,visits:34350,books:31980,last:'2026-06'},
+ {id:'LIB-0005',library:'Көкшетау балалар кітапханасы',region:'Ақмола',district:'Көкшетау қ.',readers:15880,visits:37200,books:33640,last:'2026-07'},
+ {id:'LIB-0006',library:'Ақсу ауылдық кітапханасы',region:'Павлодар',district:'Ақсу ауданы',readers:9120,visits:21400,books:18730,last:'2026-06'},
+ {id:'LIB-0007',library:'Бейнеу аудандық кітапханасы',region:'Маңғыстау',district:'Бейнеу ауданы',readers:7640,visits:17900,books:15260,last:'2026-05'}];
+const MY={r:new Array(12).fill(0),v:new Array(12).fill(0),fund:0,issued:0,books:0,staff:0,name:'',region:''};
 const BOOKS=[
  {t:{kk:'Менің атым Қожа',ru:'Меня зовут Кожа'},a:'Б. Соқпақбаев',c:412},
  {t:{kk:'Абай жолы',ru:'Путь Абая'},a:'М. Әуезов',c:308},
@@ -1178,7 +1182,7 @@ async function loadLibs(){
   try{
     const d=await API.ranking();
     if(d&&d.length){LIBS=d.map(x=>({id:x.libraryId||'',library:x.library||x.name,region:x.region||'',
-      district:x.district||'',readers:+x.readers||0,visits:+x.visits||0,last:x.lastReport||''}));
+      district:x.district||'',readers:+x.readers||0,visits:+x.visits||0,books:+x.books||0,last:x.lastReport||''}));
       LIBS_DEMO=false;renderLibs();}
   }catch(e){}
 }
@@ -1225,8 +1229,9 @@ function renderLibs(){
      <td><span class="medal ${k===0?'g':''}">${k+1}</span></td>
      <td>${x.library}</td><td>${[x.region,x.district].filter(Boolean).join(', ')}</td>
      <td class="num">${nf(x.readers)}</td><td class="num">${x.visits?nf(x.visits):'—'}</td>
+     <td class="num">${x.books?nf(x.books):'—'}</td>
      <td class="num" style="font-weight:400">${x.last||T[L].noRep}</td></tr>`).join('')
-   :`<tr><td colspan="6" class="hint" style="padding:20px">${T[L].lbEmpty}</td></tr>`;
+   :`<tr><td colspan="7" class="hint" style="padding:20px">${T[L].lbEmpty}</td></tr>`;
 }
 /* Өз кітапханамның орны */
 function myRank(){
@@ -1507,7 +1512,8 @@ function renderMonths(){
 function pick(i){EDIT=i;renderMonths();loadMonth();}
 function loadMonth(){
   $('#mReaders').value=MY.r[EDIT]||'';$('#mVisits').value=MY.v[EDIT]||'';
-  $('#mFund').value=MY.fund||'';$('#mIssued').value=MY.issued||'';$('#mStaff').value=MY.staff||'';
+  $('#mFund').value=MY.fund||'';$('#mIssued').value=MY.issued||'';
+  $('#mBooks').value=MY.books||'';$('#mStaff').value=MY.staff||'';
   $('#dWarn').classList.remove('on');$('#dOk').classList.remove('on');
 }
 function saveMonth(){
@@ -1516,13 +1522,14 @@ function saveMonth(){
     if(Math.abs(d)>70&&!$('#dWarn').classList.contains('on')){
       $('#dWarn').textContent=T[L].warn(nf(prev),nf(nr),(d>0?'+':'')+d);$('#dWarn').classList.add('on');return;}}
   MY.r[EDIT]=nr;MY.v[EDIT]=+$('#mVisits').value||0;
-  MY.fund=+$('#mFund').value||0;MY.issued=+$('#mIssued').value||0;MY.staff=+$('#mStaff').value||0;
+  MY.fund=+$('#mFund').value||0;MY.issued=+$('#mIssued').value||0;
+  MY.books=+$('#mBooks').value||0;MY.staff=+$('#mStaff').value||0;
   $('#dWarn').classList.remove('on');
   $('#dOk').textContent=T[L].saved(T[L].months[EDIT]);$('#dOk').classList.add('on');
   ST.cabPeriod=EDIT;renderMonths();renderBars();renderRoll();draw();
   if(MODE==='api'&&ME&&ME.libraryId)
     API.saveMonthly({libraryId:ME.libraryId,library:MY.name,region:MY.region,year:YEAR+1,month:EDIT+1,
-      readers:MY.r[EDIT],visits:MY.v[EDIT],fund:MY.fund,issued:MY.issued,staff:MY.staff,
+      readers:MY.r[EDIT],visits:MY.v[EDIT],fund:MY.fund,issued:MY.issued,books:MY.books,staff:MY.staff,
       enteredBy:ME.name,position:ME.pos}).then(()=>toast('✓')).catch(e=>toast(e.message));
 }
 function insight(i){
