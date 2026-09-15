@@ -235,8 +235,51 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .duo button{align-self:flex-start;border:0;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14.5px;background:#fff;color:var(--ink)}
 .duo .b button{background:var(--ink);color:#fff}
 
-/* about */
-.abt p{max-width:72ch;color:#4B5563;font-size:15.5px}
+/* about — «бұрын → қазір» диптихі */
+.abt{background:var(--card);border-radius:var(--r);padding:34px}
+.abhead{max-width:54ch;margin-bottom:24px}
+.abhead h2{margin-bottom:0}
+.abflow{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+.abcard{border-radius:var(--r2);padding:24px;display:flex;flex-direction:column;gap:12px;min-height:168px}
+.abcard .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.abcard .q{margin:0;font-family:var(--disp);font-weight:800;font-size:clamp(17px,2vw,21px);letter-spacing:-.03em;line-height:1.28}
+.abcard .abm{font-size:13px;margin-top:auto;padding-top:6px}
+.abcard.old{background:var(--box)}
+.abcard.old .tag{color:var(--bad)}
+.abcard.old .q{color:#4B5563}
+.abcard.old .abm{color:var(--mute)}
+.abcard.new{background:var(--dark);color:#fff}
+.abcard.new .tag{color:var(--lime)}
+.abcard.new .abm{color:rgba(255,255,255,.72)}
+.abar{align-self:center;justify-self:center;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:700;flex:none;box-shadow:0 12px 26px -12px rgba(44,92,255,.8)}
+.abfoot{display:flex;gap:11px;align-items:flex-start;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--mute);max-width:80ch}
+.abfoot i{font-style:normal;flex:none}
+@media(max-width:760px){
+  .abt{padding:24px}
+  .abflow{grid-template-columns:1fr}
+  .abar{transform:rotate(90deg)}
+}
+
+/* crowdfunding — жобаны қолдау */
+.fund{background:var(--dark);color:#fff;border-radius:var(--r);padding:40px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;position:relative;overflow:hidden}
+.fund::after{content:"";position:absolute;width:340px;height:340px;right:-130px;top:-150px;border-radius:50%;background:radial-gradient(circle,rgba(201,244,92,.2),transparent 70%);pointer-events:none}
+.fund>div{position:relative;z-index:1}
+.fund .eyebrow{color:var(--lime)}
+.fund h2{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;margin:0 0 12px;line-height:1.1}
+.fund h2 em{font-style:normal;color:var(--lime)}
+.fund p{margin:0 0 14px;color:rgba(255,255,255,.72);font-size:15px;max-width:52ch}
+.fnote{display:block;font-size:13px;color:rgba(255,255,255,.5)}
+.fcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r2);padding:22px}
+.fbank{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px}
+.fbank i{width:27px;height:27px;border-radius:9px;background:var(--lime);color:#22300A;display:grid;place-items:center;font-size:13px;font-weight:800;font-style:normal;flex:none}
+.flbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:18px 0 7px}
+.fnum{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.1vw,20px);letter-spacing:.06em;color:var(--lime);word-break:break-word}
+.fcopy{margin-top:18px;width:100%;background:#fff;color:var(--ink);border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px}
+.fcopy:hover{background:var(--lime);color:#22300A}
+.fok{display:block;margin-top:9px;font-size:12.5px;color:var(--lime);opacity:0;transition:opacity .25s}
+.fok.on{opacity:1}
+.fthx{margin-top:15px;font-size:12.5px;color:rgba(255,255,255,.55);text-align:center}
+@media(max-width:960px){.fund{grid-template-columns:1fr;padding:28px}}
 
 /* footer */
 footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
@@ -643,11 +686,46 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
   </div>
 </div></div></section>
 
-<section style="padding-top:0"><div class="wrap abt">
-  <div class="eyebrow" data-i="ab.eye">Жоба туралы</div>
-  <h2 class="sh" id="abH" style="margin-bottom:16px">—</h2>
-  <p data-i="ab.p1">Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды.</p>
-  <p data-i="ab.p2">Платформа сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ.</p>
+<section id="about" style="padding-top:0"><div class="wrap">
+  <div class="abt">
+    <div class="abhead">
+      <div class="eyebrow" data-i="ab.eye">Жоба туралы</div>
+      <h2 class="sh" id="abH">—</h2>
+    </div>
+    <div class="abflow">
+      <div class="abcard old">
+        <span class="tag" data-i="ab.t1">Бұрын</span>
+        <p class="q" data-i="ab.q1">Мыңдаған көрсеткіш есепке тапсырылып, қағазда қалады.</p>
+        <span class="abm" data-i="ab.m1">Оқырман көрмейді · еңбек көрінбейді</span>
+      </div>
+      <div class="abar" aria-hidden="true">→</div>
+      <div class="abcard new">
+        <span class="tag" data-i="ab.t2">DILIGEN-мен</span>
+        <p class="q" data-i="ab.q2">Сол сан бір батырмамен көрінетін контентке айналады.</p>
+        <span class="abm" data-i="ab.m2">4 формат · 5 минут · дизайн білімі керек емес</span>
+      </div>
+    </div>
+    <div class="abfoot"><i>✍️</i><span data-i="ab.au">Әр постер мен жазбаның астында деректі енгізген қызметкердің аты-жөні мен лауазымы қалады — еңбек өз авторымен бірге көрінеді.</span></div>
+  </div>
+</div></section>
+
+<section id="support" style="padding-top:0"><div class="wrap">
+  <div class="fund">
+    <div>
+      <div class="eyebrow" data-i="fn.eye">Жобаны қолдау</div>
+      <h2 data-i="fn.h">Мұндай жобалар <em>қолдаумен</em> дамиды</h2>
+      <p data-i="fn.p">DILIGEN кітапханалар үшін тегін жасалды және тегін қала береді. Домен, сервер мен жаңа құралдар авторлардың өз қаражатымен қамтылып отыр. Жобаның дамуына үлес қосқыңыз келсе, төмендегі реквизит арқылы қолдау білдіре аласыз.</p>
+      <span class="fnote" data-i="fn.note">Қолдау — толықтай ерікті. Платформаның бірде-бір мүмкіндігі ақылы болмайды.</span>
+    </div>
+    <div class="fcard">
+      <div class="fbank"><i>K</i><span>Kaspi Bank</span></div>
+      <span class="flbl" data-i="fn.lbl">Карта нөмірі</span>
+      <div class="fnum" id="kaspiNo" data-num="4400430347414069">4400 4303 4741 4069</div>
+      <button class="fcopy" onclick="copyKaspi()" data-i="fn.copy">Нөмірді көшіру</button>
+      <span class="fok" id="fnOk" data-i="fn.ok">Көшірілді ✓</span>
+      <div class="fthx" data-i="fn.thx">Қолдауыңыз үшін шын жүректен алғыс 🤍</div>
+    </div>
+  </div>
 </div></section>
 
 <footer><div class="wrap">
@@ -659,7 +737,8 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
     <div><h4 data-i="ft.h1">Платформа</h4>
       <a href="#stat" data-i="nav.stat">Статистика</a>
       <a href="#rank" data-i="nav.rank">Рейтинг</a>
-      <a href="#libs" data-i="nav.libs">Кітапханалар</a></div>
+      <a href="#libs" data-i="nav.libs">Кітапханалар</a>
+      <a href="#support" data-i="ft.sup">Жобаны қолдау</a></div>
     <div><h4 data-i="ft.h2">Құралдар</h4>
       <a href="#studio" data-i="nav.studio">Студия</a>
       <a href="#media" data-i="nav.media">Медиа</a>
@@ -841,7 +920,7 @@ kk:{
  'bn.s3':'Жыл соңында дайын сторис','bn.s4':'Төлем','bn.s4v':'тегін',
  'du.ah':'Медиа блог','du.ap':'Кітапханаңыздың жұмысы туралы жазыңыз — басқалар оқысын.','du.ab':'Жазба қосу',
  'du.bh':'Кітапханалар картасы','du.bp':'Қазақстандағы кітапханалар Google Maps-та. Ең жақынын тауып, жұмыс уақытын көріңіз.',
- 'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.',
+ 'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.','ft.sup':'Жобаны қолдау',
  'ft.h1':'Платформа','ft.h2':'Құралдар','ft.h3':'Форматтар',
 
  'lb.eye':'Платформадағы кітапханалар','lb.h':'Тіркелген кітапханалар рейтингі',
@@ -878,8 +957,18 @@ kk:{
  'f.pos':'Лауазымы *','f.ph':'Телефон *','f.mail':'Электрондық пошта *','f.role':'Рөлі *','f.code':'Кодты енгізіңіз',
  'ro.lib':'Кітапханашы','ro.dist':'Аудандық жинақтаушы','ro.obl':'Облыстық үйлестіруші','ro.min':'Министрлік',
  'ab.eye':'Жоба туралы',
- 'ab.p1':'Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды. Оқырман оны көрмейді, әлеуметтік желіде жарияланбайды, кітапхананың еңбегі көрінбейді.',
- 'ab.p2':'Платформа сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ — жүйе мәтінді өзі жазады, форматты өзі өлшейді, автордың мөрін өзі қояды.',
+ 'ab.t1':'Бұрын','ab.t2':'DILIGEN-мен',
+ 'ab.q1':'Мыңдаған көрсеткіш есепке тапсырылып, қағазда қалады.',
+ 'ab.q2':'Сол сан бір батырмамен көрінетін контентке айналады.',
+ 'ab.m1':'Оқырман көрмейді · еңбек көрінбейді',
+ 'ab.m2':'4 формат · 5 минут · дизайн білімі керек емес',
+ 'ab.au':'Әр постер мен жазбаның астында деректі енгізген қызметкердің аты-жөні мен лауазымы қалады — еңбек өз авторымен бірге көрінеді.',
+ 'fn.eye':'Жобаны қолдау',
+ 'fn.h':'Мұндай жобалар <em>қолдаумен</em> дамиды',
+ 'fn.p':'DILIGEN кітапханалар үшін тегін жасалды және тегін қала береді. Домен, сервер мен жаңа құралдар авторлардың өз қаражатымен қамтылып отыр. Жобаның дамуына үлес қосқыңыз келсе, төмендегі реквизит арқылы қолдау білдіре аласыз.',
+ 'fn.note':'Қолдау — толықтай ерікті. Платформаның бірде-бір мүмкіндігі ақылы болмайды.',
+ 'fn.lbl':'Карта нөмірі','fn.copy':'Нөмірді көшіру','fn.ok':'Көшірілді ✓',
+ 'fn.thx':'Қолдауыңыз үшін шын жүректен алғыс 🤍',
  'lg.eye':'// Жеке кабинет','lg.h':'Кіру','lg.hint':'Пошта мен поштаға келген код арқылы кіресіз.',
  'lg.ask':'Поштаға код жіберу','lg.go':'Кіру',
  'cb.out':'Шығу','cb.t1':'Дерек енгізу','cb.t2':'Кітап рейтингі','cb.t3':'Жыл қорытындысы','cb.t4':'Жиынтық есеп','cb.t5':'Баптаулар','cb.t6':'Блог',
@@ -1004,7 +1093,7 @@ ru:{
  'bn.s3':'Готовых сторис в конце года','bn.s4':'Оплата','bn.s4v':'бесплатно',
  'du.ah':'Медиа-блог','du.ap':'Напишите о работе своей библиотеки — пусть прочитают другие.','du.ab':'Добавить запись',
  'du.bh':'Карта библиотек','du.bp':'Библиотеки Казахстана на Google Maps. Найдите ближайшую и посмотрите часы работы.',
- 'ft.about':'Платформа превращения библиотечных данных в визуальный контент.',
+ 'ft.about':'Платформа превращения библиотечных данных в визуальный контент.','ft.sup':'Поддержать проект',
  'ft.h1':'Платформа','ft.h2':'Инструменты','ft.h3':'Форматы',
 
  'lb.eye':'Библиотеки на платформе','lb.h':'Рейтинг зарегистрированных библиотек',
@@ -1041,8 +1130,18 @@ ru:{
  'f.pos':'Должность *','f.ph':'Телефон *','f.mail':'Электронная почта *','f.role':'Роль *','f.code':'Введите код',
  'ro.lib':'Библиотекарь','ro.dist':'Районный координатор','ro.obl':'Областной координатор','ro.min':'Министерство',
  'ab.eye':'О проекте',
- 'ab.p1':'Библиотеки ежегодно сдают тысячи показателей в отчёт, но цифра остаётся на бумаге. Читатель её не видит, в соцсетях она не появляется, труд библиотеки остаётся незаметным.',
- 'ab.p2':'Платформа превращает эту цифру в видимый контент одной кнопкой. Библиотекарю не нужно знать дизайн — система сама пишет текст, сама подбирает формат, сама ставит печать автора.',
+ 'ab.t1':'Было','ab.t2':'С DILIGEN',
+ 'ab.q1':'Тысячи показателей уходят в отчёт и остаются на бумаге.',
+ 'ab.q2':'Та же цифра одной кнопкой становится видимым контентом.',
+ 'ab.m1':'Читатель не видит · труд незаметен',
+ 'ab.m2':'4 формата · 5 минут · без навыков дизайна',
+ 'ab.au':'Под каждым постером и записью остаётся ФИО и должность сотрудника, который внёс данные, — труд виден вместе с его автором.',
+ 'fn.eye':'Поддержать проект',
+ 'fn.h':'Такие проекты живут <em>благодаря</em> поддержке',
+ 'fn.p':'DILIGEN создан для библиотек бесплатно и останется бесплатным. Домен, сервер и новые инструменты пока оплачиваются авторами из своих средств. Если вы хотите поддержать развитие проекта, это можно сделать по реквизитам ниже.',
+ 'fn.note':'Поддержка — дело полностью добровольное. Ни одна возможность платформы не станет платной.',
+ 'fn.lbl':'Номер карты','fn.copy':'Скопировать номер','fn.ok':'Скопировано ✓',
+ 'fn.thx':'Искренне благодарим за поддержку 🤍',
  'lg.eye':'// Личный кабинет','lg.h':'Вход','lg.hint':'Вход по почте и коду, который пришёл на неё.',
  'lg.ask':'Отправить код на почту','lg.go':'Войти',
  'cb.out':'Выйти','cb.t1':'Ввод данных','cb.t2':'Рейтинг книг','cb.t3':'Итоги года','cb.t4':'Сводный отчёт','cb.t5':'Настройки','cb.t6':'Блог',
@@ -1998,6 +2097,25 @@ async function dlWrapped(){
 }
 
 /* ==========================================================
+   Жобаны қолдау — реквизитті көшіру
+========================================================== */
+function copyKaspi(){
+  const el=$('#kaspiNo'),ok=$('#fnOk');if(!el)return;
+  const num=el.dataset.num||el.textContent.replace(/\D/g,'');
+  const done=()=>{if(!ok)return;ok.classList.add('on');clearTimeout(copyKaspi._t);copyKaspi._t=setTimeout(()=>ok.classList.remove('on'),2200);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(num).then(done,()=>fallbackCopy(num,done));
+  }else fallbackCopy(num,done);
+}
+function fallbackCopy(txt,done){
+  const t=document.createElement('textarea');
+  t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:-1000px;opacity:0';
+  document.body.appendChild(t);t.select();
+  try{document.execCommand('copy');done();}catch(e){}
+  document.body.removeChild(t);
+}
+
+/* ==========================================================
    Визуалды әсерлер
    Қозғалысты азайту режимінде барлығы автоматты өшеді.
 ========================================================== */
@@ -2005,7 +2123,7 @@ const NOMO=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)
 function initEffects(){
   if(NOMO)return;
   /* 1. Скроллмен бірге жұмсақ шығу */
-  const marks=document.querySelectorAll('.head, .box, .nc, .pj, .mock, .banner, .duo>div, .formbox, .bignums');
+  const marks=document.querySelectorAll('.head, .box, .nc, .pj, .mock, .banner, .duo>div, .formbox, .bignums, .abt, .fund');
   marks.forEach(e=>e.classList.add('reveal'));
   if('IntersectionObserver'in window){
     const io=new IntersectionObserver(es=>es.forEach(en=>{
