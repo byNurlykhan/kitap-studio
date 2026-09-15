@@ -1162,6 +1162,9 @@ kk:{
  saved:m=>`${m} айының дерегі сақталды.`,
  errFill:'Барлық өрісті толтырыңыз',errMail:'Пошта дұрыс емес',
  errCode:'Код сәйкес келмейді',errLogin:'Мұндай пошта табылмады.',
+ errHtml:'Сервер JSON емес, HTML бет қайтарды. Apps Script деплойында «Кім кіре алады» деген жерде Anyone тұруы және жаңа нұсқа деплой етілуі керек.',
+ errNet:'Серверге қосыла алмадық. Интернетті және Apps Script сілтемесін тексеріңіз.',
+ errSrv:'Сервер қатесі',
  bT:'Кітап атауы',bA:'Авторы',bC:'Оқылым саны',
  needApi:'Қосылым жоқ — демо аккаунтты қолданыңыз',
  sent:'Код поштаға жіберілді',
@@ -1331,6 +1334,9 @@ ru:{
  saved:m=>`Данные за ${m} сохранены.`,
  errFill:'Заполните все поля',errMail:'Некорректная почта',
  errCode:'Код не совпадает',errLogin:'Такая почта не найдена.',
+ errHtml:'Сервер вернул HTML вместо JSON. В развёртывании Apps Script доступ «Кто имеет доступ» должен быть Anyone, и нужно развернуть новую версию.',
+ errNet:'Не удалось связаться с сервером. Проверьте интернет и ссылку Apps Script.',
+ errSrv:'Ошибка сервера',
  bT:'Название книги',bA:'Автор',bC:'Количество прочтений',
  needApi:'Нет подключения — используйте демо-аккаунт',
  sent:'Код отправлен на почту',
@@ -1363,10 +1369,20 @@ function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clea
 const API=(()=>{
   const B=API_URL;
   const ok=()=>/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(B);
-  const rd=async(a,p={})=>{const r=await fetch(B+'?'+new URLSearchParams({action:a,...p}));const j=await r.json();if(!j.ok)throw new Error(j.error);return j.data;};
-  const wr=async(a,p={})=>{const r=await fetch(B,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+  /* Транспорт қатесін бөліп аламыз: Apps Script JSON емес, HTML қайтаруы мүмкін */
+  const tErr=m=>{const e=new Error(m);e.transport=true;return e;};
+  const parse=async r=>{
+    const txt=await r.text();
+    let j;
+    try{j=JSON.parse(txt);}
+    catch(_){throw tErr(/^\s*</.test(txt)?T[L].errHtml:T[L].errSrv+' ('+r.status+')');}
+    if(!j.ok)throw new Error(j.error||T[L].errSrv);
+    return j;
+  };
+  const send=async(u,o)=>{let r;try{r=await fetch(u,o);}catch(_){throw tErr(T[L].errNet);}return parse(r);};
+  const rd=async(a,p={})=>(await send(B+'?'+new URLSearchParams({action:a,...p}))).data;
+  const wr=(a,p={})=>send(B,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
     body:JSON.stringify({action:a,client:navigator.userAgent,lang:L,...p})});
-    const j=await r.json();if(!j.ok)throw new Error(j.error);return j;};
   return{ok,summary:()=>rd('summary'),library:id=>rd('library',{libraryId:id}),posts:()=>rd('posts'),
    ranking:()=>rd('ranking'),booklists:()=>rd('booklists'),feedData:()=>rd('feed'),
    requestCode:e=>wr('requestCode',{email:e}),verifyCode:(e,c)=>wr('verifyCode',{email:e,code:c}),
@@ -2077,7 +2093,7 @@ async function sendCode(){
 }
 async function confirmCode(){
   const e=$('#cdErr');e.classList.remove('on');const c=$('#rCode').value.trim();
-  try{await API.verifyCode(pending.mail,c);}catch(err){e.textContent=T[L].errCode;e.classList.add('on');return;}
+  try{await API.verifyCode(pending.mail,c);}catch(err){e.textContent=err&&err.transport?err.message:T[L].errCode;e.classList.add('on');return;}
   ME={libraryId:pending.libraryId||'LIB-DEMO',name:pending.name,pos:pending.pos,mail:pending.mail,role:pending.role};
   MY.name=pending.lib;MY.region=pending.reg;enterApp();
 }
@@ -2099,7 +2115,7 @@ async function doLogin(){
     try{const d=await API.library(u.libraryId);
       if(d.readers)MY.r=d.readers;if(d.visits)MY.v=d.visits;
       renderMonths();renderBars();renderRoll();loadMonth();draw();}catch(_){}
-  }catch(err){e.textContent=T[L].errCode;e.classList.add('on');}
+  }catch(err){e.textContent=err&&err.transport?err.message:T[L].errCode;e.classList.add('on');}
 }
 function enterApp(){
   closeM();$('#app').classList.add('on');document.body.style.overflow='hidden';
