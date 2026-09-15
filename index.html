@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DILIGEN — кітапхана деректерін визуалды контентке айналдыру</title>
-<meta name="description" content="Кітапхана статистикасын Instagram посты, сторис, Facebook суреті және A4 құжатына айналдыратын платформа.">
+<meta name="description" content="DILIGEN — мәдениет мекемелерінің деректерін жасанды интеллект көмегімен дайын контентке айналдыратын платформа: әлеуметтік желі посты, дайджест, инфографика және баспасөз хабарламасы.">
 <meta property="og:title" content="DILIGEN — кітапхана деректерін визуалды контентке айналдыру">
-<meta property="og:description" content="Санды енгіз — постер өзі шықсын. 3 889 кітапхана, 5,5 млн оқырман.">
+<meta property="og:description" content="Санды енгіз — жасанды интеллект посты, дайджесті, инфографиканы және баспасөз хабарламасын өзі жинасын. 3 889 кітапхана, 5,5 млн оқырман.">
 <meta property="og:locale" content="kk_KZ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,10 +59,16 @@ a{color:var(--blue);text-decoration:none}
 /* ---------- hero ---------- */
 .hero{padding:44px 0 26px}
 .hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:7px;background:var(--violet-s);color:#6D3FE0;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px}
 h1.hh{font-family:var(--disp);font-weight:800;font-size:clamp(38px,5.2vw,62px);line-height:1.02;letter-spacing:-.045em;margin:20px 0 0}
 h1.hh em{font-style:normal;color:var(--blue);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
 .lead{font-size:16.5px;color:var(--mute);max-width:46ch;margin:18px 0 26px}
+.lead b{color:var(--ink);font-weight:600}
+.fmtl{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.fmts{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px;padding:0}
+.fmts li{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 15px 6px 6px;font-size:13.5px;font-weight:600;box-shadow:0 10px 22px -18px rgba(11,13,20,.55);transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s}
+.fmts li:hover{transform:translateY(-2px);box-shadow:0 16px 26px -18px rgba(11,13,20,.6)}
+.fmts li i{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-style:normal;flex:none}
+.hnote{font-size:13px;color:var(--mute);margin:16px 0 0}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
 
 .mock{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:0 24px 60px -30px rgba(11,13,20,.4);position:relative}
@@ -72,16 +78,27 @@ h1.hh em{font-style:normal;color:var(--blue);text-decoration:underline;text-deco
 .mrow .lft{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px}
 .mrow .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:14px}
 .mrow .val{font-family:var(--mono);font-size:13px;color:var(--mute)}
-.float{position:absolute;right:18px;top:64px;background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 18px 40px -14px rgba(44,92,255,.7);min-width:180px}
+.float{background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 16px 34px -16px rgba(44,92,255,.65);min-width:180px;margin:6px 0 2px}
 .float .t{font-size:12px;opacity:.85}
 .float .n{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.03em;margin-top:2px}
 .mstat{border-top:1px solid var(--line);margin-top:14px;padding-top:14px}
 .mstat .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
 .mstat .big{font-family:var(--disp);font-weight:800;font-size:34px;letter-spacing:-.04em;line-height:1.1;margin:4px 0 2px}
 .mstat .cap{font-size:13px;color:var(--mute)}
-.spark{display:flex;align-items:flex-end;gap:5px;height:52px;margin-top:14px}
-.spark i{flex:1;background:#EDEFF3;border-radius:4px 4px 0 0;display:block}
-.spark i.on{background:linear-gradient(180deg,var(--blue),#7BA0FF)}
+.spark{display:flex;align-items:flex-end;gap:6px;margin-top:16px}
+.spark .sb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0;cursor:default}
+.spark .bar{width:100%;height:var(--h);flex:none;border-radius:7px 7px 4px 4px;background:linear-gradient(180deg,#E2E7F0,#EFF1F5);
+  transform-origin:bottom;animation:sbgrow .85s cubic-bezier(.2,.85,.3,1) both;animation-delay:var(--d);position:relative;transition:filter .25s}
+.spark .sb.on .bar{background:linear-gradient(180deg,var(--blue) 0%,#6E95FF 100%);box-shadow:0 12px 22px -12px rgba(44,92,255,.85)}
+.spark .sb:hover .bar{filter:brightness(.96)}
+.spark .lb{font-family:var(--mono);font-size:9px;letter-spacing:.02em;line-height:1.2;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;flex:none}
+.spark .sb.on .lb{color:var(--blue);font-weight:700}
+.spark .bar::after{content:attr(data-v);position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%) scale(.85);
+  font-family:var(--mono);font-size:9.5px;color:#fff;background:var(--ink);padding:2px 7px;border-radius:999px;white-space:nowrap;
+  opacity:0;transition:opacity .2s,transform .2s;pointer-events:none}
+.spark .sb:hover .bar::after{opacity:1;transform:translateX(-50%) scale(1)}
+.spark .sb.on .bar::after{background:var(--blue)}
+@keyframes sbgrow{from{transform:scaleY(.05);opacity:.15}to{transform:scaleY(1);opacity:1}}
 
 /* ---------- trust ---------- */
 .trust{background:var(--box);padding:22px 0;margin-top:18px}
@@ -106,7 +123,7 @@ h3.ph{font-family:var(--disp);font-weight:800;font-size:clamp(21px,2.5vw,28px);l
 h3.ph em{font-style:normal;color:var(--blue)}
 .ticks{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin-top:16px}
 .ticks div{font-size:13.5px;display:flex;gap:8px;align-items:flex-start}
-.ticks div::before{content:"✓";color:var(--blue);font-weight:700;flex:none}
+.ticks div::before{content:"";width:16px;height:16px;flex:none;margin-top:2px;background:var(--blue);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.6 12.6 9.6 17.6 19.6 6.6'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4.6 12.6 9.6 17.6 19.6 6.6'/%3E%3C/svg%3E") center/contain no-repeat}
 
 /* stat cards */
 .bignums{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -217,15 +234,79 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .duo>div{border-radius:var(--r);padding:34px;min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
 .duo .a{background:var(--violet);color:#fff}
 .bkgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.bkh{font-family:var(--disp);font-weight:800;font-size:17px;margin:0 0 14px;letter-spacing:-.02em}
+.bkh{font-family:var(--disp);font-weight:800;font-size:17px;margin:0 0 14px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.bkh .itile{width:34px;height:34px;border-radius:11px}
+.bkh .itile .ico{width:19px;height:19px}
 .bkrow{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line);align-items:flex-start}
 .bkrow:first-of-type{border-top:0}
 .bkrow .no{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--acc,#4F46E5);min-width:22px}
 .bkrow .t{font-weight:600;font-size:14.5px;line-height:1.35}
 .bkrow .a{font-size:13px;color:#6E6E80}
 .bkrow .c{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:#6E6E80;white-space:nowrap}
+
+/* ---- ашылатын кітап жолы ---- */
+.bkit{border-top:1px solid var(--line)}
+.bkit:first-child{border-top:0}
+.bkmain{width:100%;display:flex;align-items:flex-start;gap:12px;background:none;border:0;padding:12px 8px 12px 0;text-align:left;border-radius:14px;transition:background .2s}
+.bkmain:hover{background:var(--box)}
+.bkit.open .bkmain{background:var(--box)}
+.bkmain .no{font-family:var(--mono);font-weight:700;font-size:12px;color:#5A3FBE;background:var(--violet-s);border-radius:8px;
+  min-width:24px;height:24px;display:grid;place-items:center;flex:none;margin-top:1px}
+.bkit.open .bkmain .no,.bkmain:hover .no{background:var(--blue);color:#fff}
+.bkmain .tx{min-width:0;flex:1}
+.bkmain .t{display:block;font-weight:600;font-size:14.5px;line-height:1.35}
+.bkmain .a{display:block;font-size:12.5px;color:#6E6E80;margin-top:2px}
+.bkmain .rt{display:flex;align-items:center;gap:9px;margin-left:auto;flex:none;color:#6E6E80}
+.bkmain .c{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.bkmain .c .ico{width:14px;height:14px;opacity:.65}
+.bkmain .chv{width:16px;height:16px;transition:transform .3s cubic-bezier(.2,.8,.3,1);color:var(--mute)}
+.bkit.open .bkmain .chv{transform:rotate(180deg);color:var(--blue)}
+.bkdet{text-align:left;padding:2px 8px 16px 36px;animation:bkfade .32s cubic-bezier(.2,.8,.3,1) both}
+@keyframes bkfade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.bkdet .dlbl{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:10px 0 7px}
+.bkchips{display:flex;flex-wrap:wrap;gap:6px}
+.bkchip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 11px;border-radius:999px;
+  background:var(--blue-s);color:#2947B8}
+.bkchip .ico{width:13px;height:13px}
+.bklibs{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.bklibs li{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 11px;font-size:13px}
+.bklibs li .ico{width:16px;height:16px;color:var(--blue);opacity:.8}
+.bklibs li .ln{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bklibs li .lr{font-size:12px;color:var(--mute);white-space:nowrap}
+.bklibs li .lc{margin-left:auto;font-family:var(--mono);font-size:12px;color:#6E6E80}
+@media(max-width:560px){.bkdet{padding-left:12px}.bklibs li .lr{display:none}}
+
+/* ---- «не оқып, не ұсынып жатыр» сахнасы ---- */
+.bkscene{margin:0 auto 22px;max-width:660px}
+.bkscene svg{width:100%;height:auto;display:block;overflow:visible}
+.bkscene .fly{animation:bkfly 7s cubic-bezier(.45,0,.25,1) infinite}
+.bkscene .arc{stroke-dashoffset:120;animation:bkarc 7s linear infinite}
+.bkscene .libn{transform-origin:205px 150px;animation:bknod 7s ease-in-out infinite}
+.bkscene .rdr{transform-origin:470px 154px;animation:bkread 7s ease-in-out infinite}
+.bkscene .rdr .bk{transform-origin:470px 125px;animation:bkopen 7s ease-in-out infinite}
+.bkscene .sprk path{opacity:0}
+.bkscene .s1{animation:bkspark 7s ease-in-out infinite}
+.bkscene .s2{animation:bkspark 7s ease-in-out infinite .35s}
+.bkscene .s3{animation:bkspark 7s ease-in-out infinite .7s}
+.bkscene .sb1{animation:bkshelf 7s ease-in-out infinite}
+.bkscene .sb2{animation:bkshelf 7s ease-in-out infinite .5s}
+.bkscene .sb3{animation:bkshelf 7s ease-in-out infinite 1s}
+.bkscene .sb4{animation:bkshelf 7s ease-in-out infinite 1.5s}
+.bkscene .sb5{animation:bkshelf 7s ease-in-out infinite 2s}
+@keyframes bkfly{
+  0%,8%{transform:translate(276px,100px) rotate(-8deg);opacity:0}
+  14%{opacity:1}
+  46%{transform:translate(444px,92px) rotate(10deg);opacity:1}
+  56%{transform:translate(462px,116px) rotate(0deg);opacity:0}
+  100%{transform:translate(276px,100px) rotate(-8deg);opacity:0}}
+@keyframes bkarc{0%,10%{stroke-dashoffset:120;opacity:0}20%{opacity:.45}50%{stroke-dashoffset:0;opacity:.45}66%,100%{opacity:0;stroke-dashoffset:0}}
+@keyframes bknod{0%,6%{transform:translateY(0)}12%{transform:translateY(-5px)}20%,100%{transform:translateY(0)}}
+@keyframes bkread{0%,50%{transform:translateY(0)}60%{transform:translateY(-4px)}72%,100%{transform:translateY(0)}}
+@keyframes bkopen{0%,52%{transform:scale(1)}62%{transform:scale(1.09)}76%,100%{transform:scale(1)}}
+@keyframes bkspark{0%,58%{opacity:0;transform:translateY(6px) scale(.6)}68%{opacity:.9;transform:translateY(0) scale(1)}86%,100%{opacity:0;transform:translateY(-8px) scale(.7)}}
+@keyframes bkshelf{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @media(max-width:960px){.bkgrid{grid-template-columns:1fr}}
-.mapbox{border-radius:16px;overflow:hidden;height:190px;margin-top:14px;background:#fff}
+.mapbox{border-radius:16px;overflow:hidden;flex:1 1 auto;min-height:190px;max-height:430px;margin-top:14px;background:#fff}
 .mapbox iframe{width:100%;height:100%;border:0;display:block}
 .duo .b{background:var(--lime);color:#22300A}
 .duo h3{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.035em;margin:16px 0 6px}
@@ -233,6 +314,27 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .duo .ic{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:20px}
 .duo .b .ic{background:rgba(0,0,0,.12)}
 .duo button{align-self:flex-start;border:0;border-radius:999px;padding:11px 22px;font-weight:600;font-size:14.5px;background:#fff;color:var(--ink)}
+
+/* Жоба және автор туралы карточкасы */
+.duo .prof{padding:30px}
+.duo .prof h3{font-size:23px;margin:14px 0 3px}
+.prof .pname{font-weight:700;font-size:15px;margin-bottom:10px}
+.prof .prole{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:5px}
+.prof .prole li{position:relative;padding-left:13px;font-size:12.5px;line-height:1.45;opacity:.9}
+.prof .prole li::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.75)}
+.prof .plbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-bottom:8px}
+.prof .pprj{list-style:none;margin:0 0 15px;padding:0;display:grid;gap:8px}
+.prof .pprj li{border-left:2px solid rgba(255,255,255,.35);padding-left:11px}
+.prof .pprj b{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.01em}
+.prof .pprj i{font-style:normal;font-size:11.5px;opacity:.7}
+.prof .pprj span{display:block;font-size:12px;line-height:1.42;opacity:.85;margin-top:2px}
+.prof .pskl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.prof .pskl span{background:rgba(255,255,255,.18);border-radius:999px;padding:5px 11px;font-size:11.5px;line-height:1.35}
+.prof .pmail{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);
+  border-radius:999px;padding:9px 18px 9px 12px;font-weight:600;font-size:14px;text-decoration:none}
+.prof .pmail .ico{width:17px;height:17px;flex:none;color:var(--violet)}
+.prof .pmail i{display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:700;color:var(--violet);margin-bottom:1px}
 .duo .b button{background:var(--ink);color:#fff}
 
 /* about — «бұрын → қазір» диптихі */
@@ -357,9 +459,14 @@ footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
   .studio{grid-template-columns:1fr}
   .tnav{display:none}
   .months{grid-template-columns:repeat(3,1fr)}
-  .float{position:static;margin-bottom:12px}
   .banner{padding:30px}
   .fgrid{gap:20px}
+}
+@media (max-width:560px){
+  /* Тар экранда тақырып өзі тасымалданады — қолмен қойылған үзіліс керек емес */
+  h1.hh br,h2.sh br{display:none}
+  .spark{gap:4px}
+  .spark .lb{font-size:8px;letter-spacing:0}
 }
 
 /* ==========================================================
@@ -381,7 +488,7 @@ table.rank.tight td.num{font-size:13px}
 .expander button:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px);box-shadow:0 12px 26px -12px rgba(44,92,255,.5)}
 .expander button .cnt{font-family:var(--mono);font-size:11.5px;background:var(--blue-s);color:var(--blue);
   border-radius:999px;padding:3px 9px;font-weight:700}
-.expander button .arw{transition:transform .3s cubic-bezier(.2,.8,.3,1);display:inline-block}
+.expander button .arw{transition:transform .3s cubic-bezier(.2,.8,.3,1);display:inline-block;width:16px;height:16px;vertical-align:-.2em}
 .expander button[aria-expanded="true"] .arw{transform:rotate(180deg)}
 table.rank tr.rk-top5 td{background:linear-gradient(90deg,rgba(44,92,255,.045),rgba(44,92,255,0) 42%)}
 table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
@@ -436,10 +543,41 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 .newsrow .t{font-weight:600;font-size:14.5px}
 .newsrow .a{font-size:13px;color:#6E6E80}
 
+/* ---------- иконкалар ---------- */
+.spr{position:absolute;width:0;height:0;overflow:hidden}
+.ico{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.13em}
+.ico.fat{stroke-width:1.9}
+.ibtn{display:inline-flex;align-items:center;gap:8px}
+.ibtn .ico{width:17px;height:17px}
+.itile{display:grid;place-items:center;border-radius:10px;flex:none;color:var(--blue)}
+.itile .ico{width:60%;height:60%}
+.itile.v{color:#6D3FE0}.itile.g{color:#3E7A2E}.itile.o{color:#9A6212}.itile.b{color:var(--blue)}
+
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
+
+<!-- ===== Иконка жиынтығы (SVG sprite) ===== -->
+<svg class="spr" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-post" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M9 7.5h6M9 11h6M9 14.5h3.5"/><path d="M10.5 18.5h3"/></symbol>
+<symbol id="i-digest" viewBox="0 0 24 24"><path d="M4 5h11.5v14.5H5.6A1.6 1.6 0 0 1 4 17.9z"/><path d="M15.5 9.5h4v8a2 2 0 0 1-4 0"/><path d="M7 8.5h5.5M7 12h5.5M7 15.5h3.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 3.5v16.5h16"/><rect x="7" y="12.5" width="3" height="4.5" rx="1.2"/><rect x="12" y="9" width="3" height="8" rx="1.2"/><rect x="17" y="5.5" width="3" height="11.5" rx="1.2"/></symbol>
+<symbol id="i-press" viewBox="0 0 24 24"><path d="M4 10.2v3.6a1.2 1.2 0 0 0 1.2 1.2H7l8 4.2V4.8L7 9H5.2A1.2 1.2 0 0 0 4 10.2z"/><path d="M18.2 9.4a3.6 3.6 0 0 1 0 5.2"/><path d="M7 15v4.2h2.6"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9.3" cy="8.2" r="3.3"/><path d="M3.6 19.4a5.7 5.7 0 0 1 11.4 0"/><path d="M16.4 5.6a3.3 3.3 0 0 1 0 5.4"/><path d="M17.6 14.3a5.2 5.2 0 0 1 3 4.7"/></symbol>
+<symbol id="i-door" viewBox="0 0 24 24"><path d="M4.2 20.2V4.9a1 1 0 0 1 .8-1l8.4-1.6a1 1 0 0 1 1.2 1v18.4a1 1 0 0 1-1.2 1L5 21.2a1 1 0 0 1-.8-1z"/><path d="M14.6 20.2h4a1 1 0 0 0 1-1V4.8a1 1 0 0 0-1-1h-4"/><circle cx="11.4" cy="12.2" r=".95" fill="currentColor" stroke="none"/></symbol>
+<symbol id="i-rec" viewBox="0 0 24 24"><path d="M4.2 5.6A2.6 2.6 0 0 1 6.8 3H19.4v15.4H6.8a2.6 2.6 0 0 0-2.6 2.6z"/><path d="M19.4 18.4v2.6H6.8"/><path d="M14.7 7.6a1.8 1.8 0 0 0-2.5 0l-.3.3-.3-.3a1.8 1.8 0 0 0-2.5 2.5l2.8 2.8 2.8-2.8a1.8 1.8 0 0 0 0-2.5z"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><path d="M3.6 16.8 9.2 11.2l3.4 3.4 7.8-7.8"/><path d="M15.2 6.8h5.2V12"/><path d="M3.6 20.4h16.8"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20.2h4L19.4 8.8a2.1 2.1 0 0 0-3-3L4 18.2v2z"/><path d="M14.4 6.6l3 3"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.2s7-6.3 7-11.2a7 7 0 1 0-14 0c0 4.9 7 11.2 7 11.2z"/><circle cx="12" cy="9.8" r="2.7"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M20.6 3.4 10.2 13.8"/><path d="M20.6 3.4 14.1 20.6l-3.9-6.8-6.8-3.9z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4.6 12.6 9.6 17.6 19.6 6.6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9.5 12 15.5 18 9.5"/></symbol>
+<symbol id="i-lib" viewBox="0 0 24 24"><path d="M3.4 9.6 12 4.2l8.6 5.4"/><path d="M5.8 11.4v7.4M9.9 11.4v7.4M14.1 11.4v7.4M18.2 11.4v7.4"/><path d="M3.4 20.6h17.2"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M4 11.4V5.2a1.2 1.2 0 0 1 1.2-1.2h6.2a1.2 1.2 0 0 1 .85.35l7.6 7.6a1.2 1.2 0 0 1 0 1.7l-6.2 6.2a1.2 1.2 0 0 1-1.7 0l-7.6-7.6A1.2 1.2 0 0 1 4 11.4z"/><circle cx="8.3" cy="8.3" r="1.35"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4.2 5.6A2.6 2.6 0 0 1 6.8 3H19.4v15.4H6.8a2.6 2.6 0 0 0-2.6 2.6z"/><path d="M19.4 18.4v2.6H6.8"/><path d="M8 7.4h7.6M8 10.6h5.4"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M11.4 3.4 13.2 8.8 18.6 10.6 13.2 12.4 11.4 17.8 9.6 12.4 4.2 10.6 9.6 8.8z"/><path d="M18.4 15.6 19.1 17.7 21.2 18.4 19.1 19.1 18.4 21.2 17.7 19.1 15.6 18.4 17.7 17.7z"/></symbol>
+</defs></svg>
 
 <header class="topbar"><div class="wrap">
   <a class="logo" href="#top"><i></i> <span class="bn">DILIGEN</span></a>
@@ -462,18 +600,25 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
   <div>
-    <span class="pill" data-i="hero.badge">📊 2025 жыл қорытындысы</span>
-    <h1 class="hh" data-i="hero.h1">Сан емес — <em>сөйлейтін</em> контент</h1>
-    <p class="lead" data-i="hero.lead">Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды.</p>
+    <h1 class="hh" data-i="hero.h1">Сан үнсіз. Біз оны <em>сөйлетеміз</em>.</h1>
+    <p class="lead" data-i="hero.lead">Мәдениет мекемелерінің деректерін <b>жасанды интеллект</b> дайын контентке айналдырады. Сіз санды енгізесіз — жүйе мәтінін өзі жазып, суретін өзі жинайды.</p>
+    <p class="fmtl" data-i="hero.fl">Бір деректен шығады</p>
+    <ul class="fmts">
+      <li><i class="itile v" style="background:var(--violet-s)"><svg class="ico"><use href="#i-post"/></svg></i><span data-i="hero.f1">Әлеуметтік желі посты</span></li>
+      <li><i class="itile b" style="background:var(--blue-s)"><svg class="ico"><use href="#i-digest"/></svg></i><span data-i="hero.f2">Дайджест</span></li>
+      <li><i class="itile g" style="background:var(--green-s)"><svg class="ico"><use href="#i-chart"/></svg></i><span data-i="hero.f3">Инфографика</span></li>
+      <li><i class="itile o" style="background:var(--amber-s)"><svg class="ico"><use href="#i-press"/></svg></i><span data-i="hero.f4">Баспасөз хабарламасы</span></li>
+    </ul>
     <div class="cta">
       <a class="btn-dark" href="#studio" data-i="hero.c1">Постер жасап көру</a>
       <a class="btn-out" href="#reg" data-i="hero.c2">Кітапхананы тіркеу</a>
     </div>
+    <p class="hnote" data-i="hero.note">Тіркелусіз көріп көруге болады · дайын файл 30 секундта</p>
   </div>
   <div class="mock">
     <div class="bar"><i></i><i></i><i></i></div>
-    <div class="mrow"><div class="lft"><span class="ic" style="background:var(--blue-s)">📕</span><span data-i="mk.r1">Оқырман</span></div><span class="val" id="mkR">—</span></div>
-    <div class="mrow"><div class="lft"><span class="ic" style="background:var(--green-s)">🚪</span><span data-i="mk.r2">Келушi</span></div><span class="val" id="mkV">—</span></div>
+    <div class="mrow"><div class="lft"><span class="ic itile b" style="background:var(--blue-s)"><svg class="ico"><use href="#i-users"/></svg></span><span data-i="mk.r1">Оқырман</span></div><span class="val" id="mkR">—</span></div>
+    <div class="mrow"><div class="lft"><span class="ic itile g" style="background:var(--green-s)"><svg class="ico"><use href="#i-door"/></svg></span><span data-i="mk.r2">Келушi</span></div><span class="val" id="mkV">—</span></div>
     <div class="float">
       <div class="t" id="hcMini">—</div>
       <div class="n" id="hcBig">—</div>
@@ -482,7 +627,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
       <div class="mini" data-i="mk.top">Ел бойынша ең жоғары көрсеткіш</div>
       <div class="big" id="mkFund">—</div>
       <div class="cap" id="hcCap">—</div>
-      <div class="spark"><i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i><i class="on" style="height:100%"></i><i style="height:71%"></i><i style="height:58%"></i><i style="height:80%"></i></div>
+      <div class="spark" id="hSpark" role="img"></div>
     </div>
   </div>
 </div></div>
@@ -598,13 +743,74 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 <section id="books" style="padding-top:0"><div class="wrap">
   <div class="head">
     <div class="eyebrow" data-i="bk.eye">Кітап тізімдері</div>
-    <h2 class="sh" data-i="bk.h">Кітапханалар не <em>оқып</em>, не <em>ұсынып</em> жатыр</h2>
+    <h2 class="sh" data-i="bk.h">Кітапханалар не <em>оқып</em>, <br>не <em>ұсынып</em> жатыр</h2>
     <p class="sub" data-i="bk.sub">Тізімдер тіркелген кітапханалардың есебінен жиналады.</p>
   </div>
-  <div class="bkgrid">
-    <div class="box"><h3 class="bkh" data-i="bk.rec">📚 Кітапханалар оқырманға ұсынады</h3><div id="recList"></div></div>
-    <div class="box"><h3 class="bkh" data-i="bk.top">🔥 Ең көп оқылған кітаптар</h3><div id="topList"></div></div>
+  <div class="bkscene" aria-hidden="true">
+    <svg viewBox="0 0 660 190" role="presentation">
+      <!-- сөре -->
+      <g class="shelf">
+        <rect x="26" y="34" width="112" height="120" rx="12" fill="#fff" stroke="var(--line)" stroke-width="2"/>
+        <path d="M26 78h112M26 118h112" stroke="var(--line)" stroke-width="2"/>
+        <g class="sb1"><rect x="38" y="46" width="12" height="28" rx="3" fill="var(--blue)" opacity=".85"/></g>
+        <g class="sb2"><rect x="54" y="42" width="12" height="32" rx="3" fill="var(--violet)" opacity=".7"/></g>
+        <g class="sb3"><rect x="70" y="50" width="12" height="24" rx="3" fill="#8FC98A"/></g>
+        <g class="sb4"><rect x="86" y="44" width="12" height="30" rx="3" fill="#F2B84B"/></g>
+        <g class="sb5"><rect x="102" y="48" width="12" height="26" rx="3" fill="var(--blue)" opacity=".45"/></g>
+        <rect x="38" y="92" width="12" height="22" rx="3" fill="var(--violet)" opacity=".45"/>
+        <rect x="54" y="88" width="12" height="26" rx="3" fill="var(--blue)" opacity=".55"/>
+        <rect x="70" y="94" width="12" height="20" rx="3" fill="#8FC98A" opacity=".8"/>
+        <rect x="86" y="90" width="12" height="24" rx="3" fill="#F2B84B" opacity=".75"/>
+        <rect x="102" y="96" width="12" height="18" rx="3" fill="var(--violet)" opacity=".6"/>
+      </g>
+      <!-- кітапханашы -->
+      <g class="libn">
+        <circle cx="205" cy="62" r="18" fill="var(--ink)"/>
+        <path d="M205 84c-18 0-30 12-30 28v42h60v-42c0-16-12-28-30-28z" fill="var(--blue)"/>
+        <path d="M232 106l34-10" stroke="var(--blue)" stroke-width="11" stroke-linecap="round"/>
+        <circle cx="205" cy="62" r="18" fill="none" stroke="#fff" stroke-width="0" />
+      </g>
+      <!-- ұшатын кітап -->
+      <path class="arc" d="M282 96C330 42 390 42 438 88" fill="none" stroke="var(--blue)" stroke-width="2"
+            stroke-dasharray="5 7" stroke-linecap="round" opacity=".45"/>
+      <g class="fly">
+        <g transform="translate(-16,-13)">
+          <rect x="0" y="0" width="32" height="26" rx="4" fill="#fff" stroke="var(--blue)" stroke-width="2.4"/>
+          <path d="M16 3v20" stroke="var(--blue)" stroke-width="2.4"/>
+          <path d="M6 9h6M6 14h6M20 9h6M20 14h6" stroke="var(--blue)" stroke-width="1.8" stroke-linecap="round" opacity=".55"/>
+        </g>
+      </g>
+      <!-- оқырман -->
+      <g class="rdr">
+        <circle cx="470" cy="66" r="17" fill="var(--ink)"/>
+        <path d="M470 87c-17 0-28 11-28 26v41h56v-41c0-15-11-26-28-26z" fill="var(--violet)"/>
+        <g class="bk">
+          <path d="M440 112c10-6 20-6 30 0 10-6 20-6 30 0v26c-10-6-20-6-30 0-10-6-20-6-30 0z"
+                fill="#fff" stroke="var(--ink)" stroke-width="2.4" stroke-linejoin="round"/>
+          <path d="M470 112v26" stroke="var(--ink)" stroke-width="2.4"/>
+        </g>
+      </g>
+      <!-- ұшқындар -->
+      <g class="sprk" fill="var(--blue)">
+        <path class="s1" d="M520 58l3.4 8.6 8.6 3.4-8.6 3.4L520 82l-3.4-8.6-8.6-3.4 8.6-3.4z"/>
+        <path class="s2" d="M556 92l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z" opacity=".7"/>
+        <path class="s3" d="M534 122l1.9 4.8 4.8 1.9-4.8 1.9-1.9 4.8-1.9-4.8-4.8-1.9 4.8-1.9z" opacity=".5"/>
+      </g>
+      <!-- еден -->
+      <path d="M20 168h620" stroke="var(--line)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
   </div>
+  <div class="bkgrid">
+    <div class="box">
+      <h3 class="bkh"><span class="itile v" style="background:var(--violet-s)"><svg class="ico"><use href="#i-rec"/></svg></span><span data-i="bk.rec">Кітапханалар оқырманға ұсынады</span></h3>
+      <div id="recList"></div>
+    </div>
+    <div class="box">
+      <h3 class="bkh"><span class="itile o" style="background:var(--amber-s)"><svg class="ico"><use href="#i-trend"/></svg></span><span data-i="bk.top">Ең көп оқылған кітаптар</span></h3>
+      <div id="topList"></div>
+    </div>
+  </div>
+  <p class="hint bknote" id="bkNote" style="text-align:center;margin:14px 4px 0"></p>
 </div></section>
 
 <section id="media" style="padding-top:0"><div class="wrap">
@@ -620,7 +826,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
     <div class="feed" id="feed"></div>
     <button class="more" id="moreBtn" onclick="showMore()"></button>
     <div style="margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-      <button class="btn" onclick="writePost()" data-i="md.write">Блог жазу ✍️</button>
+      <button class="btn ibtn" onclick="writePost()"><svg class="ico"><use href="#i-pen"/></svg><span data-i="md.write">Блог жазу</span></button>
       <span class="hint" data-i="md.writeh">Тіркелген кітапхана қызметкерлері үшін</span>
     </div>
   </div>
@@ -670,7 +876,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
         <option value="obl" data-i="ro.obl">Облыстық үйлестіруші</option>
         <option value="min" data-i="ro.min">Министрлік</option></select></div>
       <div class="err" id="rgErr"></div>
-      <button class="btn" style="width:100%;margin-top:10px" onclick="sendCode()" data-i="rg.send">Кодты поштаға жіберу 🚀</button>
+      <button class="btn ibtn" style="width:100%;margin-top:10px" onclick="sendCode()"><svg class="ico"><use href="#i-send"/></svg><span data-i="rg.send">Кодты поштаға жіберу</span></button>
     </div>
     <div id="rgStep2" style="display:none">
       <div style="background:var(--blue-s);border-radius:16px;padding:18px">
@@ -687,14 +893,38 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 </div></section>
 
 <section style="padding-top:0"><div class="wrap"><div class="duo">
-  <div class="a">
-    <div><div class="ic">✍️</div>
-      <h3 data-i="du.ah">Медиа блог</h3>
-      <p data-i="du.ap">Кітапханаңыздың жұмысы туралы жазыңыз — басқалар оқысын.</p></div>
-    <button onclick="writePost()" data-i="du.ab">Жазба қосу</button>
+  <div class="a prof">
+    <div>
+      <div class="ic"><svg class="ico"><use href="#i-spark"/></svg></div>
+      <h3 data-i="du.ah">Жоба және автор туралы</h3>
+      <div class="pname" data-i="du.aname">Нұрлыхан Қасымханұлы</div>
+      <ul class="prole">
+        <li data-i="du.ar1">Кітапхана статистикасы мен деректерін талдауға негізделген әдістемелік материалдар дайындаймын</li>
+        <li data-i="du.ar2">Кітапхана ісін цифрландыру бағытында жоспарлау және стандарттау жұмыстарын жүргіземін</li>
+      </ul>
+      <div class="plbl" data-i="du.apl">Жобалар</div>
+      <ul class="pprj">
+        <li><b>LABA</b> <i>Library and Book Analytics</i>
+          <span data-i="du.p1">Қазақстан кітапханаларының статистикасын визуалды түрде көрсететін аналитикалық платформа</span></li>
+        <li><b>DILIGEN</b>
+          <span data-i="du.p2">Кітапхана мен мәдениет мекемелерінің деректерін дайын контентке айналдыратын платформа (LABA-ның серіктес жобасы)</span></li>
+        <li><b>LibLab</b>
+          <span data-i="du.p3">Кітапханашыларға арналған AI негізіндегі библиографиялық өңдеу платформасы; ашық API және көптілді кітапхана стандарттарын қолдау көзделген</span></li>
+      </ul>
+      <div class="plbl" data-i="du.asl">Дағдылар</div>
+      <div class="pskl">
+        <span data-i="du.s1">AI құралдарын кәсіби жұмыс үрдісіне енгізу және дербес платформалар құру</span>
+        <span data-i="du.s2">Кітапхана ісі, ақпараттық менеджмент және стандарттау</span>
+        <span data-i="du.s3">Деректерді талдау және визуализациялау</span>
+      </div>
+    </div>
+    <a class="pmail" href="mailto:ionurlykhans@gmail.com">
+      <svg class="ico"><use href="#i-send"/></svg>
+      <span><i data-i="du.amail">Байланыс</i>ionurlykhans@gmail.com</span>
+    </a>
   </div>
   <div class="b">
-    <div><div class="ic">📍</div>
+    <div><div class="ic"><svg class="ico"><use href="#i-pin"/></svg></div>
       <h3 data-i="du.bh">Кітапханалар картасы</h3>
       <p data-i="du.bp">Қазақстандағы кітапханалар Google Maps-та. Ең жақынын тауып, жұмыс уақытын көріңіз.</p></div>
     <div class="mapbox"><iframe title="Kitaphanalar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
@@ -859,7 +1089,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
         <div class="field"><label data-i="cb.ti">Тақырып</label><input id="bTi" placeholder="Кітапханада «Зерделі ұлт» апталығы өтті"></div>
         <div class="field"><label data-i="cb.tx">Мәтін</label><textarea id="bTx" rows="7" placeholder="Не істедіңіз, кім қатысты, қандай нәтиже болды?"></textarea></div>
         <div class="err" id="bErr"></div>
-        <button class="btn" onclick="savePost()" data-i="cb.bp">Жариялау 📢</button>
+        <button class="btn ibtn" onclick="savePost()"><svg class="ico"><use href="#i-press"/></svg><span data-i="cb.bp">Жариялау</span></button>
         <p class="hint" style="margin-top:12px" data-i="cb.bph">Жазба Медиа бөлімінде кітапхананың аты, автордың аты-жөні мен лауазымымен бірге шығады.</p>
       </div>
       <div class="card"><h4 data-i="cb.mine">Менің жазбаларым</h4><div id="myPosts"></div></div>
@@ -924,9 +1154,9 @@ const T={
 kk:{
  'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.media':'Медиа','nav.reg':'Тіркелу','nav.login':'Кіру',
  'nav.libs':'Кітапханалар','nav.books':'Кітаптар',
- 'bk.eye':'Кітап тізімдері','bk.h':'Кітапханалар не <em>оқып</em>, не <em>ұсынып</em> жатыр',
+ 'bk.eye':'Кітап тізімдері','bk.h':'Кітапханалар не <em>оқып</em>, <br>не <em>ұсынып</em> жатыр',
  'bk.sub':'Тізімдер тіркелген кітапханалардың есебінен жиналады.',
- 'bk.rec':'📚 Кітапханалар оқырманға ұсынады','bk.top':'🔥 Ең көп оқылған кітаптар',
+ 'bk.rec':'Кітапханалар оқырманға ұсынады','bk.top':'Ең көп оқылған кітаптар',
  'bk.empty':'Тіркелген кітапханалар тізімді енгізген соң осы жерде шығады.',
  'nw.h':'Жаңалықтар мен хабарламалар',
  'mk.r1':'Оқырман','mk.r2':'Келушi','mk.top':'Ел бойынша ең жоғары көрсеткіш',
@@ -936,7 +1166,18 @@ kk:{
  'bn.p':'Айына бес минут — жыл бойы дайын контент. Тіркелу тегін, растау коды поштаға келеді.',
  'bn.b':'Тіркелуді бастау','bn.s1':'Есеп енгізу уақыты','bn.s2':'Бір деректен шығатын формат',
  'bn.s3':'Жыл соңында дайын сторис','bn.s4':'Төлем','bn.s4v':'тегін',
- 'du.ah':'Медиа блог','du.ap':'Кітапханаңыздың жұмысы туралы жазыңыз — басқалар оқысын.','du.ab':'Жазба қосу',
+ 'du.ah':'Жоба және автор туралы','du.aname':'Нұрлыхан Қасымханұлы',
+ 'du.ar1':'Кітапхана статистикасы мен деректерін талдауға негізделген әдістемелік материалдар дайындаймын',
+ 'du.ar2':'Кітапхана ісін цифрландыру бағытында жоспарлау және стандарттау жұмыстарын жүргіземін',
+ 'du.apl':'Жобалар',
+ 'du.p1':'Қазақстан кітапханаларының статистикасын визуалды түрде көрсететін аналитикалық платформа',
+ 'du.p2':'Кітапхана мен мәдениет мекемелерінің деректерін дайын контентке айналдыратын платформа (LABA-ның серіктес жобасы)',
+ 'du.p3':'Кітапханашыларға арналған AI негізіндегі библиографиялық өңдеу платформасы; ашық API және көптілді кітапхана стандарттарын қолдау көзделген',
+ 'du.asl':'Дағдылар',
+ 'du.s1':'AI құралдарын кәсіби жұмыс үрдісіне енгізу және дербес платформалар құру',
+ 'du.s2':'Кітапхана ісі, ақпараттық менеджмент және стандарттау',
+ 'du.s3':'Деректерді талдау және визуализациялау',
+ 'du.amail':'Байланыс',
  'du.bh':'Кітапханалар картасы','du.bp':'Қазақстандағы кітапханалар Google Maps-та. Ең жақынын тауып, жұмыс уақытын көріңіз.',
  'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.','ft.sup':'Жобаны қолдау',
  'ft.h1':'Платформа','ft.h2':'Құралдар','ft.h3':'Форматтар',
@@ -945,9 +1186,11 @@ kk:{
  'lb.sub':'Есеп берген кітапханалар өзара салыстырылады. Өз кітапханаңызды тіркеп, тізімге қосылыңыз.',
  'lb.c0':'Орын','lb.c1':'Кітапхана','lb.c2':'Орналасқан жері','lb.c3':'Оқырман','lb.c4':'Келушi','lb.c5':'Соңғы есеп күні','lb.c6':'Кітап берілімі',
 
- 'hero.badge':'📊 2025 жыл қорытындысы · ҚР көпшілік кітапханалары',
- 'hero.h1':'Сан емес — <em>сөйлейтін</em> контент.',
- 'hero.lead':'Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды. Мәтінді де өзі жазады. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
+ 'hero.h1':'Сан үнсіз. Біз оны <em>сөйлетеміз</em>.',
+ 'hero.lead':'Мәдениет мекемелерінің деректерін <b>жасанды интеллект</b> дайын контентке айналдырады. Сіз санды енгізесіз — жүйе мәтінін өзі жазып, суретін өзі жинайды. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
+ 'hero.fl':'Бір деректен шығады',
+ 'hero.f1':'Әлеуметтік желі посты','hero.f2':'Дайджест','hero.f3':'Инфографика','hero.f4':'Баспасөз хабарламасы',
+ 'hero.note':'Тіркелусіз көріп көруге болады · дайын файл 30 секундта',
  'hero.c1':'Постер жасап көру','hero.c2':'Кітапхананы тіркеу',
  'hero.sn':'Сәрсенова А.Қ.','hero.sp':'Кітапхана меңгерушісі',
  'st.eye':'Республика бойынша','st.h':'Кітапхана статистикасы',
@@ -966,10 +1209,10 @@ kk:{
  'gd.eye':'Практикалық нұсқаулық','gd.h':'Кітапханашы қалай жұмыс істейді?',
  'md.eye':'Медиа және жобалар','md.h':'Кітапхана тәжірибесі',
  'md.sub':'Әдістемелік көмек, кітап пен кітапханаға қатысты жобалар. Тіркелген кітапханалар өз жұмысы туралы блог жаза алады.',
- 'md.write':'Блог жазу ✍️','md.writeh':'Тіркелген кітапхана қызметкерлері үшін',
+ 'md.write':'Блог жазу','md.writeh':'Тіркелген кітапхана қызметкерлері үшін',
  'rg.eye':'Қабылдау бөлмесі','rg.h':'Кітапхананы тіркеу',
  'rg.sub':'Тіркелу — кітапхана қызметкері үшін. Растау коды поштаңызға жіберіледі және құпия сөз орнына қызмет етеді.',
- 'rg.send':'Кодты поштаға жіберу 🚀','rg.done':'Растап, кабинетке кіру',
+ 'rg.send':'Кодты поштаға жіберу','rg.done':'Растап, кабинетке кіру',
  'rg.mail':'Кіріс хат','rg.mailtxt':'Кіру кодыңыз поштаңызға жіберілді. Ол 15 минут жарамды.',
  'f.lib':'Кітапхана атауы *','f.reg':'Өңір *','f.dist':'Аудан *','f.loc':'Ауыл / қала *','f.name':'Аты-жөні *',
  'f.pos':'Лауазымы *','f.ph':'Телефон *','f.mail':'Электрондық пошта *','f.role':'Рөлі *','f.code':'Кодты енгізіңіз',
@@ -998,7 +1241,7 @@ kk:{
  'cb.rh':'Өңірлер бойынша жиынтық','cb.mo':'Ай','cb.chg':'Өзгеріс',
  'cb.bl':'Жоба туралы блог жазу','cb.pj':'Жоба / айдар',
  'cb.sec':'Бөлім','cb.rub':'Рубрика','cb.rubn':'Жаңа рубрика атауы',
- 'cb.rubh':'Рубриканы тізімнен таңдаңыз немесе «＋ Жаңа рубрика» деп өзіңіз қосыңыз.','cb.ti':'Тақырып','cb.tx':'Мәтін','cb.bp':'Жариялау 📢',
+ 'cb.rubh':'Рубриканы тізімнен таңдаңыз немесе «＋ Жаңа рубрика» деп өзіңіз қосыңыз.','cb.ti':'Тақырып','cb.tx':'Мәтін','cb.bp':'Жариялау',
  'cb.bph':'Жазба Медиа бөлімінде кітапхананың аты, автордың аты-жөні мен лауазымымен бірге шығады.',
  'cb.mine':'Менің жазбаларым',
  'cb.br':'Кітапхананың бренд түсі','cb.brs':'Бір түс','cb.brg':'Градиент','cb.site':'Профиль сілтемесі (QR-ға түседі)',
@@ -1040,6 +1283,10 @@ kk:{
  tplCab:['Ең көп оқылған кітап','Кітапханалар рейтингі'],
  platformLine:'Қазақстан кітапханалары туралы цифрлы деректер платформасы',
  bkEmpty:'Тіркелген кітапханалар тізімді енгізген соң осы жерде шығады.',
+ bkTip:'Кітаптың үстін бассаңыз — оны қай кітапханалар ұсынғанын және қай жас санатына жататынын көресіз.',
+ bkDemo:'Тізімдер — үлгі дерек. Тіркелген кітапханалар өз тізімін енгізген сайын осында нақты дерек шығады.',
+ bkLibsRec:'Ұсынған кітапханалар',bkLibsTop:'Есеп берген кітапханалар',bkCat:'Жас санаты',
+ bkReads:'оқылым',bkLibOne:l=>`${l} кітапхана`,
  allReg:'Барлық өңір',
  lbCount:n=>`${n} кітапхана есеп берген`,
  lbEmpty:'Әзірге бірде-бір кітапхана есеп бермеген. Бірінші болыңыз — тіркеліңіз.',
@@ -1083,12 +1330,15 @@ kk:{
  saved:m=>`${m} айының дерегі сақталды.`,
  errFill:'Барлық өрісті толтырыңыз',errMail:'Пошта дұрыс емес',
  errCode:'Код сәйкес келмейді',errLogin:'Мұндай пошта табылмады.',
+ errHtml:'Сервер JSON емес, HTML бет қайтарды. Apps Script деплойында «Кім кіре алады» деген жерде Anyone тұруы және жаңа нұсқа деплой етілуі керек.',
+ errNet:'Серверге қосыла алмадық. Интернетті және Apps Script сілтемесін тексеріңіз.',
+ errSrv:'Сервер қатесі',
  bT:'Кітап атауы',bA:'Авторы',bC:'Оқылым саны',
  needApi:'Қосылым жоқ — демо аккаунтты қолданыңыз',
  sent:'Код поштаға жіберілді',
  needLogin:'Блог жазу үшін алдымен кабинетке кіріңіз',
  posted:'Жазба жарияланды',noPosts:'Әзірге жазба жоқ',
- more:n=>`Тағы да (${n}) ↓`,myRep:l=>`${l} — 12 айлық есеп`,tot:'Барлығы',
+ more:n=>`Тағы да (${n})`,myRep:l=>`${l} — 12 айлық есеп`,tot:'Барлығы',
  tJpg:'JPG жүктелді',tPdf:'PDF жүктелді',tZip:'ZIP жүктелді',
  rkMore:n=>`Қалған ${n} өңірді жаю`,rkLess:'Кестені жинау',
  errRub:'Рубрика атауын жазыңыз',
@@ -1097,9 +1347,9 @@ kk:{
 ru:{
  'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.media':'Медиа','nav.reg':'Регистрация','nav.login':'Кіру',
  'nav.libs':'Библиотеки','nav.books':'Книги',
- 'bk.eye':'Книжные списки','bk.h':'Что библиотеки <em>читают</em> и что <em>советуют</em>',
+ 'bk.eye':'Книжные списки','bk.h':'Что библиотеки <em>читают</em> <br>и что <em>советуют</em>',
  'bk.sub':'Списки собираются из отчётов зарегистрированных библиотек.',
- 'bk.rec':'📚 Библиотеки советуют читателям','bk.top':'🔥 Самые читаемые книги',
+ 'bk.rec':'Библиотеки советуют читателям','bk.top':'Самые читаемые книги',
  'bk.empty':'Появится здесь, как только зарегистрированные библиотеки внесут списки.',
  'nw.h':'Новости и объявления',
  'mk.r1':'Читатели','mk.r2':'Посещения','mk.top':'Лучший показатель по стране',
@@ -1109,7 +1359,18 @@ ru:{
  'bn.p':'Пять минут в месяц — готовый контент весь год. Регистрация бесплатна, код подтверждения придёт на почту.',
  'bn.b':'Начать регистрацию','bn.s1':'Время на ввод отчёта','bn.s2':'Форматов из одних данных',
  'bn.s3':'Готовых сторис в конце года','bn.s4':'Оплата','bn.s4v':'бесплатно',
- 'du.ah':'Медиа-блог','du.ap':'Напишите о работе своей библиотеки — пусть прочитают другие.','du.ab':'Добавить запись',
+ 'du.ah':'О проекте и авторе','du.aname':'Нурлыхан Касымханулы',
+ 'du.ar1':'Готовлю методические материалы на основе анализа библиотечной статистики и данных',
+ 'du.ar2':'Веду работу по планированию и стандартизации в направлении цифровизации библиотечного дела',
+ 'du.apl':'Проекты',
+ 'du.p1':'Аналитическая платформа, наглядно показывающая статистику библиотек Казахстана',
+ 'du.p2':'Платформа, превращающая данные библиотек и учреждений культуры в готовый контент (партнёрский проект LABA)',
+ 'du.p3':'Платформа библиографической обработки на основе ИИ для библиотекарей; предусмотрены открытый API и поддержка многоязычных библиотечных стандартов',
+ 'du.asl':'Навыки',
+ 'du.s1':'Внедрение ИИ-инструментов в рабочие процессы и создание собственных платформ',
+ 'du.s2':'Библиотечное дело, информационный менеджмент и стандартизация',
+ 'du.s3':'Анализ и визуализация данных',
+ 'du.amail':'Связаться',
  'du.bh':'Карта библиотек','du.bp':'Библиотеки Казахстана на Google Maps. Найдите ближайшую и посмотрите часы работы.',
  'ft.about':'Платформа превращения библиотечных данных в визуальный контент.','ft.sup':'Поддержать проект',
  'ft.h1':'Платформа','ft.h2':'Инструменты','ft.h3':'Форматы',
@@ -1118,9 +1379,11 @@ ru:{
  'lb.sub':'Сравниваются библиотеки, сдавшие отчёт. Зарегистрируйте свою и попадите в список.',
  'lb.c0':'Место','lb.c1':'Библиотека','lb.c2':'Расположение','lb.c3':'Читатели','lb.c4':'Посещения','lb.c5':'Дата последнего отчёта','lb.c6':'Книговыдача',
 
- 'hero.badge':'📊 Итоги 2025 года · публичные библиотеки РК',
- 'hero.h1':'Не цифра — <em>говорящий</em> контент.',
- 'hero.lead':'Введите статистику библиотеки — платформа сама соберёт из неё пост для Instagram, сторис, картинку для Facebook и документ A4. И сама напишет текст. Внизу будет ваше имя и должность.',
+ 'hero.h1':'Цифра молчит. Мы даём ей <em>голос</em>.',
+ 'hero.lead':'<b>Искусственный интеллект</b> превращает данные учреждений культуры в готовый контент. Вы вводите цифры — система сама пишет текст и собирает картинку. Внизу будет ваше имя и должность.',
+ 'hero.fl':'Из одних данных',
+ 'hero.f1':'Пост для соцсетей','hero.f2':'Дайджест','hero.f3':'Инфографика','hero.f4':'Пресс-релиз',
+ 'hero.note':'Можно попробовать без регистрации · готовый файл за 30 секунд',
  'hero.c1':'Попробовать студию','hero.c2':'Зарегистрировать библиотеку',
  'hero.sn':'Сарсенова А.К.','hero.sp':'Заведующая библиотекой',
  'st.eye':'По республике','st.h':'Статистика библиотек',
@@ -1139,10 +1402,10 @@ ru:{
  'gd.eye':'Практическое руководство','gd.h':'Как работает библиотекарь?',
  'md.eye':'Медиа и проекты','md.h':'Опыт библиотек',
  'md.sub':'Методическая помощь, проекты о книге и библиотеке. Зарегистрированные библиотеки могут вести блог о своей работе.',
- 'md.write':'Написать в блог ✍️','md.writeh':'Для сотрудников зарегистрированных библиотек',
+ 'md.write':'Написать в блог','md.writeh':'Для сотрудников зарегистрированных библиотек',
  'rg.eye':'Приёмная','rg.h':'Регистрация библиотеки',
  'rg.sub':'Регистрация — для сотрудника библиотеки. Код подтверждения придёт на почту и служит паролем.',
- 'rg.send':'Отправить код на почту 🚀','rg.done':'Подтвердить и войти',
+ 'rg.send':'Отправить код на почту','rg.done':'Подтвердить и войти',
  'rg.mail':'Входящее письмо','rg.mailtxt':'Код входа отправлен на вашу почту. Действует 15 минут.',
  'f.lib':'Название библиотеки *','f.reg':'Регион *','f.dist':'Район *','f.loc':'Село / город *','f.name':'ФИО *',
  'f.pos':'Должность *','f.ph':'Телефон *','f.mail':'Электронная почта *','f.role':'Роль *','f.code':'Введите код',
@@ -1171,7 +1434,7 @@ ru:{
  'cb.rh':'Сводка по регионам','cb.mo':'Месяц','cb.chg':'Изменение',
  'cb.bl':'Написать в блог о проекте','cb.pj':'Проект / рубрика',
  'cb.sec':'Раздел','cb.rub':'Рубрика','cb.rubn':'Название новой рубрики',
- 'cb.rubh':'Выберите рубрику из списка или добавьте свою через «＋ Новая рубрика».','cb.ti':'Заголовок','cb.tx':'Текст','cb.bp':'Опубликовать 📢',
+ 'cb.rubh':'Выберите рубрику из списка или добавьте свою через «＋ Новая рубрика».','cb.ti':'Заголовок','cb.tx':'Текст','cb.bp':'Опубликовать',
  'cb.bph':'Запись появится в разделе Медиа вместе с названием библиотеки, ФИО и должностью автора.',
  'cb.mine':'Мои записи',
  'cb.br':'Фирменный цвет библиотеки','cb.brs':'Один цвет','cb.brg':'Градиент','cb.site':'Ссылка на профиль (попадёт в QR)',
@@ -1213,6 +1476,10 @@ ru:{
  tplCab:['Самая читаемая книга','Рейтинг библиотек'],
  platformLine:'Платформа цифровых данных о библиотеках Казахстана',
  bkEmpty:'Появится здесь, как только зарегистрированные библиотеки внесут списки.',
+ bkTip:'Нажмите на книгу — увидите, какие библиотеки её советуют и к какой возрастной категории она относится.',
+ bkDemo:'Списки — демонстрационные данные. Как только библиотеки внесут свои списки, здесь появятся реальные.',
+ bkLibsRec:'Рекомендовали библиотеки',bkLibsTop:'Отчитались библиотеки',bkCat:'Возрастная категория',
+ bkReads:'прочтений',bkLibOne:l=>`${l} ${l%10===1&&l%100!==11?'библиотека':(l%10>=2&&l%10<=4&&!(l%100>=12&&l%100<=14)?'библиотеки':'библиотек')}`,
  allReg:'Все регионы',
  lbCount:n=>`Отчитались библиотек: ${n}`,
  lbEmpty:'Пока ни одна библиотека не отчиталась. Станьте первой — зарегистрируйтесь.',
@@ -1256,12 +1523,15 @@ ru:{
  saved:m=>`Данные за ${m} сохранены.`,
  errFill:'Заполните все поля',errMail:'Некорректная почта',
  errCode:'Код не совпадает',errLogin:'Такая почта не найдена.',
+ errHtml:'Сервер вернул HTML вместо JSON. В развёртывании Apps Script доступ «Кто имеет доступ» должен быть Anyone, и нужно развернуть новую версию.',
+ errNet:'Не удалось связаться с сервером. Проверьте интернет и ссылку Apps Script.',
+ errSrv:'Ошибка сервера',
  bT:'Название книги',bA:'Автор',bC:'Количество прочтений',
  needApi:'Нет подключения — используйте демо-аккаунт',
  sent:'Код отправлен на почту',
  needLogin:'Чтобы писать в блог, сначала войдите в кабинет',
  posted:'Запись опубликована',noPosts:'Пока нет записей',
- more:n=>`Ещё (${n}) ↓`,myRep:l=>`${l} — отчёт за 12 месяцев`,tot:'Всего',
+ more:n=>`Ещё (${n})`,myRep:l=>`${l} — отчёт за 12 месяцев`,tot:'Всего',
  tJpg:'JPG скачан',tPdf:'PDF скачан',tZip:'ZIP скачан',
  rkMore:n=>`Показать ещё ${n} регионов`,rkLess:'Свернуть таблицу',
  errRub:'Укажите название рубрики',
@@ -1288,10 +1558,20 @@ function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('on');clea
 const API=(()=>{
   const B=API_URL;
   const ok=()=>/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(B);
-  const rd=async(a,p={})=>{const r=await fetch(B+'?'+new URLSearchParams({action:a,...p}));const j=await r.json();if(!j.ok)throw new Error(j.error);return j.data;};
-  const wr=async(a,p={})=>{const r=await fetch(B,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+  /* Транспорт қатесін бөліп аламыз: Apps Script JSON емес, HTML қайтаруы мүмкін */
+  const tErr=m=>{const e=new Error(m);e.transport=true;return e;};
+  const parse=async r=>{
+    const txt=await r.text();
+    let j;
+    try{j=JSON.parse(txt);}
+    catch(_){throw tErr(/^\s*</.test(txt)?T[L].errHtml:T[L].errSrv+' ('+r.status+')');}
+    if(!j.ok)throw new Error(j.error||T[L].errSrv);
+    return j;
+  };
+  const send=async(u,o)=>{let r;try{r=await fetch(u,o);}catch(_){throw tErr(T[L].errNet);}return parse(r);};
+  const rd=async(a,p={})=>(await send(B+'?'+new URLSearchParams({action:a,...p}))).data;
+  const wr=(a,p={})=>send(B,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
     body:JSON.stringify({action:a,client:navigator.userAgent,lang:L,...p})});
-    const j=await r.json();if(!j.ok)throw new Error(j.error);return j;};
   return{ok,summary:()=>rd('summary'),library:id=>rd('library',{libraryId:id}),posts:()=>rd('posts'),
    ranking:()=>rd('ranking'),booklists:()=>rd('booklists'),feedData:()=>rd('feed'),
    requestCode:e=>wr('requestCode',{email:e}),verifyCode:(e,c)=>wr('verifyCode',{email:e,code:c}),
@@ -1411,6 +1691,20 @@ function renderHero(){
   $('#hcMini').textContent=top.n[L].toUpperCase()+' · '+YEAR;
   $('#hcBig').textContent=nf(top.users);
   $('#hcCap').textContent=L==='kk'?'оқырман — ел бойынша ең жоғары көрсеткіш':'читателей — лучший показатель по стране';
+  renderSpark();
+}
+/* Hero мини-диаграмма: оқырман саны бойынша үздік жеті өңір */
+function renderSpark(){
+  const el=$('#hSpark');if(!el)return;
+  const arr=[...REGIONS].sort((a,b)=>b.users-a.users).slice(0,7);
+  const mx=arr[0].users,mn=arr[arr.length-1].users;
+  el.setAttribute('aria-label',L==='kk'?'Оқырман саны бойынша үздік жеті өңір':'Семь регионов с наибольшим числом читателей');
+  el.innerHTML=arr.map((r,i)=>{
+    const h=Math.round(28+58*(r.users-mn)/Math.max(1,mx-mn));
+    const nm=r.n[L];
+    return `<div class="sb${i===0?' on':''}" title="${nm} · ${nf(r.users)}">
+      <span class="bar" style="--h:${h}px;--d:${(i*70)}ms" data-v="${nf(r.users)}"></span>
+      <span class="lb">${nm}</span></div>`;}).join('');
 }
 function renderNums(){
   const rural=REGIONS.reduce((s,r)=>s+r.rural,0),prevU=REGIONS.reduce((s,r)=>s+r.usersPrev,0);
@@ -1444,8 +1738,8 @@ function applyRankState(){
   box.classList.toggle('collapsed',!rankOpen);
   btn.setAttribute('aria-expanded',String(rankOpen));
   btn.innerHTML=rankOpen
-    ? `<span>${T[L].rkLess}</span><span class="arw">▾</span>`
-    : `<span>${T[L].rkMore(rest)}</span><span class="cnt">+${rest}</span><span class="arw">▾</span>`;
+    ? `<span>${T[L].rkLess}</span><svg class="ico arw"><use href="#i-chev"/></svg>`
+    : `<span>${T[L].rkMore(rest)}</span><span class="cnt">+${rest}</span><svg class="ico arw"><use href="#i-chev"/></svg>`;
   btn.style.display=rest>0?'':'none';
 }
 function toggleRank(){
@@ -1534,7 +1828,7 @@ function renderFeed(){
     :`<p class="hint">${T[L].noPosts}</p>`;
   const rest=src.length-shown;
   $('#moreBtn').style.display=rest>0?'block':'none';
-  $('#moreBtn').textContent=T[L].more(rest);
+  $('#moreBtn').innerHTML=`<span>${T[L].more(rest)}</span><svg class="ico" style="width:15px;height:15px;vertical-align:-.2em;margin-left:7px"><use href="#i-chev"/></svg>`;
   renderNews();
 }
 function showMore(){shown+=3;renderFeed();}
@@ -1555,18 +1849,95 @@ async function loadLibs(){
       LIBS_DEMO=false;renderLibs();}
   }catch(e){}
 }
-let RECS=[],TOPS=[];
+let RECS=[],TOPS=[],BOOKS_DEMO=true;
+/* Үлгі тізімдер — нақты дерек келгенше көрсетіледі */
+const DEMO_TOP=[
+ {title:{kk:'Менің атым Қожа',ru:'Меня зовут Кожа'},author:{kk:'Б. Соқпақбаев',ru:'Б. Сокпакбаев'},count:412,category:0,library:'Қарасу ауылдық кітапханасы',region:'Алматы облысы'},
+ {title:{kk:'Менің атым Қожа',ru:'Меня зовут Кожа'},author:{kk:'Б. Соқпақбаев',ru:'Б. Сокпакбаев'},count:318,category:0,library:'Талдықорған балалар кітапханасы',region:'Жетісу'},
+ {title:{kk:'Менің атым Қожа',ru:'Меня зовут Кожа'},author:{kk:'Б. Соқпақбаев',ru:'Б. Сокпакбаев'},count:274,category:1,library:'Көкшетау балалар кітапханасы',region:'Ақмола'},
+ {title:{kk:'Абай жолы',ru:'Путь Абая'},author:{kk:'М. Әуезов',ru:'М. Ауэзов'},count:308,category:3,library:'Түркістан қалалық кітапханасы',region:'Түркістан'},
+ {title:{kk:'Абай жолы',ru:'Путь Абая'},author:{kk:'М. Әуезов',ru:'М. Ауэзов'},count:265,category:2,library:'Шымкент орталық кітапханасы',region:'Шымкент'},
+ {title:{kk:'Көшпенділер',ru:'Кочевники'},author:{kk:'І. Есенберлин',ru:'И. Есенберлин'},count:264,category:2,library:'Ақсу ауылдық кітапханасы',region:'Павлодар'},
+ {title:{kk:'Көшпенділер',ru:'Кочевники'},author:{kk:'І. Есенберлин',ru:'И. Есенберлин'},count:190,category:3,library:'Бейнеу аудандық кітапханасы',region:'Маңғыстау'},
+ {title:{kk:'Қан мен тер',ru:'Кровь и пот'},author:{kk:'Ә. Нұрпейісов',ru:'А. Нурпеисов'},count:197,category:3,library:'Түркістан қалалық кітапханасы',region:'Түркістан'},
+ {title:{kk:'Ұлпан',ru:'Улпан'},author:{kk:'Ғ. Мүсірепов',ru:'Г. Мусрепов'},count:186,category:2,library:'Көкшетау балалар кітапханасы',region:'Ақмола'},
+ {title:{kk:'Бақытсыз Жамал',ru:'Несчастная Жамал'},author:{kk:'М. Дулатұлы',ru:'М. Дулатов'},count:154,category:3,library:'Шымкент орталық кітапханасы',region:'Шымкент'}];
+const DEMO_REC=[
+ {title:{kk:'Балалық шаққа саяхат',ru:'Школа жизни'},author:{kk:'С. Мұқанов',ru:'С. Муканов'},library:'Талдықорған балалар кітапханасы',region:'Жетісу'},
+ {title:{kk:'Балалық шаққа саяхат',ru:'Школа жизни'},author:{kk:'С. Мұқанов',ru:'С. Муканов'},library:'Көкшетау балалар кітапханасы',region:'Ақмола'},
+ {title:{kk:'Аяз би',ru:'Аяз би'},author:{kk:'Халық ертегісі',ru:'Народная сказка'},library:'Қарасу ауылдық кітапханасы',region:'Алматы облысы'},
+ {title:{kk:'Аяз би',ru:'Аяз би'},author:{kk:'Халық ертегісі',ru:'Народная сказка'},library:'Ақсу ауылдық кітапханасы',region:'Павлодар'},
+ {title:{kk:'Аяз би',ru:'Аяз би'},author:{kk:'Халық ертегісі',ru:'Народная сказка'},library:'Талдықорған балалар кітапханасы',region:'Жетісу'},
+ {title:{kk:'Оян, қазақ!',ru:'Проснись, казах!'},author:{kk:'М. Дулатұлы',ru:'М. Дулатов'},library:'Түркістан қалалық кітапханасы',region:'Түркістан'},
+ {title:{kk:'Қыз Жібек',ru:'Кыз Жибек'},author:{kk:'Халық жыры',ru:'Народный эпос'},library:'Шымкент орталық кітапханасы',region:'Шымкент'},
+ {title:{kk:'Қыз Жібек',ru:'Кыз Жибек'},author:{kk:'Халық жыры',ru:'Народный эпос'},library:'Бейнеу аудандық кітапханасы',region:'Маңғыстау'},
+ {title:{kk:'Көксерек',ru:'Серый Лютый'},author:{kk:'М. Әуезов',ru:'М. Ауэзов'},library:'Көкшетау балалар кітапханасы',region:'Ақмола'}];
 async function loadBooks(){
   try{const d=await API.booklists();
-    if(d){RECS=d.rec||[];TOPS=d.top||[];renderBookLists();}}catch(e){}
+    if(d&&((d.rec&&d.rec.length)||(d.top&&d.top.length))){
+      RECS=d.rec||[];TOPS=d.top||[];BOOKS_DEMO=false;renderBookLists();}}catch(e){}
+}
+function recList(){return BOOKS_DEMO?DEMO_REC:RECS;}
+function topList(){return BOOKS_DEMO?DEMO_TOP:TOPS;}
+/* Бір кітап бірнеше кітапханадан келуі мүмкін — біріктіріп топтаймыз */
+function catIx(x){
+  const v=(x.category!=null?x.category:x.cat);
+  if(v===''||v==null)return null;
+  const n=+v;return isFinite(n)&&n>=0&&n<4?n:null;
+}
+function bval(v){return v&&typeof v==='object'?(v[L]||v.kk||''):(v||'');}
+function groupBooks(rows){
+  const map=new Map();
+  (rows||[]).forEach(x=>{
+    const title=String(bval(x.title)).trim();if(!title)return;
+    const author=String(bval(x.author)).trim();
+    const key=(title+'|'+author).toLowerCase();
+    let g=map.get(key);
+    if(!g){g={title,author,count:0,cats:[],libs:[]};map.set(key,g);}
+    const c=+x.count||0;g.count+=c;
+    const ci=catIx(x);if(ci!=null&&g.cats.indexOf(ci)<0)g.cats.push(ci);
+    const lib=String(x.library||'').trim();
+    if(lib){const ex=g.libs.find(l=>l.name===lib);
+      if(ex)ex.count+=c;else g.libs.push({name:lib,region:String(x.region||'').trim(),count:c});}
+  });
+  return[...map.values()].sort((a,b)=>b.count-a.count||b.libs.length-a.libs.length);
+}
+function esc(v){return String(v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function bookItem(g,i,id,kind){
+  const t=T[L];
+  const cats=kind==='top'&&g.cats.length
+    ? `<div class="dlbl">${t.bkCat}</div><div class="bkchips">${g.cats.sort().map(c=>
+        `<span class="bkchip"><svg class="ico"><use href="#i-tag"/></svg>${esc(t.cats[c])}</span>`).join('')}</div>`:'';
+  const libs=g.libs.length
+    ? `<div class="dlbl">${kind==='top'?t.bkLibsTop:t.bkLibsRec} · ${g.libs.length}</div>
+       <ul class="bklibs">${g.libs.sort((a,b)=>b.count-a.count).map(l=>
+        `<li><svg class="ico"><use href="#i-lib"/></svg><span class="ln">${esc(l.name)}</span>
+         ${l.region?`<span class="lr">${esc(l.region)}</span>`:''}
+         ${l.count?`<span class="lc">${nf(l.count)}</span>`:''}</li>`).join('')}</ul>`
+    : `<div class="dlbl">${kind==='top'?t.bkLibsTop:t.bkLibsRec}</div><p class="hint" style="margin:0">—</p>`;
+  return `<div class="bkit" id="${id}">
+    <button class="bkmain" aria-expanded="false" aria-controls="${id}-d" onclick="bkToggle('${id}')">
+      <span class="no">${i+1}</span>
+      <span class="tx"><span class="t">${esc(g.title)}</span>
+        <span class="a">${esc(g.author||'')}${g.libs.length?(g.author?' · ':'')+esc(t.bkLibOne(g.libs.length)):''}</span></span>
+      <span class="rt">${g.count?`<span class="c"><svg class="ico"><use href="#i-book"/></svg>${nf(g.count)}</span>`:''}
+        <svg class="ico chv"><use href="#i-chev"/></svg></span>
+    </button>
+    <div class="bkdet" id="${id}-d" hidden>${cats}${libs}</div>
+  </div>`;
+}
+function bkToggle(id){
+  const it=document.getElementById(id);if(!it)return;
+  const det=document.getElementById(id+'-d'),btn=it.querySelector('.bkmain');
+  const open=it.classList.toggle('open');
+  det.hidden=!open;btn.setAttribute('aria-expanded',open?'true':'false');
 }
 function renderBookLists(){
-  const row=(x,i)=>`<div class="bkrow"><span class="no">${i+1}</span>
-    <span><span class="t">${x.title}</span><br><span class="a">${x.author||''}${x.library?' · '+x.library:''}</span></span>
-    ${x.count?`<span class="c">${nf(x.count)}</span>`:''}</div>`;
   const rl=$('#recList'),tl=$('#topList');if(!rl)return;
-  rl.innerHTML=RECS.length?RECS.slice(0,8).map(row).join(''):`<p class="hint">${T[L].bkEmpty}</p>`;
-  tl.innerHTML=TOPS.length?TOPS.slice(0,8).map(row).join(''):`<p class="hint">${T[L].bkEmpty}</p>`;
+  const rec=groupBooks(recList()).slice(0,8),top=groupBooks(topList()).slice(0,8);
+  rl.innerHTML=rec.length?rec.map((g,i)=>bookItem(g,i,'bkr'+i,'rec')).join(''):`<p class="hint">${T[L].bkEmpty}</p>`;
+  tl.innerHTML=top.length?top.map((g,i)=>bookItem(g,i,'bkt'+i,'top')).join(''):`<p class="hint">${T[L].bkEmpty}</p>`;
+  const n=$('#bkNote');if(n)n.textContent=BOOKS_DEMO?T[L].bkDemo+' '+T[L].bkTip:T[L].bkTip;
 }
 /* Әкімші енгізген жобалар мен жаңалықтар */
 let ADMIN_PJ=null,NEWS=[];
@@ -1911,7 +2282,7 @@ async function sendCode(){
 }
 async function confirmCode(){
   const e=$('#cdErr');e.classList.remove('on');const c=$('#rCode').value.trim();
-  try{await API.verifyCode(pending.mail,c);}catch(err){e.textContent=T[L].errCode;e.classList.add('on');return;}
+  try{await API.verifyCode(pending.mail,c);}catch(err){e.textContent=err&&err.transport?err.message:T[L].errCode;e.classList.add('on');return;}
   ME={libraryId:pending.libraryId||'LIB-DEMO',name:pending.name,pos:pending.pos,mail:pending.mail,role:pending.role};
   MY.name=pending.lib;MY.region=pending.reg;enterApp();
 }
@@ -1933,7 +2304,7 @@ async function doLogin(){
     try{const d=await API.library(u.libraryId);
       if(d.readers)MY.r=d.readers;if(d.visits)MY.v=d.visits;
       renderMonths();renderBars();renderRoll();loadMonth();draw();}catch(_){}
-  }catch(err){e.textContent=T[L].errCode;e.classList.add('on');}
+  }catch(err){e.textContent=err&&err.transport?err.message:T[L].errCode;e.classList.add('on');}
 }
 function enterApp(){
   closeM();$('#app').classList.add('on');document.body.style.overflow='hidden';
