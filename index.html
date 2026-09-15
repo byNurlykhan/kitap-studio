@@ -240,7 +240,12 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .abhead{max-width:54ch;margin-bottom:24px}
 .abhead h2{margin-bottom:0}
 .abflow{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
-.abcard{border-radius:var(--r2);padding:24px;display:flex;flex-direction:column;gap:12px;min-height:168px}
+.abcard{border-radius:var(--r2);padding:24px;display:flex;flex-direction:column;gap:12px;min-height:168px;
+  transition:transform .32s cubic-bezier(.2,.8,.3,1),box-shadow .32s}
+.abcard:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(11,13,20,.42)}
+.abcard .ic{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:19px;flex:none}
+.abcard.old .ic{background:#E1E4EA}
+.abcard.new .ic{background:rgba(201,244,92,.16)}
 .abcard .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
 .abcard .q{margin:0;font-family:var(--disp);font-weight:800;font-size:clamp(17px,2vw,21px);letter-spacing:-.03em;line-height:1.28}
 .abcard .abm{font-size:13px;margin-top:auto;padding-top:6px}
@@ -251,7 +256,11 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .abcard.new{background:var(--dark);color:#fff}
 .abcard.new .tag{color:var(--lime)}
 .abcard.new .abm{color:rgba(255,255,255,.72)}
-.abar{align-self:center;justify-self:center;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:700;flex:none;box-shadow:0 12px 26px -12px rgba(44,92,255,.8)}
+.abar{align-self:center;justify-self:center;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:700;flex:none;box-shadow:0 12px 26px -12px rgba(44,92,255,.8);position:relative}
+.abar span{display:block;animation:abnudge 2.6s ease-in-out infinite}
+.abar::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(44,92,255,.35);animation:abring 2.6s ease-out infinite}
+@keyframes abnudge{0%,100%{transform:translateX(-2px)}50%{transform:translateX(3px)}}
+@keyframes abring{0%{transform:scale(.85);opacity:.9}70%,100%{transform:scale(1.35);opacity:0}}
 .abfoot{display:flex;gap:11px;align-items:flex-start;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--mute);max-width:80ch}
 .abfoot i{font-style:normal;flex:none}
 @media(max-width:760px){
@@ -262,20 +271,27 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 
 /* crowdfunding — жобаны қолдау */
 .fund{background:var(--dark);color:#fff;border-radius:var(--r);padding:40px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;position:relative;overflow:hidden}
-.fund::after{content:"";position:absolute;width:340px;height:340px;right:-130px;top:-150px;border-radius:50%;background:radial-gradient(circle,rgba(201,244,92,.2),transparent 70%);pointer-events:none}
+.fund::after{content:"";position:absolute;width:340px;height:340px;right:-130px;top:-150px;border-radius:50%;background:radial-gradient(circle,rgba(201,244,92,.2),transparent 70%);pointer-events:none;animation:flo 19s ease-in-out infinite}
 .fund>div{position:relative;z-index:1}
 .fund .eyebrow{color:var(--lime)}
 .fund h2{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;margin:0 0 12px;line-height:1.1}
 .fund h2 em{font-style:normal;color:var(--lime)}
 .fund p{margin:0 0 14px;color:rgba(255,255,255,.72);font-size:15px;max-width:52ch}
 .fnote{display:block;font-size:13px;color:rgba(255,255,255,.5)}
-.fcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r2);padding:22px}
+.fcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r2);padding:22px;
+  transition:transform .32s cubic-bezier(.2,.8,.3,1),box-shadow .32s,border-color .32s}
+.fcard:hover{transform:translateY(-3px);border-color:rgba(201,244,92,.4);box-shadow:0 26px 52px -28px rgba(0,0,0,.65)}
 .fbank{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px}
-.fbank i{width:27px;height:27px;border-radius:9px;background:var(--lime);color:#22300A;display:grid;place-items:center;font-size:13px;font-weight:800;font-style:normal;flex:none}
+.fbank i{width:27px;height:27px;border-radius:9px;background:var(--lime);color:#22300A;display:grid;place-items:center;font-size:13px;font-weight:800;font-style:normal;flex:none;
+  box-shadow:0 0 0 0 rgba(201,244,92,.5);animation:fring 3.2s ease-out infinite}
+@keyframes fring{0%{box-shadow:0 0 0 0 rgba(201,244,92,.5)}70%,100%{box-shadow:0 0 0 12px rgba(201,244,92,0)}}
 .flbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:18px 0 7px}
-.fnum{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.1vw,20px);letter-spacing:.06em;color:var(--lime);word-break:break-word}
-.fcopy{margin-top:18px;width:100%;background:#fff;color:var(--ink);border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px}
-.fcopy:hover{background:var(--lime);color:#22300A}
+.fnum{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.1vw,20px);letter-spacing:.06em;color:var(--lime);word-break:break-word;animation:fglow 3.8s ease-in-out infinite}
+@keyframes fglow{0%,100%{text-shadow:0 0 0 rgba(201,244,92,0)}50%{text-shadow:0 0 16px rgba(201,244,92,.45)}}
+.fcopy{margin-top:18px;width:100%;background:#fff;color:var(--ink);border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px;
+  transition:transform .25s cubic-bezier(.2,.8,.3,1),background .25s,box-shadow .25s}
+.fcopy:hover{background:var(--lime);color:#22300A;transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(201,244,92,.75)}
+.fcopy:active{transform:translateY(0)}
 .fok{display:block;margin-top:9px;font-size:12.5px;color:var(--lime);opacity:0;transition:opacity .25s}
 .fok.on{opacity:1}
 .fthx{margin-top:15px;font-size:12.5px;color:rgba(255,255,255,.55);text-align:center}
@@ -420,7 +436,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 .newsrow .t{font-weight:600;font-size:14.5px}
 .newsrow .a{font-size:13px;color:#6E6E80}
 
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -694,12 +710,14 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
     </div>
     <div class="abflow">
       <div class="abcard old">
+        <div class="ic">📄</div>
         <span class="tag" data-i="ab.t1">Бұрын</span>
         <p class="q" data-i="ab.q1">Мыңдаған көрсеткіш есепке тапсырылып, қағазда қалады.</p>
         <span class="abm" data-i="ab.m1">Оқырман көрмейді · еңбек көрінбейді</span>
       </div>
-      <div class="abar" aria-hidden="true">→</div>
+      <div class="abar" aria-hidden="true"><span>→</span></div>
       <div class="abcard new">
+        <div class="ic">⚡</div>
         <span class="tag" data-i="ab.t2">DILIGEN-мен</span>
         <p class="q" data-i="ab.q2">Сол сан бір батырмамен көрінетін контентке айналады.</p>
         <span class="abm" data-i="ab.m2">4 формат · 5 минут · дизайн білімі керек емес</span>
