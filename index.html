@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DILIGEN — кітапхана деректерін визуалды контентке айналдыру</title>
-<meta name="description" content="Кітапхана статистикасын Instagram посты, сторис, Facebook суреті және A4 құжатына айналдыратын платформа.">
+<meta name="description" content="DILIGEN — мәдениет мекемелерінің деректерін жасанды интеллект көмегімен дайын контентке айналдыратын платформа: әлеуметтік желі посты, дайджест, инфографика және баспасөз хабарламасы.">
 <meta property="og:title" content="DILIGEN — кітапхана деректерін визуалды контентке айналдыру">
-<meta property="og:description" content="Санды енгіз — постер өзі шықсын. 3 889 кітапхана, 5,5 млн оқырман.">
+<meta property="og:description" content="Санды енгіз — жасанды интеллект посты, дайджесті, инфографиканы және баспасөз хабарламасын өзі жинасын. 3 889 кітапхана, 5,5 млн оқырман.">
 <meta property="og:locale" content="kk_KZ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,10 +59,16 @@ a{color:var(--blue);text-decoration:none}
 /* ---------- hero ---------- */
 .hero{padding:44px 0 26px}
 .hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
-.pill{display:inline-flex;align-items:center;gap:7px;background:var(--violet-s);color:#6D3FE0;font-size:12.5px;font-weight:600;padding:6px 14px;border-radius:999px}
 h1.hh{font-family:var(--disp);font-weight:800;font-size:clamp(38px,5.2vw,62px);line-height:1.02;letter-spacing:-.045em;margin:20px 0 0}
 h1.hh em{font-style:normal;color:var(--blue);text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px}
 .lead{font-size:16.5px;color:var(--mute);max-width:46ch;margin:18px 0 26px}
+.lead b{color:var(--ink);font-weight:600}
+.fmtl{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.fmts{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px;padding:0}
+.fmts li{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 15px 6px 6px;font-size:13.5px;font-weight:600;box-shadow:0 10px 22px -18px rgba(11,13,20,.55);transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s}
+.fmts li:hover{transform:translateY(-2px);box-shadow:0 16px 26px -18px rgba(11,13,20,.6)}
+.fmts li i{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:13px;font-style:normal;flex:none}
+.hnote{font-size:13px;color:var(--mute);margin:16px 0 0}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
 
 .mock{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:0 24px 60px -30px rgba(11,13,20,.4);position:relative}
@@ -403,13 +409,20 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
   <div>
-    <span class="pill" data-i="hero.badge">📊 2025 жыл қорытындысы</span>
     <h1 class="hh" data-i="hero.h1">Сан емес — <em>сөйлейтін</em> контент</h1>
-    <p class="lead" data-i="hero.lead">Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды.</p>
+    <p class="lead" data-i="hero.lead">Мәдениет мекемелерінің деректерін <b>жасанды интеллект</b> дайын контентке айналдырады. Сіз санды енгізесіз — жүйе мәтінін өзі жазып, суретін өзі жинайды.</p>
+    <p class="fmtl" data-i="hero.fl">Бір деректен шығады</p>
+    <ul class="fmts">
+      <li><i style="background:var(--violet-s)">📱</i><span data-i="hero.f1">Әлеуметтік желі посты</span></li>
+      <li><i style="background:var(--blue-s)">📰</i><span data-i="hero.f2">Дайджест</span></li>
+      <li><i style="background:var(--green-s)">📊</i><span data-i="hero.f3">Инфографика</span></li>
+      <li><i style="background:var(--amber-s)">🗞️</i><span data-i="hero.f4">Баспасөз хабарламасы</span></li>
+    </ul>
     <div class="cta">
       <a class="btn-dark" href="#studio" data-i="hero.c1">Постер жасап көру</a>
       <a class="btn-out" href="#reg" data-i="hero.c2">Кітапхананы тіркеу</a>
     </div>
+    <p class="hnote" data-i="hero.note">Тіркелусіз көріп көруге болады · дайын файл 30 секундта</p>
   </div>
   <div class="mock">
     <div class="bar"><i></i><i></i><i></i></div>
@@ -848,9 +861,11 @@ kk:{
  'lb.sub':'Есеп берген кітапханалар өзара салыстырылады. Өз кітапханаңызды тіркеп, тізімге қосылыңыз.',
  'lb.c0':'Орын','lb.c1':'Кітапхана','lb.c2':'Орналасқан жері','lb.c3':'Оқырман','lb.c4':'Келушi','lb.c5':'Соңғы есеп күні','lb.c6':'Кітап берілімі',
 
- 'hero.badge':'📊 2025 жыл қорытындысы · ҚР көпшілік кітапханалары',
  'hero.h1':'Сан емес — <em>сөйлейтін</em> контент.',
- 'hero.lead':'Кітапхана статистикасын енгізіңіз — платформа оны Instagram посты, сторис, Facebook суреті және A4 құжаты етіп өзі жинайды. Мәтінді де өзі жазады. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
+ 'hero.lead':'Мәдениет мекемелерінің деректерін <b>жасанды интеллект</b> дайын контентке айналдырады. Сіз санды енгізесіз — жүйе мәтінін өзі жазып, суретін өзі жинайды. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
+ 'hero.fl':'Бір деректен шығады',
+ 'hero.f1':'Әлеуметтік желі посты','hero.f2':'Дайджест','hero.f3':'Инфографика','hero.f4':'Баспасөз хабарламасы',
+ 'hero.note':'Тіркелусіз көріп көруге болады · дайын файл 30 секундта',
  'hero.c1':'Постер жасап көру','hero.c2':'Кітапхананы тіркеу',
  'hero.sn':'Сәрсенова А.Қ.','hero.sp':'Кітапхана меңгерушісі',
  'st.eye':'Республика бойынша','st.h':'Кітапхана статистикасы',
@@ -1011,9 +1026,11 @@ ru:{
  'lb.sub':'Сравниваются библиотеки, сдавшие отчёт. Зарегистрируйте свою и попадите в список.',
  'lb.c0':'Место','lb.c1':'Библиотека','lb.c2':'Расположение','lb.c3':'Читатели','lb.c4':'Посещения','lb.c5':'Дата последнего отчёта','lb.c6':'Книговыдача',
 
- 'hero.badge':'📊 Итоги 2025 года · публичные библиотеки РК',
  'hero.h1':'Не цифра — <em>говорящий</em> контент.',
- 'hero.lead':'Введите статистику библиотеки — платформа сама соберёт из неё пост для Instagram, сторис, картинку для Facebook и документ A4. И сама напишет текст. Внизу будет ваше имя и должность.',
+ 'hero.lead':'<b>Искусственный интеллект</b> превращает данные учреждений культуры в готовый контент. Вы вводите цифры — система сама пишет текст и собирает картинку. Внизу будет ваше имя и должность.',
+ 'hero.fl':'Из одних данных',
+ 'hero.f1':'Пост для соцсетей','hero.f2':'Дайджест','hero.f3':'Инфографика','hero.f4':'Пресс-релиз',
+ 'hero.note':'Можно попробовать без регистрации · готовый файл за 30 секунд',
  'hero.c1':'Попробовать студию','hero.c2':'Зарегистрировать библиотеку',
  'hero.sn':'Сарсенова А.К.','hero.sp':'Заведующая библиотекой',
  'st.eye':'По республике','st.h':'Статистика библиотек',
