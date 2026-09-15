@@ -317,19 +317,29 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 
 /* Жоба және автор туралы карточкасы */
 .duo .prof{padding:30px}
-.duo .prof h3{font-size:23px;margin:14px 0 3px}
-.prof .pname{font-weight:700;font-size:15px;margin-bottom:10px}
-.prof .prole{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:5px}
-.prof .prole li{position:relative;padding-left:13px;font-size:12.5px;line-height:1.45;opacity:.9}
-.prof .prole li::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.75)}
-.prof .plbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-bottom:8px}
-.prof .pprj{list-style:none;margin:0 0 15px;padding:0;display:grid;gap:8px}
-.prof .pprj li{border-left:2px solid rgba(255,255,255,.35);padding-left:11px}
-.prof .pprj b{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.01em}
-.prof .pprj i{font-style:normal;font-size:11.5px;opacity:.7}
-.prof .pprj span{display:block;font-size:12px;line-height:1.42;opacity:.85;margin-top:2px}
+.prof .phead{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.prof .pav{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.22);display:grid;place-items:center;
+  font-family:var(--disp);font-weight:800;font-size:16px;letter-spacing:.02em;flex:none}
+.duo .prof h3{font-size:21px;margin:0 0 1px}
+.prof .pname{font-weight:600;font-size:13.5px;opacity:.85;margin:0}
+.prof .prole{margin:0 0 18px;font-size:13px;line-height:1.5;opacity:.9}
+.prof .plbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-bottom:9px}
+.prof .pprj{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:7px}
+.prof .pprj li{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.12);border-radius:13px;padding:9px 13px;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1),background .28s}
+.prof .pprj li:hover{background:rgba(255,255,255,.22);transform:translateX(3px)}
+.prof .pprj .pi{width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.22);display:grid;place-items:center;flex:none;color:#fff}
+.prof .pprj .pi .ico{width:16px;height:16px}
+.prof .pprj b{font-family:var(--disp);font-weight:800;font-size:13.5px;letter-spacing:.01em;flex:none}
+.prof .pprj span{font-size:12px;line-height:1.35;opacity:.82}
 .prof .pskl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
 .prof .pskl span{background:rgba(255,255,255,.18);border-radius:999px;padding:5px 11px;font-size:11.5px;line-height:1.35}
+@media(max-width:520px){
+  .prof .pprj li{flex-wrap:wrap}
+  .prof .pprj span{flex-basis:100%;padding-left:41px}
+  .prof .phead{align-items:flex-start}
+  .duo .prof h3{font-size:19px}
+}
 .prof .pmail{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);
   border-radius:999px;padding:9px 18px 9px 12px;font-weight:600;font-size:14px;text-decoration:none}
 .prof .pmail .ico{width:17px;height:17px;flex:none;color:var(--violet)}
@@ -345,9 +355,10 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .abcard{border-radius:var(--r2);padding:24px;display:flex;flex-direction:column;gap:12px;min-height:168px;
   transition:transform .32s cubic-bezier(.2,.8,.3,1),box-shadow .32s}
 .abcard:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(11,13,20,.42)}
-.abcard .ic{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;font-size:19px;flex:none}
-.abcard.old .ic{background:#E1E4EA}
-.abcard.new .ic{background:rgba(201,244,92,.16)}
+.abcard .ic{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;flex:none}
+.abcard .ic .ico{width:20px;height:20px}
+.abcard.old .ic{background:#E1E4EA;color:#6B7280}
+.abcard.new .ic{background:rgba(201,244,92,.16);color:var(--lime)}
 .abcard .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
 .abcard .q{margin:0;font-family:var(--disp);font-weight:800;font-size:clamp(17px,2vw,21px);letter-spacing:-.03em;line-height:1.28}
 .abcard .abm{font-size:13px;margin-top:auto;padding-top:6px}
@@ -364,7 +375,8 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 @keyframes abnudge{0%,100%{transform:translateX(-2px)}50%{transform:translateX(3px)}}
 @keyframes abring{0%{transform:scale(.85);opacity:.9}70%,100%{transform:scale(1.35);opacity:0}}
 .abfoot{display:flex;gap:11px;align-items:flex-start;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--mute);max-width:80ch}
-.abfoot i{font-style:normal;flex:none}
+.abfoot i{font-style:normal;flex:none;color:var(--blue);display:inline-flex}
+.abfoot .ico{width:16px;height:16px;margin-top:2px}
 @media(max-width:760px){
   .abt{padding:24px}
   .abflow{grid-template-columns:1fr}
@@ -390,7 +402,7 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .flbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:18px 0 7px}
 .fnum{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.1vw,20px);letter-spacing:.06em;color:var(--lime);word-break:break-word;animation:fglow 3.8s ease-in-out infinite}
 @keyframes fglow{0%,100%{text-shadow:0 0 0 rgba(201,244,92,0)}50%{text-shadow:0 0 16px rgba(201,244,92,.45)}}
-.fcopy{margin-top:18px;width:100%;background:#fff;color:var(--ink);border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px;
+.fcopy{margin-top:18px;width:100%;justify-content:center;background:#fff;color:var(--ink);border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px;
   transition:transform .25s cubic-bezier(.2,.8,.3,1),background .25s,box-shadow .25s}
 .fcopy:hover{background:var(--lime);color:#22300A;transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(201,244,92,.75)}
 .fcopy:active{transform:translateY(0)}
@@ -895,27 +907,27 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 <section style="padding-top:0"><div class="wrap"><div class="duo">
   <div class="a prof">
     <div>
-      <div class="ic"><svg class="ico"><use href="#i-spark"/></svg></div>
-      <h3 data-i="du.ah">Жоба және автор туралы</h3>
-      <div class="pname" data-i="du.aname">Нұрлыхан Қасымханұлы</div>
-      <ul class="prole">
-        <li data-i="du.ar1">Кітапхана статистикасы мен деректерін талдауға негізделген әдістемелік материалдар дайындаймын</li>
-        <li data-i="du.ar2">Кітапхана ісін цифрландыру бағытында жоспарлау және стандарттау жұмыстарын жүргіземін</li>
-      </ul>
+      <div class="phead">
+        <div class="pav" data-i="du.amono" aria-hidden="true">НҚ</div>
+        <div>
+          <h3 data-i="du.ah">Жоба және автор туралы</h3>
+          <div class="pname" data-i="du.aname">Нұрлыхан Қасымханұлы</div>
+        </div>
+      </div>
+      <p class="prole" data-i="du.arole">Кітапхана ісін цифрландырамын: деректерді талдау, әдістеме және стандарттау.</p>
       <div class="plbl" data-i="du.apl">Жобалар</div>
       <ul class="pprj">
-        <li><b>LABA</b> <i>Library and Book Analytics</i>
-          <span data-i="du.p1">Қазақстан кітапханаларының статистикасын визуалды түрде көрсететін аналитикалық платформа</span></li>
-        <li><b>DILIGEN</b>
-          <span data-i="du.p2">Кітапхана мен мәдениет мекемелерінің деректерін дайын контентке айналдыратын платформа (LABA-ның серіктес жобасы)</span></li>
-        <li><b>LibLab</b>
-          <span data-i="du.p3">Кітапханашыларға арналған AI негізіндегі библиографиялық өңдеу платформасы; ашық API және көптілді кітапхана стандарттарын қолдау көзделген</span></li>
+        <li><i class="pi"><svg class="ico"><use href="#i-chart"/></svg></i>
+          <b>LABA</b><span data-i="du.p1">кітапхана статистикасының аналитикасы</span></li>
+        <li><i class="pi"><svg class="ico"><use href="#i-spark"/></svg></i>
+          <b>DILIGEN</b><span data-i="du.p2">деректен дайын визуалды контент</span></li>
+        <li><i class="pi"><svg class="ico"><use href="#i-book"/></svg></i>
+          <b>LibLab</b><span data-i="du.p3">AI негізінде библиографиялық өңдеу</span></li>
       </ul>
-      <div class="plbl" data-i="du.asl">Дағдылар</div>
       <div class="pskl">
-        <span data-i="du.s1">AI құралдарын кәсіби жұмыс үрдісіне енгізу және дербес платформалар құру</span>
-        <span data-i="du.s2">Кітапхана ісі, ақпараттық менеджмент және стандарттау</span>
-        <span data-i="du.s3">Деректерді талдау және визуализациялау</span>
+        <span data-i="du.s1">AI-платформа құру</span>
+        <span data-i="du.s2">Кітапхана ісі · стандарттау</span>
+        <span data-i="du.s3">Дата-визуализация</span>
       </div>
     </div>
     <a class="pmail" href="mailto:ionurlykhans@gmail.com">
@@ -940,20 +952,20 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
     </div>
     <div class="abflow">
       <div class="abcard old">
-        <div class="ic">📄</div>
+        <div class="ic"><svg class="ico"><use href="#i-digest"/></svg></div>
         <span class="tag" data-i="ab.t1">Бұрын</span>
         <p class="q" data-i="ab.q1">Мыңдаған көрсеткіш есепке тапсырылып, қағазда қалады.</p>
         <span class="abm" data-i="ab.m1">Оқырман көрмейді · еңбек көрінбейді</span>
       </div>
       <div class="abar" aria-hidden="true"><span>→</span></div>
       <div class="abcard new">
-        <div class="ic">⚡</div>
+        <div class="ic"><svg class="ico"><use href="#i-spark"/></svg></div>
         <span class="tag" data-i="ab.t2">DILIGEN-мен</span>
         <p class="q" data-i="ab.q2">Сол сан бір батырмамен көрінетін контентке айналады.</p>
         <span class="abm" data-i="ab.m2">4 формат · 5 минут · дизайн білімі керек емес</span>
       </div>
     </div>
-    <div class="abfoot"><i>✍️</i><span data-i="ab.au">Әр постер мен жазбаның астында деректі енгізген қызметкердің аты-жөні мен лауазымы қалады — еңбек өз авторымен бірге көрінеді.</span></div>
+    <div class="abfoot"><i><svg class="ico"><use href="#i-pen"/></svg></i><span data-i="ab.au">Әр постер мен жазбаның астында деректі енгізген қызметкердің аты-жөні мен лауазымы қалады — еңбек өз авторымен бірге көрінеді.</span></div>
   </div>
 </div></section>
 
@@ -969,7 +981,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
       <div class="fbank"><i>K</i><span>Kaspi Bank</span></div>
       <span class="flbl" data-i="fn.lbl">Карта нөмірі</span>
       <div class="fnum" id="kaspiNo" data-num="4400430347414069">4400 4303 4741 4069</div>
-      <button class="fcopy" onclick="copyKaspi()" data-i="fn.copy">Нөмірді көшіру</button>
+      <button class="fcopy ibtn" onclick="copyKaspi()"><svg class="ico"><use href="#i-check"/></svg><span data-i="fn.copy">Нөмірді көшіру</span></button>
       <span class="fok" id="fnOk" data-i="fn.ok">Көшірілді ✓</span>
       <div class="fthx" data-i="fn.thx">Қолдауыңыз үшін шын жүректен алғыс 🤍</div>
     </div>
@@ -1166,17 +1178,13 @@ kk:{
  'bn.p':'Айына бес минут — жыл бойы дайын контент. Тіркелу тегін, растау коды поштаға келеді.',
  'bn.b':'Тіркелуді бастау','bn.s1':'Есеп енгізу уақыты','bn.s2':'Бір деректен шығатын формат',
  'bn.s3':'Жыл соңында дайын сторис','bn.s4':'Төлем','bn.s4v':'тегін',
- 'du.ah':'Жоба және автор туралы','du.aname':'Нұрлыхан Қасымханұлы',
- 'du.ar1':'Кітапхана статистикасы мен деректерін талдауға негізделген әдістемелік материалдар дайындаймын',
- 'du.ar2':'Кітапхана ісін цифрландыру бағытында жоспарлау және стандарттау жұмыстарын жүргіземін',
+ 'du.ah':'Жоба және автор туралы','du.aname':'Нұрлыхан Қасымханұлы','du.amono':'НҚ',
+ 'du.arole':'Кітапхана ісін цифрландырамын: деректерді талдау, әдістеме және стандарттау.',
  'du.apl':'Жобалар',
- 'du.p1':'Қазақстан кітапханаларының статистикасын визуалды түрде көрсететін аналитикалық платформа',
- 'du.p2':'Кітапхана мен мәдениет мекемелерінің деректерін дайын контентке айналдыратын платформа (LABA-ның серіктес жобасы)',
- 'du.p3':'Кітапханашыларға арналған AI негізіндегі библиографиялық өңдеу платформасы; ашық API және көптілді кітапхана стандарттарын қолдау көзделген',
- 'du.asl':'Дағдылар',
- 'du.s1':'AI құралдарын кәсіби жұмыс үрдісіне енгізу және дербес платформалар құру',
- 'du.s2':'Кітапхана ісі, ақпараттық менеджмент және стандарттау',
- 'du.s3':'Деректерді талдау және визуализациялау',
+ 'du.p1':'кітапхана статистикасының аналитикасы',
+ 'du.p2':'деректен дайын визуалды контент',
+ 'du.p3':'AI негізінде библиографиялық өңдеу',
+ 'du.s1':'AI-платформа құру','du.s2':'Кітапхана ісі · стандарттау','du.s3':'Дата-визуализация',
  'du.amail':'Байланыс',
  'du.bh':'Кітапханалар картасы','du.bp':'Қазақстандағы кітапханалар Google Maps-та. Ең жақынын тауып, жұмыс уақытын көріңіз.',
  'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.','ft.sup':'Жобаны қолдау',
@@ -1359,17 +1367,13 @@ ru:{
  'bn.p':'Пять минут в месяц — готовый контент весь год. Регистрация бесплатна, код подтверждения придёт на почту.',
  'bn.b':'Начать регистрацию','bn.s1':'Время на ввод отчёта','bn.s2':'Форматов из одних данных',
  'bn.s3':'Готовых сторис в конце года','bn.s4':'Оплата','bn.s4v':'бесплатно',
- 'du.ah':'О проекте и авторе','du.aname':'Нурлыхан Касымханулы',
- 'du.ar1':'Готовлю методические материалы на основе анализа библиотечной статистики и данных',
- 'du.ar2':'Веду работу по планированию и стандартизации в направлении цифровизации библиотечного дела',
+ 'du.ah':'О проекте и авторе','du.aname':'Нурлыхан Касымханулы','du.amono':'НК',
+ 'du.arole':'Цифровизирую библиотечное дело: анализ данных, методика и стандартизация.',
  'du.apl':'Проекты',
- 'du.p1':'Аналитическая платформа, наглядно показывающая статистику библиотек Казахстана',
- 'du.p2':'Платформа, превращающая данные библиотек и учреждений культуры в готовый контент (партнёрский проект LABA)',
- 'du.p3':'Платформа библиографической обработки на основе ИИ для библиотекарей; предусмотрены открытый API и поддержка многоязычных библиотечных стандартов',
- 'du.asl':'Навыки',
- 'du.s1':'Внедрение ИИ-инструментов в рабочие процессы и создание собственных платформ',
- 'du.s2':'Библиотечное дело, информационный менеджмент и стандартизация',
- 'du.s3':'Анализ и визуализация данных',
+ 'du.p1':'аналитика библиотечной статистики',
+ 'du.p2':'данные — в готовый визуальный контент',
+ 'du.p3':'библиографическая обработка на ИИ',
+ 'du.s1':'Создание ИИ-платформ','du.s2':'Библиотечное дело · стандартизация','du.s3':'Визуализация данных',
  'du.amail':'Связаться',
  'du.bh':'Карта библиотек','du.bp':'Библиотеки Казахстана на Google Maps. Найдите ближайшую и посмотрите часы работы.',
  'ft.about':'Платформа превращения библиотечных данных в визуальный контент.','ft.sup':'Поддержать проект',
