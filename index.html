@@ -78,20 +78,20 @@ h1.hh em{font-style:normal;color:var(--blue);text-decoration:underline;text-deco
 .mrow .lft{display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px}
 .mrow .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:14px}
 .mrow .val{font-family:var(--mono);font-size:13px;color:var(--mute)}
-.float{position:absolute;right:18px;top:64px;background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 18px 40px -14px rgba(44,92,255,.7);min-width:180px}
+.float{background:var(--blue);color:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 16px 34px -16px rgba(44,92,255,.65);min-width:180px;margin:6px 0 2px}
 .float .t{font-size:12px;opacity:.85}
 .float .n{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.03em;margin-top:2px}
 .mstat{border-top:1px solid var(--line);margin-top:14px;padding-top:14px}
 .mstat .mini{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
 .mstat .big{font-family:var(--disp);font-weight:800;font-size:34px;letter-spacing:-.04em;line-height:1.1;margin:4px 0 2px}
 .mstat .cap{font-size:13px;color:var(--mute)}
-.spark{display:flex;align-items:flex-end;gap:6px;height:86px;margin-top:16px}
-.spark .sb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;height:100%;min-width:0;cursor:default}
-.spark .bar{width:100%;height:var(--h);border-radius:7px 7px 4px 4px;background:linear-gradient(180deg,#E2E7F0,#EFF1F5);
+.spark{display:flex;align-items:flex-end;gap:6px;margin-top:16px}
+.spark .sb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:7px;min-width:0;cursor:default}
+.spark .bar{width:100%;height:var(--h);flex:none;border-radius:7px 7px 4px 4px;background:linear-gradient(180deg,#E2E7F0,#EFF1F5);
   transform-origin:bottom;animation:sbgrow .85s cubic-bezier(.2,.85,.3,1) both;animation-delay:var(--d);position:relative;transition:filter .25s}
 .spark .sb.on .bar{background:linear-gradient(180deg,var(--blue) 0%,#6E95FF 100%);box-shadow:0 12px 22px -12px rgba(44,92,255,.85)}
 .spark .sb:hover .bar{filter:brightness(.96)}
-.spark .lb{font-family:var(--mono);font-size:9px;letter-spacing:.04em;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.spark .lb{font-family:var(--mono);font-size:9px;letter-spacing:.02em;line-height:1.2;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;flex:none}
 .spark .sb.on .lb{color:var(--blue);font-weight:700}
 .spark .bar::after{content:attr(data-v);position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%) scale(.85);
   font-family:var(--mono);font-size:9.5px;color:#fff;background:var(--ink);padding:2px 7px;border-radius:999px;white-space:nowrap;
@@ -379,9 +379,14 @@ footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
   .studio{grid-template-columns:1fr}
   .tnav{display:none}
   .months{grid-template-columns:repeat(3,1fr)}
-  .float{position:static;margin-bottom:12px}
   .banner{padding:30px}
   .fgrid{gap:20px}
+}
+@media (max-width:560px){
+  /* Тар экранда тақырып өзі тасымалданады — қолмен қойылған үзіліс керек емес */
+  h1.hh br,h2.sh br{display:none}
+  .spark{gap:4px}
+  .spark .lb{font-size:8px;letter-spacing:0}
 }
 
 /* ==========================================================
@@ -515,7 +520,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
   <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
   <div>
-    <h1 class="hh" data-i="hero.h1">Сан жинайтын — сіз, <em>сөйлететін</em> — біз</h1>
+    <h1 class="hh" data-i="hero.h1">Сан үнсіз. Біз оны <em>сөйлетеміз</em>.</h1>
     <p class="lead" data-i="hero.lead">Мәдениет мекемелерінің деректерін <b>жасанды интеллект</b> дайын контентке айналдырады. Сіз санды енгізесіз — жүйе мәтінін өзі жазып, суретін өзі жинайды.</p>
     <p class="fmtl" data-i="hero.fl">Бір деректен шығады</p>
     <ul class="fmts">
@@ -658,7 +663,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 <section id="books" style="padding-top:0"><div class="wrap">
   <div class="head">
     <div class="eyebrow" data-i="bk.eye">Кітап тізімдері</div>
-    <h2 class="sh" data-i="bk.h">Кітапханалар не <em>оқып</em>, не <em>ұсынып</em> жатыр</h2>
+    <h2 class="sh" data-i="bk.h">Кітапханалар не <em>оқып</em>, <br>не <em>ұсынып</em> жатыр</h2>
     <p class="sub" data-i="bk.sub">Тізімдер тіркелген кітапханалардың есебінен жиналады.</p>
   </div>
   <div class="bkscene" aria-hidden="true">
@@ -1007,7 +1012,7 @@ const T={
 kk:{
  'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.media':'Медиа','nav.reg':'Тіркелу','nav.login':'Кіру',
  'nav.libs':'Кітапханалар','nav.books':'Кітаптар',
- 'bk.eye':'Кітап тізімдері','bk.h':'Кітапханалар не <em>оқып</em>, не <em>ұсынып</em> жатыр',
+ 'bk.eye':'Кітап тізімдері','bk.h':'Кітапханалар не <em>оқып</em>, <br>не <em>ұсынып</em> жатыр',
  'bk.sub':'Тізімдер тіркелген кітапханалардың есебінен жиналады.',
  'bk.rec':'Кітапханалар оқырманға ұсынады','bk.top':'Ең көп оқылған кітаптар',
  'bk.empty':'Тіркелген кітапханалар тізімді енгізген соң осы жерде шығады.',
@@ -1028,7 +1033,7 @@ kk:{
  'lb.sub':'Есеп берген кітапханалар өзара салыстырылады. Өз кітапханаңызды тіркеп, тізімге қосылыңыз.',
  'lb.c0':'Орын','lb.c1':'Кітапхана','lb.c2':'Орналасқан жері','lb.c3':'Оқырман','lb.c4':'Келушi','lb.c5':'Соңғы есеп күні','lb.c6':'Кітап берілімі',
 
- 'hero.h1':'Сан жинайтын — сіз, <em>сөйлететін</em> — біз.',
+ 'hero.h1':'Сан үнсіз. Біз оны <em>сөйлетеміз</em>.',
  'hero.lead':'Мәдениет мекемелерінің деректерін <b>жасанды интеллект</b> дайын контентке айналдырады. Сіз санды енгізесіз — жүйе мәтінін өзі жазып, суретін өзі жинайды. Астында сіздің аты-жөніңіз бен лауазымыңыз тұрады.',
  'hero.fl':'Бір деректен шығады',
  'hero.f1':'Әлеуметтік желі посты','hero.f2':'Дайджест','hero.f3':'Инфографика','hero.f4':'Баспасөз хабарламасы',
@@ -1179,7 +1184,7 @@ kk:{
 ru:{
  'nav.stat':'Статистика','nav.rank':'Рейтинг','nav.studio':'Студия','nav.media':'Медиа','nav.reg':'Регистрация','nav.login':'Кіру',
  'nav.libs':'Библиотеки','nav.books':'Книги',
- 'bk.eye':'Книжные списки','bk.h':'Что библиотеки <em>читают</em> и что <em>советуют</em>',
+ 'bk.eye':'Книжные списки','bk.h':'Что библиотеки <em>читают</em> <br>и что <em>советуют</em>',
  'bk.sub':'Списки собираются из отчётов зарегистрированных библиотек.',
  'bk.rec':'Библиотеки советуют читателям','bk.top':'Самые читаемые книги',
  'bk.empty':'Появится здесь, как только зарегистрированные библиотеки внесут списки.',
@@ -1200,7 +1205,7 @@ ru:{
  'lb.sub':'Сравниваются библиотеки, сдавшие отчёт. Зарегистрируйте свою и попадите в список.',
  'lb.c0':'Место','lb.c1':'Библиотека','lb.c2':'Расположение','lb.c3':'Читатели','lb.c4':'Посещения','lb.c5':'Дата последнего отчёта','lb.c6':'Книговыдача',
 
- 'hero.h1':'Цифры собираете вы — <em>говорить</em> им поможем мы.',
+ 'hero.h1':'Цифра молчит. Мы даём ей <em>голос</em>.',
  'hero.lead':'<b>Искусственный интеллект</b> превращает данные учреждений культуры в готовый контент. Вы вводите цифры — система сама пишет текст и собирает картинку. Внизу будет ваше имя и должность.',
  'hero.fl':'Из одних данных',
  'hero.f1':'Пост для соцсетей','hero.f2':'Дайджест','hero.f3':'Инфографика','hero.f4':'Пресс-релиз',
@@ -1511,11 +1516,11 @@ function renderSpark(){
   const mx=arr[0].users,mn=arr[arr.length-1].users;
   el.setAttribute('aria-label',L==='kk'?'Оқырман саны бойынша үздік жеті өңір':'Семь регионов с наибольшим числом читателей');
   el.innerHTML=arr.map((r,i)=>{
-    const h=Math.round(34+66*(r.users-mn)/Math.max(1,mx-mn));
+    const h=Math.round(28+58*(r.users-mn)/Math.max(1,mx-mn));
     const nm=r.n[L];
     return `<div class="sb${i===0?' on':''}" title="${nm} · ${nf(r.users)}">
-      <span class="bar" style="--h:${h}%;--d:${(i*70)}ms" data-v="${nf(r.users)}"></span>
-      <span class="lb">${nm.length>9?nm.slice(0,8)+'.':nm}</span></div>`;}).join('');
+      <span class="bar" style="--h:${h}px;--d:${(i*70)}ms" data-v="${nf(r.users)}"></span>
+      <span class="lb">${nm}</span></div>`;}).join('');
 }
 function renderNums(){
   const rural=REGIONS.reduce((s,r)=>s+r.rural,0),prevU=REGIONS.reduce((s,r)=>s+r.usersPrev,0);
