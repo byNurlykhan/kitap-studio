@@ -280,7 +280,10 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 .bkscene{margin:0 auto 22px;max-width:660px}
 .bkscene svg{width:100%;height:auto;display:block;overflow:visible}
 .bkscene .fly{animation:bkfly 7s cubic-bezier(.45,0,.25,1) infinite}
-.bkscene .arc{stroke-dashoffset:120;animation:bkarc 7s linear infinite}
+.bkscene .hrt path{opacity:0;transform-box:fill-box;transform-origin:center}
+.bkscene .h1{animation:bkheart 7s ease-out infinite .85s}
+.bkscene .h2{animation:bkheart 7s ease-out infinite 1.3s}
+.bkscene .h3{animation:bkheart 7s ease-out infinite 1.75s}
 .bkscene .libn{transform-origin:205px 150px;animation:bknod 7s ease-in-out infinite}
 .bkscene .rdr{transform-origin:470px 154px;animation:bkread 7s ease-in-out infinite}
 .bkscene .rdr .bk{transform-origin:470px 125px;animation:bkopen 7s ease-in-out infinite}
@@ -299,7 +302,12 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
   46%{transform:translate(444px,92px) rotate(10deg);opacity:1}
   56%{transform:translate(462px,116px) rotate(0deg);opacity:0}
   100%{transform:translate(276px,100px) rotate(-8deg);opacity:0}}
-@keyframes bkarc{0%,10%{stroke-dashoffset:120;opacity:0}20%{opacity:.45}50%{stroke-dashoffset:0;opacity:.45}66%,100%{opacity:0;stroke-dashoffset:0}}
+@keyframes bkheart{
+  0%{opacity:0;transform:translateY(9px) scale(.45)}
+  5%{opacity:.9;transform:translateY(2px) scale(1.06)}
+  9%{transform:translateY(-3px) scale(.97)}
+  18%{opacity:.6;transform:translateY(-19px) scale(1)}
+  27%,100%{opacity:0;transform:translateY(-34px) scale(.8)}}
 @keyframes bknod{0%,6%{transform:translateY(0)}12%{transform:translateY(-5px)}20%,100%{transform:translateY(0)}}
 @keyframes bkread{0%,50%{transform:translateY(0)}60%{transform:translateY(-4px)}72%,100%{transform:translateY(0)}}
 @keyframes bkopen{0%,52%{transform:scale(1)}62%{transform:scale(1.09)}76%,100%{transform:scale(1)}}
@@ -782,9 +790,13 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
         <path d="M232 106l34-10" stroke="var(--blue)" stroke-width="11" stroke-linecap="round"/>
         <circle cx="205" cy="62" r="18" fill="none" stroke="#fff" stroke-width="0" />
       </g>
+      <!-- жүректер -->
+      <g class="hrt">
+        <g transform="translate(309.4,75.4) scale(.72)"><path class="h1" d="M12 20.5S3 14.8 3 9.2C3 6.3 5.3 4 8.1 4c1.7 0 3.2.8 4 2.1C12.7 4.8 14.2 4 15.9 4 18.7 4 21 6.3 21 9.2c0 5.6-9 11.3-9 11.3z" fill="var(--blue)" opacity=".55"/></g>
+        <g transform="translate(350.6,58.6) scale(.95)"><path class="h2" d="M12 20.5S3 14.8 3 9.2C3 6.3 5.3 4 8.1 4c1.7 0 3.2.8 4 2.1C12.7 4.8 14.2 4 15.9 4 18.7 4 21 6.3 21 9.2c0 5.6-9 11.3-9 11.3z" fill="var(--violet)"/></g>
+        <g transform="translate(398.8,72.8) scale(.6)"><path class="h3" d="M12 20.5S3 14.8 3 9.2C3 6.3 5.3 4 8.1 4c1.7 0 3.2.8 4 2.1C12.7 4.8 14.2 4 15.9 4 18.7 4 21 6.3 21 9.2c0 5.6-9 11.3-9 11.3z" fill="var(--violet)" opacity=".6"/></g>
+      </g>
       <!-- ұшатын кітап -->
-      <path class="arc" d="M282 96C330 42 390 42 438 88" fill="none" stroke="var(--blue)" stroke-width="2"
-            stroke-dasharray="5 7" stroke-linecap="round" opacity=".45"/>
       <g class="fly">
         <g transform="translate(-16,-13)">
           <rect x="0" y="0" width="32" height="26" rx="4" fill="#fff" stroke="var(--blue)" stroke-width="2.4"/>
