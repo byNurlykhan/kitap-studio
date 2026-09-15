@@ -317,19 +317,29 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
 
 /* Жоба және автор туралы карточкасы */
 .duo .prof{padding:30px}
-.duo .prof h3{font-size:23px;margin:14px 0 3px}
-.prof .pname{font-weight:700;font-size:15px;margin-bottom:10px}
-.prof .prole{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:5px}
-.prof .prole li{position:relative;padding-left:13px;font-size:12.5px;line-height:1.45;opacity:.9}
-.prof .prole li::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.75)}
-.prof .plbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-bottom:8px}
-.prof .pprj{list-style:none;margin:0 0 15px;padding:0;display:grid;gap:8px}
-.prof .pprj li{border-left:2px solid rgba(255,255,255,.35);padding-left:11px}
-.prof .pprj b{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.01em}
-.prof .pprj i{font-style:normal;font-size:11.5px;opacity:.7}
-.prof .pprj span{display:block;font-size:12px;line-height:1.42;opacity:.85;margin-top:2px}
+.prof .phead{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.prof .pav{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.22);display:grid;place-items:center;
+  font-family:var(--disp);font-weight:800;font-size:16px;letter-spacing:.02em;flex:none}
+.duo .prof h3{font-size:21px;margin:0 0 1px}
+.prof .pname{font-weight:600;font-size:13.5px;opacity:.85;margin:0}
+.prof .prole{margin:0 0 18px;font-size:13px;line-height:1.5;opacity:.9}
+.prof .plbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-bottom:9px}
+.prof .pprj{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:7px}
+.prof .pprj li{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.12);border-radius:13px;padding:9px 13px;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1),background .28s}
+.prof .pprj li:hover{background:rgba(255,255,255,.22);transform:translateX(3px)}
+.prof .pprj .pi{width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.22);display:grid;place-items:center;flex:none;color:#fff}
+.prof .pprj .pi .ico{width:16px;height:16px}
+.prof .pprj b{font-family:var(--disp);font-weight:800;font-size:13.5px;letter-spacing:.01em;flex:none}
+.prof .pprj span{font-size:12px;line-height:1.35;opacity:.82}
 .prof .pskl{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
 .prof .pskl span{background:rgba(255,255,255,.18);border-radius:999px;padding:5px 11px;font-size:11.5px;line-height:1.35}
+@media(max-width:520px){
+  .prof .pprj li{flex-wrap:wrap}
+  .prof .pprj span{flex-basis:100%;padding-left:41px}
+  .prof .phead{align-items:flex-start}
+  .duo .prof h3{font-size:19px}
+}
 .prof .pmail{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);
   border-radius:999px;padding:9px 18px 9px 12px;font-weight:600;font-size:14px;text-decoration:none}
 .prof .pmail .ico{width:17px;height:17px;flex:none;color:var(--violet)}
@@ -337,8 +347,69 @@ select.sel{width:100%;padding:11px 13px;border:1px solid var(--line);border-radi
   text-transform:uppercase;font-weight:700;color:var(--violet);margin-bottom:1px}
 .duo .b button{background:var(--ink);color:#fff}
 
-/* about */
-.abt p{max-width:72ch;color:#4B5563;font-size:15.5px}
+/* about — «бұрын → қазір» диптихі */
+.abt{background:var(--card);border-radius:var(--r);padding:34px}
+.abhead{max-width:54ch;margin-bottom:24px}
+.abhead h2{margin-bottom:0}
+.abflow{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch}
+.abcard{border-radius:var(--r2);padding:24px;display:flex;flex-direction:column;gap:12px;min-height:168px;
+  transition:transform .32s cubic-bezier(.2,.8,.3,1),box-shadow .32s}
+.abcard:hover{transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(11,13,20,.42)}
+.abcard .ic{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;flex:none}
+.abcard .ic .ico{width:20px;height:20px}
+.abcard.old .ic{background:#E1E4EA;color:#6B7280}
+.abcard.new .ic{background:rgba(201,244,92,.16);color:var(--lime)}
+.abcard .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.abcard .q{margin:0;font-family:var(--disp);font-weight:800;font-size:clamp(17px,2vw,21px);letter-spacing:-.03em;line-height:1.28}
+.abcard .abm{font-size:13px;margin-top:auto;padding-top:6px}
+.abcard.old{background:var(--box)}
+.abcard.old .tag{color:var(--bad)}
+.abcard.old .q{color:#4B5563}
+.abcard.old .abm{color:var(--mute)}
+.abcard.new{background:var(--dark);color:#fff}
+.abcard.new .tag{color:var(--lime)}
+.abcard.new .abm{color:rgba(255,255,255,.72)}
+.abar{align-self:center;justify-self:center;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:18px;font-weight:700;flex:none;box-shadow:0 12px 26px -12px rgba(44,92,255,.8);position:relative}
+.abar span{display:block;animation:abnudge 2.6s ease-in-out infinite}
+.abar::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(44,92,255,.35);animation:abring 2.6s ease-out infinite}
+@keyframes abnudge{0%,100%{transform:translateX(-2px)}50%{transform:translateX(3px)}}
+@keyframes abring{0%{transform:scale(.85);opacity:.9}70%,100%{transform:scale(1.35);opacity:0}}
+.abfoot{display:flex;gap:11px;align-items:flex-start;margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--mute);max-width:80ch}
+.abfoot i{font-style:normal;flex:none;color:var(--blue);display:inline-flex}
+.abfoot .ico{width:16px;height:16px;margin-top:2px}
+@media(max-width:760px){
+  .abt{padding:24px}
+  .abflow{grid-template-columns:1fr}
+  .abar{transform:rotate(90deg)}
+}
+
+/* crowdfunding — жобаны қолдау */
+.fund{background:var(--dark);color:#fff;border-radius:var(--r);padding:40px;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;position:relative;overflow:hidden}
+.fund::after{content:"";position:absolute;width:340px;height:340px;right:-130px;top:-150px;border-radius:50%;background:radial-gradient(circle,rgba(201,244,92,.2),transparent 70%);pointer-events:none;animation:flo 19s ease-in-out infinite}
+.fund>div{position:relative;z-index:1}
+.fund .eyebrow{color:var(--lime)}
+.fund h2{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);letter-spacing:-.04em;margin:0 0 12px;line-height:1.1}
+.fund h2 em{font-style:normal;color:var(--lime)}
+.fund p{margin:0 0 14px;color:rgba(255,255,255,.72);font-size:15px;max-width:52ch}
+.fnote{display:block;font-size:13px;color:rgba(255,255,255,.5)}
+.fcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:var(--r2);padding:22px;
+  transition:transform .32s cubic-bezier(.2,.8,.3,1),box-shadow .32s,border-color .32s}
+.fcard:hover{transform:translateY(-3px);border-color:rgba(201,244,92,.4);box-shadow:0 26px 52px -28px rgba(0,0,0,.65)}
+.fbank{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px}
+.fbank i{width:27px;height:27px;border-radius:9px;background:var(--lime);color:#22300A;display:grid;place-items:center;font-size:13px;font-weight:800;font-style:normal;flex:none;
+  box-shadow:0 0 0 0 rgba(201,244,92,.5);animation:fring 3.2s ease-out infinite}
+@keyframes fring{0%{box-shadow:0 0 0 0 rgba(201,244,92,.5)}70%,100%{box-shadow:0 0 0 12px rgba(201,244,92,0)}}
+.flbl{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:18px 0 7px}
+.fnum{font-family:var(--mono);font-weight:700;font-size:clamp(16px,2.1vw,20px);letter-spacing:.06em;color:var(--lime);word-break:break-word;animation:fglow 3.8s ease-in-out infinite}
+@keyframes fglow{0%,100%{text-shadow:0 0 0 rgba(201,244,92,0)}50%{text-shadow:0 0 16px rgba(201,244,92,.45)}}
+.fcopy{margin-top:18px;width:100%;justify-content:center;background:#fff;color:var(--ink);border:0;border-radius:999px;padding:11px 18px;font-weight:600;font-size:14px;
+  transition:transform .25s cubic-bezier(.2,.8,.3,1),background .25s,box-shadow .25s}
+.fcopy:hover{background:var(--lime);color:#22300A;transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(201,244,92,.75)}
+.fcopy:active{transform:translateY(0)}
+.fok{display:block;margin-top:9px;font-size:12.5px;color:var(--lime);opacity:0;transition:opacity .25s}
+.fok.on{opacity:1}
+.fthx{margin-top:15px;font-size:12.5px;color:rgba(255,255,255,.55);text-align:center}
+@media(max-width:960px){.fund{grid-template-columns:1fr;padding:28px}}
 
 /* footer */
 footer{background:var(--card);margin-top:20px;padding:48px 0 30px}
@@ -494,7 +565,7 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 .itile .ico{width:60%;height:60%}
 .itile.v{color:#6D3FE0}.itile.g{color:#3E7A2E}.itile.o{color:#9A6212}.itile.b{color:var(--blue)}
 
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -836,27 +907,27 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
 <section style="padding-top:0"><div class="wrap"><div class="duo">
   <div class="a prof">
     <div>
-      <div class="ic"><svg class="ico"><use href="#i-spark"/></svg></div>
-      <h3 data-i="du.ah">Жоба және автор туралы</h3>
-      <div class="pname" data-i="du.aname">Нұрлыхан Қасымханұлы</div>
-      <ul class="prole">
-        <li data-i="du.ar1">Кітапхана статистикасы мен деректерін талдауға негізделген әдістемелік материалдар дайындаймын</li>
-        <li data-i="du.ar2">Кітапхана ісін цифрландыру бағытында жоспарлау және стандарттау жұмыстарын жүргіземін</li>
-      </ul>
+      <div class="phead">
+        <div class="pav" data-i="du.amono" aria-hidden="true">НҚ</div>
+        <div>
+          <h3 data-i="du.ah">Жоба және автор туралы</h3>
+          <div class="pname" data-i="du.aname">Нұрлыхан Қасымханұлы</div>
+        </div>
+      </div>
+      <p class="prole" data-i="du.arole">Кітапхана ісін цифрландырамын: деректерді талдау, әдістеме және стандарттау.</p>
       <div class="plbl" data-i="du.apl">Жобалар</div>
       <ul class="pprj">
-        <li><b>LABA</b> <i>Library and Book Analytics</i>
-          <span data-i="du.p1">Қазақстан кітапханаларының статистикасын визуалды түрде көрсететін аналитикалық платформа</span></li>
-        <li><b>DILIGEN</b>
-          <span data-i="du.p2">Кітапхана мен мәдениет мекемелерінің деректерін дайын контентке айналдыратын платформа (LABA-ның серіктес жобасы)</span></li>
-        <li><b>LibLab</b>
-          <span data-i="du.p3">Кітапханашыларға арналған AI негізіндегі библиографиялық өңдеу платформасы; ашық API және көптілді кітапхана стандарттарын қолдау көзделген</span></li>
+        <li><i class="pi"><svg class="ico"><use href="#i-chart"/></svg></i>
+          <b>LABA</b><span data-i="du.p1">кітапхана статистикасының аналитикасы</span></li>
+        <li><i class="pi"><svg class="ico"><use href="#i-spark"/></svg></i>
+          <b>DILIGEN</b><span data-i="du.p2">деректен дайын визуалды контент</span></li>
+        <li><i class="pi"><svg class="ico"><use href="#i-book"/></svg></i>
+          <b>LibLab</b><span data-i="du.p3">AI негізінде библиографиялық өңдеу</span></li>
       </ul>
-      <div class="plbl" data-i="du.asl">Дағдылар</div>
       <div class="pskl">
-        <span data-i="du.s1">AI құралдарын кәсіби жұмыс үрдісіне енгізу және дербес платформалар құру</span>
-        <span data-i="du.s2">Кітапхана ісі, ақпараттық менеджмент және стандарттау</span>
-        <span data-i="du.s3">Деректерді талдау және визуализациялау</span>
+        <span data-i="du.s1">AI-платформа құру</span>
+        <span data-i="du.s2">Кітапхана ісі · стандарттау</span>
+        <span data-i="du.s3">Дата-визуализация</span>
       </div>
     </div>
     <a class="pmail" href="mailto:ionurlykhans@gmail.com">
@@ -873,11 +944,48 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
   </div>
 </div></div></section>
 
-<section style="padding-top:0"><div class="wrap abt">
-  <div class="eyebrow" data-i="ab.eye">Жоба туралы</div>
-  <h2 class="sh" id="abH" style="margin-bottom:16px">—</h2>
-  <p data-i="ab.p1">Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды.</p>
-  <p data-i="ab.p2">Платформа сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ.</p>
+<section id="about" style="padding-top:0"><div class="wrap">
+  <div class="abt">
+    <div class="abhead">
+      <div class="eyebrow" data-i="ab.eye">Жоба туралы</div>
+      <h2 class="sh" id="abH">—</h2>
+    </div>
+    <div class="abflow">
+      <div class="abcard old">
+        <div class="ic"><svg class="ico"><use href="#i-digest"/></svg></div>
+        <span class="tag" data-i="ab.t1">Бұрын</span>
+        <p class="q" data-i="ab.q1">Мыңдаған көрсеткіш есепке тапсырылып, қағазда қалады.</p>
+        <span class="abm" data-i="ab.m1">Оқырман көрмейді · еңбек көрінбейді</span>
+      </div>
+      <div class="abar" aria-hidden="true"><span>→</span></div>
+      <div class="abcard new">
+        <div class="ic"><svg class="ico"><use href="#i-spark"/></svg></div>
+        <span class="tag" data-i="ab.t2">DILIGEN-мен</span>
+        <p class="q" data-i="ab.q2">Сол сан бір батырмамен көрінетін контентке айналады.</p>
+        <span class="abm" data-i="ab.m2">4 формат · 5 минут · дизайн білімі керек емес</span>
+      </div>
+    </div>
+    <div class="abfoot"><i><svg class="ico"><use href="#i-pen"/></svg></i><span data-i="ab.au">Әр постер мен жазбаның астында деректі енгізген қызметкердің аты-жөні мен лауазымы қалады — еңбек өз авторымен бірге көрінеді.</span></div>
+  </div>
+</div></section>
+
+<section id="support" style="padding-top:0"><div class="wrap">
+  <div class="fund">
+    <div>
+      <div class="eyebrow" data-i="fn.eye">Жобаны қолдау</div>
+      <h2 data-i="fn.h">Мұндай жобалар <em>қолдаумен</em> дамиды</h2>
+      <p data-i="fn.p">DILIGEN кітапханалар үшін тегін жасалды және тегін қала береді. Домен, сервер мен жаңа құралдар авторлардың өз қаражатымен қамтылып отыр. Жобаның дамуына үлес қосқыңыз келсе, төмендегі реквизит арқылы қолдау білдіре аласыз.</p>
+      <span class="fnote" data-i="fn.note">Қолдау — толықтай ерікті. Платформаның бірде-бір мүмкіндігі ақылы болмайды.</span>
+    </div>
+    <div class="fcard">
+      <div class="fbank"><i>K</i><span>Kaspi Bank</span></div>
+      <span class="flbl" data-i="fn.lbl">Карта нөмірі</span>
+      <div class="fnum" id="kaspiNo" data-num="4400430347414069">4400 4303 4741 4069</div>
+      <button class="fcopy ibtn" onclick="copyKaspi()"><svg class="ico"><use href="#i-check"/></svg><span data-i="fn.copy">Нөмірді көшіру</span></button>
+      <span class="fok" id="fnOk" data-i="fn.ok">Көшірілді ✓</span>
+      <div class="fthx" data-i="fn.thx">Қолдауыңыз үшін шын жүректен алғыс 🤍</div>
+    </div>
+  </div>
 </div></section>
 
 <footer><div class="wrap">
@@ -889,7 +997,8 @@ table.rank tr.rk-new{animation:rowIn .42s cubic-bezier(.2,.8,.3,1) both}
     <div><h4 data-i="ft.h1">Платформа</h4>
       <a href="#stat" data-i="nav.stat">Статистика</a>
       <a href="#rank" data-i="nav.rank">Рейтинг</a>
-      <a href="#libs" data-i="nav.libs">Кітапханалар</a></div>
+      <a href="#libs" data-i="nav.libs">Кітапханалар</a>
+      <a href="#support" data-i="ft.sup">Жобаны қолдау</a></div>
     <div><h4 data-i="ft.h2">Құралдар</h4>
       <a href="#studio" data-i="nav.studio">Студия</a>
       <a href="#media" data-i="nav.media">Медиа</a>
@@ -1069,20 +1178,16 @@ kk:{
  'bn.p':'Айына бес минут — жыл бойы дайын контент. Тіркелу тегін, растау коды поштаға келеді.',
  'bn.b':'Тіркелуді бастау','bn.s1':'Есеп енгізу уақыты','bn.s2':'Бір деректен шығатын формат',
  'bn.s3':'Жыл соңында дайын сторис','bn.s4':'Төлем','bn.s4v':'тегін',
- 'du.ah':'Жоба және автор туралы','du.aname':'Нұрлыхан Қасымханұлы',
- 'du.ar1':'Кітапхана статистикасы мен деректерін талдауға негізделген әдістемелік материалдар дайындаймын',
- 'du.ar2':'Кітапхана ісін цифрландыру бағытында жоспарлау және стандарттау жұмыстарын жүргіземін',
+ 'du.ah':'Жоба және автор туралы','du.aname':'Нұрлыхан Қасымханұлы','du.amono':'НҚ',
+ 'du.arole':'Кітапхана ісін цифрландырамын: деректерді талдау, әдістеме және стандарттау.',
  'du.apl':'Жобалар',
- 'du.p1':'Қазақстан кітапханаларының статистикасын визуалды түрде көрсететін аналитикалық платформа',
- 'du.p2':'Кітапхана мен мәдениет мекемелерінің деректерін дайын контентке айналдыратын платформа (LABA-ның серіктес жобасы)',
- 'du.p3':'Кітапханашыларға арналған AI негізіндегі библиографиялық өңдеу платформасы; ашық API және көптілді кітапхана стандарттарын қолдау көзделген',
- 'du.asl':'Дағдылар',
- 'du.s1':'AI құралдарын кәсіби жұмыс үрдісіне енгізу және дербес платформалар құру',
- 'du.s2':'Кітапхана ісі, ақпараттық менеджмент және стандарттау',
- 'du.s3':'Деректерді талдау және визуализациялау',
+ 'du.p1':'кітапхана статистикасының аналитикасы',
+ 'du.p2':'деректен дайын визуалды контент',
+ 'du.p3':'AI негізінде библиографиялық өңдеу',
+ 'du.s1':'AI-платформа құру','du.s2':'Кітапхана ісі · стандарттау','du.s3':'Дата-визуализация',
  'du.amail':'Байланыс',
  'du.bh':'Кітапханалар картасы','du.bp':'Қазақстандағы кітапханалар Google Maps-та. Ең жақынын тауып, жұмыс уақытын көріңіз.',
- 'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.',
+ 'ft.about':'Кітапхана деректерін визуалды контентке айналдыратын платформа.','ft.sup':'Жобаны қолдау',
  'ft.h1':'Платформа','ft.h2':'Құралдар','ft.h3':'Форматтар',
 
  'lb.eye':'Платформадағы кітапханалар','lb.h':'Тіркелген кітапханалар рейтингі',
@@ -1121,8 +1226,18 @@ kk:{
  'f.pos':'Лауазымы *','f.ph':'Телефон *','f.mail':'Электрондық пошта *','f.role':'Рөлі *','f.code':'Кодты енгізіңіз',
  'ro.lib':'Кітапханашы','ro.dist':'Аудандық жинақтаушы','ro.obl':'Облыстық үйлестіруші','ro.min':'Министрлік',
  'ab.eye':'Жоба туралы',
- 'ab.p1':'Кітапханалар жыл сайын мыңдаған көрсеткішті есепке тапсырады, бірақ ол сан қағазда қалып қояды. Оқырман оны көрмейді, әлеуметтік желіде жарияланбайды, кітапхананың еңбегі көрінбейді.',
- 'ab.p2':'Платформа сол санды бір батырмамен көрінетін контентке айналдырады. Кітапханашы дизайн білмейді де, білудің қажеті де жоқ — жүйе мәтінді өзі жазады, форматты өзі өлшейді, автордың мөрін өзі қояды.',
+ 'ab.t1':'Бұрын','ab.t2':'DILIGEN-мен',
+ 'ab.q1':'Мыңдаған көрсеткіш есепке тапсырылып, қағазда қалады.',
+ 'ab.q2':'Сол сан бір батырмамен көрінетін контентке айналады.',
+ 'ab.m1':'Оқырман көрмейді · еңбек көрінбейді',
+ 'ab.m2':'4 формат · 5 минут · дизайн білімі керек емес',
+ 'ab.au':'Әр постер мен жазбаның астында деректі енгізген қызметкердің аты-жөні мен лауазымы қалады — еңбек өз авторымен бірге көрінеді.',
+ 'fn.eye':'Жобаны қолдау',
+ 'fn.h':'Мұндай жобалар <em>қолдаумен</em> дамиды',
+ 'fn.p':'DILIGEN кітапханалар үшін тегін жасалды және тегін қала береді. Домен, сервер мен жаңа құралдар авторлардың өз қаражатымен қамтылып отыр. Жобаның дамуына үлес қосқыңыз келсе, төмендегі реквизит арқылы қолдау білдіре аласыз.',
+ 'fn.note':'Қолдау — толықтай ерікті. Платформаның бірде-бір мүмкіндігі ақылы болмайды.',
+ 'fn.lbl':'Карта нөмірі','fn.copy':'Нөмірді көшіру','fn.ok':'Көшірілді ✓',
+ 'fn.thx':'Қолдауыңыз үшін шын жүректен алғыс 🤍',
  'lg.eye':'// Жеке кабинет','lg.h':'Кіру','lg.hint':'Пошта мен поштаға келген код арқылы кіресіз.',
  'lg.ask':'Поштаға код жіберу','lg.go':'Кіру',
  'cb.out':'Шығу','cb.t1':'Дерек енгізу','cb.t2':'Кітап рейтингі','cb.t3':'Жыл қорытындысы','cb.t4':'Жиынтық есеп','cb.t5':'Баптаулар','cb.t6':'Блог',
@@ -1252,20 +1367,16 @@ ru:{
  'bn.p':'Пять минут в месяц — готовый контент весь год. Регистрация бесплатна, код подтверждения придёт на почту.',
  'bn.b':'Начать регистрацию','bn.s1':'Время на ввод отчёта','bn.s2':'Форматов из одних данных',
  'bn.s3':'Готовых сторис в конце года','bn.s4':'Оплата','bn.s4v':'бесплатно',
- 'du.ah':'О проекте и авторе','du.aname':'Нурлыхан Касымханулы',
- 'du.ar1':'Готовлю методические материалы на основе анализа библиотечной статистики и данных',
- 'du.ar2':'Веду работу по планированию и стандартизации в направлении цифровизации библиотечного дела',
+ 'du.ah':'О проекте и авторе','du.aname':'Нурлыхан Касымханулы','du.amono':'НК',
+ 'du.arole':'Цифровизирую библиотечное дело: анализ данных, методика и стандартизация.',
  'du.apl':'Проекты',
- 'du.p1':'Аналитическая платформа, наглядно показывающая статистику библиотек Казахстана',
- 'du.p2':'Платформа, превращающая данные библиотек и учреждений культуры в готовый контент (партнёрский проект LABA)',
- 'du.p3':'Платформа библиографической обработки на основе ИИ для библиотекарей; предусмотрены открытый API и поддержка многоязычных библиотечных стандартов',
- 'du.asl':'Навыки',
- 'du.s1':'Внедрение ИИ-инструментов в рабочие процессы и создание собственных платформ',
- 'du.s2':'Библиотечное дело, информационный менеджмент и стандартизация',
- 'du.s3':'Анализ и визуализация данных',
+ 'du.p1':'аналитика библиотечной статистики',
+ 'du.p2':'данные — в готовый визуальный контент',
+ 'du.p3':'библиографическая обработка на ИИ',
+ 'du.s1':'Создание ИИ-платформ','du.s2':'Библиотечное дело · стандартизация','du.s3':'Визуализация данных',
  'du.amail':'Связаться',
  'du.bh':'Карта библиотек','du.bp':'Библиотеки Казахстана на Google Maps. Найдите ближайшую и посмотрите часы работы.',
- 'ft.about':'Платформа превращения библиотечных данных в визуальный контент.',
+ 'ft.about':'Платформа превращения библиотечных данных в визуальный контент.','ft.sup':'Поддержать проект',
  'ft.h1':'Платформа','ft.h2':'Инструменты','ft.h3':'Форматы',
 
  'lb.eye':'Библиотеки на платформе','lb.h':'Рейтинг зарегистрированных библиотек',
@@ -1304,8 +1415,18 @@ ru:{
  'f.pos':'Должность *','f.ph':'Телефон *','f.mail':'Электронная почта *','f.role':'Роль *','f.code':'Введите код',
  'ro.lib':'Библиотекарь','ro.dist':'Районный координатор','ro.obl':'Областной координатор','ro.min':'Министерство',
  'ab.eye':'О проекте',
- 'ab.p1':'Библиотеки ежегодно сдают тысячи показателей в отчёт, но цифра остаётся на бумаге. Читатель её не видит, в соцсетях она не появляется, труд библиотеки остаётся незаметным.',
- 'ab.p2':'Платформа превращает эту цифру в видимый контент одной кнопкой. Библиотекарю не нужно знать дизайн — система сама пишет текст, сама подбирает формат, сама ставит печать автора.',
+ 'ab.t1':'Было','ab.t2':'С DILIGEN',
+ 'ab.q1':'Тысячи показателей уходят в отчёт и остаются на бумаге.',
+ 'ab.q2':'Та же цифра одной кнопкой становится видимым контентом.',
+ 'ab.m1':'Читатель не видит · труд незаметен',
+ 'ab.m2':'4 формата · 5 минут · без навыков дизайна',
+ 'ab.au':'Под каждым постером и записью остаётся ФИО и должность сотрудника, который внёс данные, — труд виден вместе с его автором.',
+ 'fn.eye':'Поддержать проект',
+ 'fn.h':'Такие проекты живут <em>благодаря</em> поддержке',
+ 'fn.p':'DILIGEN создан для библиотек бесплатно и останется бесплатным. Домен, сервер и новые инструменты пока оплачиваются авторами из своих средств. Если вы хотите поддержать развитие проекта, это можно сделать по реквизитам ниже.',
+ 'fn.note':'Поддержка — дело полностью добровольное. Ни одна возможность платформы не станет платной.',
+ 'fn.lbl':'Номер карты','fn.copy':'Скопировать номер','fn.ok':'Скопировано ✓',
+ 'fn.thx':'Искренне благодарим за поддержку 🤍',
  'lg.eye':'// Личный кабинет','lg.h':'Вход','lg.hint':'Вход по почте и коду, который пришёл на неё.',
  'lg.ask':'Отправить код на почту','lg.go':'Войти',
  'cb.out':'Выйти','cb.t1':'Ввод данных','cb.t2':'Рейтинг книг','cb.t3':'Итоги года','cb.t4':'Сводный отчёт','cb.t5':'Настройки','cb.t6':'Блог',
@@ -2369,6 +2490,25 @@ async function dlWrapped(){
 }
 
 /* ==========================================================
+   Жобаны қолдау — реквизитті көшіру
+========================================================== */
+function copyKaspi(){
+  const el=$('#kaspiNo'),ok=$('#fnOk');if(!el)return;
+  const num=el.dataset.num||el.textContent.replace(/\D/g,'');
+  const done=()=>{if(!ok)return;ok.classList.add('on');clearTimeout(copyKaspi._t);copyKaspi._t=setTimeout(()=>ok.classList.remove('on'),2200);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(num).then(done,()=>fallbackCopy(num,done));
+  }else fallbackCopy(num,done);
+}
+function fallbackCopy(txt,done){
+  const t=document.createElement('textarea');
+  t.value=txt;t.setAttribute('readonly','');t.style.cssText='position:fixed;top:-1000px;opacity:0';
+  document.body.appendChild(t);t.select();
+  try{document.execCommand('copy');done();}catch(e){}
+  document.body.removeChild(t);
+}
+
+/* ==========================================================
    Визуалды әсерлер
    Қозғалысты азайту режимінде барлығы автоматты өшеді.
 ========================================================== */
@@ -2376,7 +2516,7 @@ const NOMO=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)
 function initEffects(){
   if(NOMO)return;
   /* 1. Скроллмен бірге жұмсақ шығу */
-  const marks=document.querySelectorAll('.head, .box, .nc, .pj, .mock, .banner, .duo>div, .formbox, .bignums');
+  const marks=document.querySelectorAll('.head, .box, .nc, .pj, .mock, .banner, .duo>div, .formbox, .bignums, .abt, .fund');
   marks.forEach(e=>e.classList.add('reveal'));
   if('IntersectionObserver'in window){
     const io=new IntersectionObserver(es=>es.forEach(en=>{
